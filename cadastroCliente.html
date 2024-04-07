@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="site-cliente/css/loginCliente.css">
+    <title>CADASTRO</title>
+    <link rel="stylesheet" href="site-cliente/css/cadastroCliente.css">
 </head>
 
 <body>
@@ -18,11 +18,15 @@
 
             <div class="banner">
                 <div class="validarconta"><br>
-                    <h1> LOGIN</h1>
+                    <h1> CADASTRO</h1>
+                    NOME <input id="input_nome" placeholder="NOME"><br>
                     EMAIL <input id="input_email" placeholder="EMAIL"><br>
-                    SENHA<input type="password" id="senha" name="senha" placeholder="Digite sua senha">
-                    <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
-
+                    TELEFONE <input id="input_telefone" placeholder="TELEFONE"><br>
+                    SENHA<input type="password" id="senha" name="senha" placeholder="Digite sua senha"><br>
+                    <!-- <span class="toggle-password" onclick="togglePasswordVisibility()"style="  "></span> -->
+                    CONFIRMAR SENHA<input type="password" id="confirmacaoSenha" name="confirmacaoSenha" placeholder="Digite sua senha">
+                   <!-- <span class="toggle-password-confirmation" onclick="togglePasswordVisibility1()" style="  margin-top: -30px; margin-left: 100%;"></span>
+-->
                     <h5>não tem um login? Cadastre sua conta
                         <link rel="stylesheet" href="">
                     </h5>
@@ -39,6 +43,11 @@
 <Script>
     function togglePasswordVisibility() {
         var senhaInput = document.getElementById("senha");
+        var tipo = senhaInput.getAttribute("type") === "password" ? "text" : "password";
+        senhaInput.setAttribute("type", tipo);
+
+    }function togglePasswordVisibility1() {
+        var senhaInput = document.getElementById("confirmacaoSenha");
         var tipo = senhaInput.getAttribute("type") === "password" ? "text" : "password";
         senhaInput.setAttribute("type", tipo);
 

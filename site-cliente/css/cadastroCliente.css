@@ -8,13 +8,11 @@ body {
     height: 100vh;
     font-family: Roboto;
     background-image: url(../assets/fundoDeTela.png) ;
-    background-size: 1440px 680px; /* Largura de 500px e altura ajustada automaticamente */
-
-    color: #FFF;
-
+    background-size: 1560px 680px; /* Largura de 500px e altura ajustada automaticamente */
     overflow-x: hidden;
  
 }
+
 
 * {
     padding: 0;
@@ -46,7 +44,7 @@ body::-webkit-scrollbar-track {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: rgb(255, 255, 255);
+  text-align: start;
     background-size: cover;
     height: 100vh;
     width: 100%;
@@ -54,19 +52,21 @@ body::-webkit-scrollbar-track {
 }
 
 .validarconta {
+    width: 30vw;
+    height: 100vh;
     font-size: roboto;
     font-weight: 900;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+
 
 }
 
 input {
     color: #000000;
     width: 80%;
-    padding: 1rem;
+    height: 50px;
     font-size: 15px;
     display: flex;
     font-family: Roboto;
@@ -88,17 +88,51 @@ button {
     text-align: center;
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 900;
+    font-weight: 800;
     font-size: 35px;
     line-height: 56px;
     color: #FFFFFF;
-    width: 230px;
-    height: 70px;
+    width: 220px;
+    height: 50px;
     background-color:#303030;
     border-radius: 15px;
     transition: 1s;
     cursor: pointer;
 }
+/*
+.toggle-password {
+    
+    display: flex;
+    justify-content: space-around;
+  margin-right: 10px;
+  margin-top: -70px; margin-left: 100%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 25px;
+    background-image: url('../assets/senha-do-olho.png');
+    background-size: cover;
+    ;
+}
+.toggle-password-confirmation {
+    display: flex;
+    justify-content: space-around;
+    transform: translateY(-50%);
+    margin-top: -30px; margin-left: 100%;
+    width: 35px;
+    height: 25px;
+    background-image: url('../assets/senha-do-olho.png');
+    background-size: cover;
+    cursor: pointer;
+}
+
+/* Ocultar o texto da senha inicialmente */
+#senha[type="password"] {
+    font-family: 'roboto';
+}
+#senha[type="text"] {
+    font-family: 'roboto';
+}
+
 
 @keyframes MoveBackgroundPosition {
     0% {
@@ -133,6 +167,8 @@ h5{
 
 }
 h1 {
+    margin-top: 70px;
+    margin-bottom: 20PX;
     /* LOGIN */
     width: 801px;
     color: #000000;
