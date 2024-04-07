@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+
+nav {
+    background: transparent;
+    height: 147px;
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 4rem;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    transition: 0.5s;
+}
+
+nav a {
+    list-style-type: none;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+
+.navbar-options {
+    display: flex;
+    flex-direction: row;
+    font-family: Oswald;
+    gap: 1rem;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 47.42px;
+    text-align: left;
+}
+
+.navbar-options li a {
+    display: inline-block;
+    position: relative;
+    background-image: linear-gradient(to right, #0007ab, #0007ab 50%, #000000 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    font-weight: 500;
+    padding: 5px 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.navbar-options li a:hover {
+    background-position: 0;
+}
+
+.borda-gradiente-left {
+    position: relative;
+    overflow: hidden;
+    /* Para ocultar partes do gradiente que ultrapassam as bordas */
+}
+
+.borda-gradiente-left::before,
+.borda-gradiente-left::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5vh;
+    background: linear-gradient(to right, #0007AB 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #C50000 66.66%); /* gradiente com as cores especificadas */
+}
+
+.borda-gradiente-left::before {
+    left: 0;
+}
+
+
+.borda-gradiente-right {
+    position: relative;
+    overflow: hidden;
+}
+
+.borda-gradiente-right::before,
+.borda-gradiente-right::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5vh;
+    background: linear-gradient(to right, #0007AB 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #C50000 66.66%); /* gradiente com as cores especificadas */
+}
+
+.borda-gradiente-right::after {
+    right: 0;
+}
+
+#Footer::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 30vh;
+    background-image: url(../assets/waves/wave-bottom-projeto.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    left: 0;
+}
+
+footer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 333px;
+    background: black;
+    gap: 15px;
+}
+
+.container-content {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    gap: 10vw;
+    padding: 1rem 4rem;
+}
+
+footer hr {
+    position: relative;
+    border: none;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 184, 0, 1);
+
+}
+
+.container-content img {
+    align-self: flex-start;
+    max-width: 160px;
+    width: auto;
+    height: auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 2vw;
+}
+
+.footer-content ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    width: 33%;
+    height: 100%;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.footer-content ul li,
+.footer-content ul li a {
+    color: #FFF;
+    list-style: none;
+    cursor: pointer;
+}
+
+.footer-content ul li:first-of-type {
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    -webkit-text-stroke-width: .6px;
+    -webkit-text-stroke-color: #FFF;
+    margin-bottom: 2px;
+    cursor: auto;
+}
+
+.sociais {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
