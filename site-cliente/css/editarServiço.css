@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: Roboto;
+   
+ 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.select-disable {
+    user-select: none;
+}
+
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #00000055;
+}
+
+body::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #747483 30%, #b4b5c4 70%);
+}
+
+
+
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  text-align: start;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+
+}
+
+.validarconta {
+    gap: 15px;
+    width: 30vw;
+    height: 100vh;
+    font-size: roboto;
+    font-weight: 900;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+input {
+    color: #000000;
+    width: 80%;
+    height: 50px;
+    font-size: 15px;
+    display: flex;
+    font-family: Roboto;
+    width: 532px;
+    height: 50px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 0);
+
+    background: transparent;
+  
+}
+.btn-salvar-editar{
+
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+
+button {
+    margin-top: -60px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 56px;
+    color: #FFFFFF;
+    width: 220px;
+    height: 50px;
+    background-color:#303030;
+    border-radius: 15px;
+    transition: 1s;
+    cursor: pointer;
+}
+ .btn-salvar {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 56px;
+    color: #FFFFFF;
+    width: 220px;
+    height: 50px;
+    background-color:#169d00;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.tesora {
+    margin-right: -100%;
+margin-top: -140px;
+background: url(tesora-removebg-preview.png);
+mix-blend-mode: normal;
+
+}
+
+
+
+@keyframes MoveBackgroundPosition {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+button:hover {
+
+    border: solid 2px #ffffff93;
+    cursor: pointer;
+    transition: 1s;
+}
+h1 {
+    margin-top: 25%;
+    margin-bottom: 20PX;
+    /* LOGIN */
+    width: 801px;
+    color: #000000;
+    height: 56px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    background-clip: text;
+  
+}
