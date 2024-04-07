@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="site-cliente/css/loginCliente.css">
+</head>
+
+<body>
+    <div class="borda-gradiente-left">
+        <div class="borda-gradiente-right">
+            <nav id="Nav">
+
+            </nav>
+
+            <div class="banner">
+                <div class="validarconta"><br>
+                    <h1> LOGIN</h1>
+                    EMAIL <input id="input_email" placeholder="EMAIL"><br>
+                    SENHA<input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+                    <span class="toggle-password" onclick="togglePasswordVisibility()"></span>
+
+                    <h5>não tem um login? Cadastre sua conta <a href="cadastroCliente.html">clique aqui</a>
+                    </h5>
+                    <button onclick="entrar()">ENTRAR</button>
+                </div>
+                <div id="pg_login"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<Script>
+    function togglePasswordVisibility() {
+        var senhaInput = document.getElementById("senha");
+        var tipo = senhaInput.getAttribute("type") === "password" ? "text" : "password";
+        senhaInput.setAttribute("type", tipo);
+
+    }
+
+</Script>
+<script src="js/login.js"></script>

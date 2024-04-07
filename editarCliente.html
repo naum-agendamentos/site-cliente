@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDITAR CONTA</title>
+    <link rel="stylesheet" href="site-cliente/css/cadastroCliente.css">
+</head>
+
+<body>
+    <div class="borda-gradiente-left">
+        <div class="borda-gradiente-right">
+            <nav id="Nav">
+
+            </nav>
+
+            <div class="banner">
+                <div class="validarconta"><br>
+                    <h1> EDITAR CONTA</h1>
+                    NOME <input id="input_nome" placeholder="NOME"><br>
+                    EMAIL <input id="input_email" placeholder="EMAIL"><br>
+                    TELEFONE <input id="input_telefone" placeholder="TELEFONE"><br>
+                    SENHA<input type="password" id="senha" name="senha" placeholder="Digite sua senha"><br>
+                    <!-- <span class="toggle-password" onclick="togglePasswordVisibility()"style="  "></span> -->
+                    CONFIRMAR SENHA<input type="password" id="confirmacaoSenha" name="confirmacaoSenha"
+                        placeholder="Digite sua senha">
+                    <!-- <span class="toggle-password-confirmation" onclick="togglePasswordVisibility1()" style="  margin-top: -30px; margin-left: 100%;"></span>-->
+                    <button onclick="salvar()">SALVAR</button>
+                </div>
+                <div id="pg_login"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<Script>
+    function togglePasswordVisibility() {
+        var senhaInput = document.getElementById("senha");
+        var tipo = senhaInput.getAttribute("type") === "password" ? "text" : "password";
+        senhaInput.setAttribute("type", tipo);
+
+    } function togglePasswordVisibility1() {
+        var senhaInput = document.getElementById("confirmacaoSenha");
+        var tipo = senhaInput.getAttribute("type") === "password" ? "text" : "password";
+        senhaInput.setAttribute("type", tipo);
+
+    }
+
+</Script>
+<script src="js/login.js"></script>
