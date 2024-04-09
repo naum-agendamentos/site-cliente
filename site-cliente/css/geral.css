@@ -1,5 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
+html {
+    scroll-padding-top: 7vh;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+[element-anime] {
+    opacity: 0;
+    transition: .7s;
+    z-index: -1;
+}
+
+[element-anime].animate {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    z-index: 1;
+}
+
+[element-anime="appear"] {
+    transform: translate3d(0, 0, 0);
+}
+
+[element-anime="top"] {
+    transform: translate3d(0, -150px, 0);
+}
+
+[element-anime="left"] {
+    transform: translate3d(-150px, 0, 0);
+}
+
+[element-anime="right"] {
+    transform: translate3d(150px, 0, 0);
+}
+
+[element-anime="bottom"] {
+    transform: translate3d(0, 150px, 0);
+}
+
+[element-anime="bottomLeft-to-topRight"] {
+    transform: translateY(100px) translateX(-100px);
+}
+
+[element-anime="topLeft-to-bottomRight"] {
+    transform: translateY(-100px) translateX(-100px);
+}
 
 nav {
     background: transparent;
@@ -16,6 +61,7 @@ nav {
     z-index: 3;
     transition: 0.5s;
 }
+
 
 #Nav.ativa {
     justify-content: space-around;
@@ -37,6 +83,7 @@ nav a {
 
 
 .navbar-options {
+    list-style: none;
     display: flex;
     flex-direction: row;
     font-family: Oswald;
@@ -51,6 +98,19 @@ nav a {
     display: inline-block;
     position: relative;
     background-image: linear-gradient(to right, #0007ab, #0007ab 50%, #000000 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    font-weight: 500;
+    padding: 5px 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.selecionado {
+    display: inline-block;
+    position: relative;
+    background-image: linear-gradient(to right, #C50000, #C50000 50%, #0007ab 50%) !important;
     background-size: 200% 100%;
     background-position: 100%;
     font-weight: 500;

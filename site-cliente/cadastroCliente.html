@@ -7,13 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CADASTRO</title>
     <link rel="stylesheet" href="./css/cadastroCliente.css">
+    <link rel="stylesheet" href="./css/geral.css">
+    <link rel="stylesheet" href="./js/index.js">
 </head>
 
 <body>
     <div class="borda-gradiente-left">
         <div class="borda-gradiente-right">
             <nav id="Nav">
-
+                <ul class="navbar-options">
+                    <li><a href="./index.html#SobreNos">Sobre</a></li>
+                    <li><a href="./index.html#Servicos">Tipos de serviço</a></li>
+                    <li><a href="./index.html#NossoTrabalho">Nosso Trabalho</a></li>
+                </ul>
+                <img src="./assets/logo/logo.png" alt="">
+                <ul class="navbar-options">
+                    <li><a href="./index.html#Agendar">Agendar</a></li>
+                    <li><a href="./index.html#Localizacao">Localização</a></li>
+                    <li><a href="./loginCliente.html">Login</a></li>
+                    <li><a href="./cadastroCliente.html" class="selecionado">Cadastro</a></li>
+                </ul>
             </nav>
 
             <div class="banner">
@@ -22,10 +35,10 @@
                     NOME: <input id="input_nome" placeholder="NOME"><br>
                     EMAIL: <input id="input_email" placeholder="EMAIL"><br>
                     TELEFONE: <input id="input_telefone" placeholder="TELEFONE"><br>
-                    SENHA:<input type="password" id="senha" name="senha" placeholder="Digite sua senha"><br>
+                    SENHA:<input type="password" id="senha" name="senha" placeholder="DIGITE A SENHA"><br>
                     <!-- <span class="toggle-password" onclick="togglePasswordVisibility()"style="  "></span> -->
                     CONFIRMAR SENHA:<input type="password" id="confirmacaoSenha" name="confirmacaoSenha"
-                        placeholder="Digite sua senha">
+                        placeholder="CONFIRME A SENHA">
                     <!-- <span class="toggle-password-confirmation" onclick="togglePasswordVisibility1()" style="  margin-top: -30px; margin-left: 100%;"></span>
 -->
                     <h5>já tem uma conta? <a href="loginCliente.html">clique aqui</a></h5>
