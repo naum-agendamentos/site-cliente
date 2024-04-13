@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt>
 
 <head>
     <meta charset="UTF-8">
@@ -29,13 +29,15 @@
             </nav>
 
             <div class="banner">
-                <div class="validarconta"><br>
+                <div class="validarconta">
                     <h1> EDITAR BARBEIRO</h1>
-                    NOME: <input id="input_nome" placeholder="NOME"><br>
-                    EMAIL: <input id="input_email" placeholder="EMAIL"><br>
-                    TELEFONE: <input id="input_telefone" placeholder="TELEFONE"><br>
-                    ANOTAÇÕES: <input id="input_anotacoes" placeholder="ANOTAÇÕES"><br>
-                    FOTO: <input type="file" id="input_foto" placeholder="FOTO"><br>
+                    <p>NOME:</p> <input id="input_nome" placeholder="NOME">
+                    <p>EMAIL:</p> <input id="input_email" placeholder="EMAIL">
+                    <p>TELEFONE:</p> <input id="input_telefone" placeholder="TELEFONE">
+                    <p>ANOTAÇÕES:</p> <input id="input_anotacoes" placeholder="ANOTAÇÕES">
+                    <p>FOTO:</p>
+                    <label for="input_foto" id="nome_imagem">Clique aqui para selecionar uma imagem</label>
+                    <input class="foto" type="file" id="input_foto" style="display: none;" onchange="mostrarNomeImagem()">
                     <div class="btn-salvar-editar">
                         <button class="btn-salvar" onclick="salvar()">SALVAR</button>
                         <button onclick="cancelar()">CANCELAR</button>
@@ -48,4 +50,4 @@
 </body>
 
 </html>
-</Script>
+<script src="./js/fotos.js"></script>

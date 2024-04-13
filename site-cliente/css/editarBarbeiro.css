@@ -49,6 +49,7 @@ body::-webkit-scrollbar-track {
 }
 
 .validarconta {
+    margin-top: 4%;
     width: 30vw;
     height: 100vh;
     font-size: roboto;
@@ -60,21 +61,48 @@ body::-webkit-scrollbar-track {
 
 }
 
+
+p {
+    width:95%;
+    font-size: 24px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+
+    font-style: normal;
+font-weight: 900;
+font-size: 24px;
+line-height: 28px;
+
+
+}
 input {
-    color: #000000;
+    text-align: left;
     width: 80%;
-    height: 50px;
-    font-size: 15px;
+    padding: 1rem;
+    margin: 5px;
     display: flex;
     font-family: Roboto;
-    width: 532px;
-    height: 50px;
-    border-radius: 10px;
-    border-color: rgb(0, 0, 0);
-
-    background: transparent;
-  
+    width: 445px;
+    height: 38px;
+    border-color: #0f26fc93;
+    border-radius: 6px;
 }
+label{
+    width: 95%;
+    font-size: 16px;
+    font-weight: 400;
+
+    font-family: Roboto;
+    font-style: normal;
+font-weight: 900;
+line-height: 28px;
+
+color: #5F5F5F;
+margin-bottom: 5px;
+
+}
+
 .btn-salvar-editar{
 
     display: flex;
@@ -84,8 +112,13 @@ input {
 
 
 button {
-    margin-top: -20px;
-    border: none;
+    margin-top: 30px;
+    
+    font-weight: 900;
+    font-size: 24px;
+    width: 162px;
+    height: 43px;
+   color: #b4b5c4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,31 +128,15 @@ button {
     font-weight: 700;
     font-size: 25px;
     line-height: 56px;
+    border: none;
     color: #FFFFFF;
-    width: 220px;
-    height: 50px;
     background-color:#303030;
     border-radius: 15px;
     transition: 1s;
     cursor: pointer;
 }
  .btn-salvar {
- 
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 56px;
-    color: #FFFFFF;
-    width: 220px;
-    height: 50px;
     background-color:#169d00;
-    border-radius: 15px;
     cursor: pointer;
 }
 

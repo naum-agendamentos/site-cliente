@@ -8,9 +8,10 @@ body {
     height: 100vh;
     font-family: Roboto;
     background-image: url(../assets/fundoDeTela.png) ;
-    background-size: 1560px 680px; /* Largura de 500px e altura ajustada automaticamente */
+   background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
     overflow-x: hidden;
- 
 }
 
 
@@ -46,7 +47,7 @@ body::-webkit-scrollbar-track {
     flex-direction: column;
     text-align: start;
     background-size: cover;
-    height: 120vh;
+    height: 100vh;
     width: 100%;
 
 }
@@ -62,25 +63,35 @@ body::-webkit-scrollbar-track {
     align-items: center;
 }
 
+p {
+    width: 95%;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    font-family: Roboto;
+    font-style: normal;
+font-weight: 900;
+font-size: 24px;
+line-height: 28px;
+color: #000;
+margin-bottom: 5px;
+
+}
 input {
-    color: #000000;
+    text-align: left;
     width: 80%;
-    height: 50px;
-    font-size: 15px;
+    padding: 1rem;
+    margin: 5px;
     display: flex;
     font-family: Roboto;
-    width: 532px;
-    height: 50px;
-    border-radius: 10px;
-    border-color: rgb(0, 0, 0);
-
-    background: transparent;
-  
+    width: 445px;
+    height: 38px;
+    border-color: #0f26fc93;
+   
+    border-radius: 6px;
 }
 
-
 button {
-    margin-top: 30px;
     border: none;
     display: flex;
     justify-content: center;
@@ -88,16 +99,16 @@ button {
     text-align: center;
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 800;
-    font-size: 35px;
-    line-height: 56px;
-    color: #FFFFFF;
-    width: 220px;
-    height: 50px;
-    background-color:#303030;
+    font-weight: 900;
+    font-size: 24px;
+    width: 162px;
+    height: 43px;
+   color: #b4b5c4;
+    background: black;
     border-radius: 15px;
     transition: 1s;
     cursor: pointer;
+
 }
 /*
 .toggle-password {
@@ -155,20 +166,19 @@ button:hover {
     transition: 1s;
 }
 h5{
+    margin-top: -15px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 900;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 56px;
-    text-align: center;
     color: #000000;
 
-  
+
 
 }
 h1 {
-    margin-top: 70px;
-    margin-bottom: 20PX;
+    margin-top: 30%;
     /* LOGIN */
     width: 801px;
     color: #000000;
@@ -176,7 +186,7 @@ h1 {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 900;
-    font-size: 48px;
+    font-size: 40px;
     line-height: 56px;
     text-align: center;
     background-clip: text;
