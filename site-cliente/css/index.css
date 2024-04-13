@@ -51,7 +51,7 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 953px;
+    height: 768px;
     background-image: url(../assets/imgs/backgroundHeader.png);
     background-size: cover;
     background-position: center;
@@ -93,7 +93,7 @@ header * {
 .header-p {
     color: #000;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: left;
     flex-direction: row;
     gap: 5vh;
@@ -103,15 +103,13 @@ header * {
     font-family: Oswald;
     font-style: normal;
     font-weight: 400;
-    font-size: 40px;
-    line-height: 59px;
+    font-size: 24px;
+    line-height: 36px;
     color: #333333;
 }
 
-
 .img-logo {
     display: flex;
-    padding-bottom: 15%;
 }
 
 
@@ -149,36 +147,42 @@ section {
     width: 100%;
     gap: 28vh;
     background-color: white;
-    height: 733px;
+    height: 566px;
 }
 
 
 .section-title {
+    margin-top: 30px;
+    bottom: 50px;
     display: flex;
     justify-content: right;
     flex-direction: column;
     text-align: left;
-    gap: 7vh;
+    gap: 10vh;
 }
 
 .section-title h1 {
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 400;
-    font-size: 64px;
-    line-height: 95px;
+    font-size: 40px;
+    line-height: 54px;
     text-align: center;
     color: #000000;
 }
 
+
+
 .section-title p {
-    font-family: 'Oswald';
+    font-family: Oswald;
     font-style: normal;
     font-weight: 400;
-    font-size: 36px;
-    line-height: 53px;
-    color: #000000;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333333;
 }
+
+
 
 .section-title a {
     display: flex;
@@ -186,16 +190,16 @@ section {
     align-items: center;
     font-family: 'Oswald';
     font-style: normal;
-    font-weight: 400;
-    font-size: 36px;
-    line-height: 53px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
     color: rgba(253, 253, 253, 1);
     background-image: linear-gradient(to right, #0007ab, #0007ab 50%, #000000 50%);
-    width: 146px;
-    height: 73px;
+    width: 162px;
+    height: 43px;
     background-image: repeating-linear-gradient(to right, #0007ab 0%, #0007ab 8%, #0007d5 18%, #0108e4 27%, #0008f0 35%, #020bff 40%, #0b13ff 50%, #0007e1 58%, #0007d3 67%, #0007d0 77%, #0007d3 83%, #0007d0 88%, #0109e5 93%, #0109ff 100%);
     background-size: 150%;
-    border-radius: 15px;
+    border-radius: 5px;
     filter: drop-shadow(0 0 1px rgba(255, 200, 0, .3));
     animation: MoveBackgroundPosition 6s ease-in-out infinite;
     transition: 1s;
@@ -238,8 +242,8 @@ section {
     background-image: url(../assets/imgs/backgroundServicos.png);
     background-size: cover;
     background-position: center;
-    height: 1300px;
-    gap: 10vh;
+    height: 1040px;
+    gap: 6vh;
 }
 
 .cards {
@@ -247,14 +251,14 @@ section {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 3vw;
+    gap: 5vw;
 }
 
 
 .section-title-servicos {
     height: 10%;
     font-family: 'Oswald';
-    font-size: 64px;
+    font-size: 40px;
     font-weight: 400;
     background: conic-gradient(from -90deg at 51.5% 39.29%, #000000 -26.32deg, #000000 38.84deg, #000000 67.45deg, #000000 229.4deg, #000000 333.68deg, #000000 398.84deg);
     -webkit-background-clip: text;
@@ -272,10 +276,10 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 351px;
     width: 333px;
     background-color: transparent;
-    border-radius: 30px;
+    border-radius: 50px;
     transition: 0.6s !important;
     overflow: hidden;
 }
@@ -295,7 +299,6 @@ section {
     position: relative;
 }
 
-
 .servicos-info .info-card {
     font-family: 'Oswald';
     font-weight: 400;
@@ -308,26 +311,40 @@ section {
 
 
 .info-card h2 {
-    font-weight: 400;
-    font-size: 36px;
-    line-height: 53px;
+    font-style: normal;
+    font-weight: 1000;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
     text-align: center;
     color: #000000;
 }
 
 .info-card p {
     padding: 20px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
 }
+
+
 
 .final {
     display: flex;
     justify-content: center;
     font-family: 'Oswald';
     font-weight: 400;
-    font-size: 35px;
-    line-height: 40px;
-    text-align: left;
-    color: #000; 
+    font-size: 24px;
+    line-height: 36px;
+    background: conic-gradient(from 222.76deg at 48.5% 50%, #FFB800 -50.04deg, #F6B714 51.17deg, #C3801C 93.96deg, #FFD600 141.07deg, #C38100 185.72deg, #E5B300 259.56deg, #FFB800 309.96deg, #F6B714 411.17deg);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }
 
 
@@ -352,7 +369,7 @@ section {
 
 .section-title-trabalho {
     font-family: 'Oswald';
-    font-size: 64px;
+    font-size: 40px;
     font-weight: 400;
     background: conic-gradient(from -90deg at 51.5% 39.29%, #000000 -26.32deg, #000000 38.84deg, #000000 67.45deg, #000000 229.4deg, #000000 333.68deg, #000000 398.84deg);
     -webkit-background-clip: text;
@@ -389,7 +406,7 @@ section {
     align-items: center;
     width: 100%;
     background-color: white;
-    height: 1500px;
+    height: 1100px;
 }
 
 .card-agendar {
@@ -397,18 +414,16 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 45px 0;
-    gap: 15vh;
+    gap: 7vh;
 }
 
 .agendar-info {
-    height: 722px;
     border-radius: 25px;
 }
 
 .agendar-title {
     font-family: 'Oswald';
-    font-size: 64px;
+    font-size: 40px;
     font-weight: 400;
     background: conic-gradient(from -90deg at 51.5% 39.29%, #000000 -26.32deg, #000000 38.84deg, #000000 67.45deg, #000000 229.4deg, #000000 333.68deg, #000000 398.84deg);
     -webkit-background-clip: text;
@@ -424,19 +439,17 @@ section {
     -webkit-text-fill-color: transparent;
 }
 
-
 #Agendar a {
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Oswald';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 53px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
     color: rgba(253, 253, 253, 1);
-    width: 362px;
-    height: 73px;
+    width: 234px;
+    height: 62px;
     background-color: #000;
     border-radius: 5px;
     transition: 1s;
@@ -483,14 +496,14 @@ section {
     justify-content: right;
     flex-direction: column;
     text-align: left;
-    gap: 7vh;
+    gap: 2vh;
 }
 
 #Localizacao .section-title h1 {
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 400;
-    font-size: 64px;
+    font-size: 40px;
     line-height: 95px;
     text-align: center;
     color: #000000;
@@ -500,7 +513,7 @@ section {
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 400;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 53px;
     color: #000000;
 }
