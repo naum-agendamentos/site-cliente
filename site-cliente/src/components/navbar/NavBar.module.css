@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+html {
+    scroll-padding-top: 7vh;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+
+Nav {
+    background: transparent;
+    height: 80px;
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    transition: 0.5s;
+}
+
+
+Nav {
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff4e;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.122);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(7.5px);
+    margin-top: 0;
+    transition: 0.5s;
+}
+
+
+nav a {
+    list-style-type: none;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+
+.navbar-options {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    font-family: Oswald;
+    gap: 8vh;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 47.42px;
+    text-align: left;
+}
+
+.line {
+    color: #000;
+    font-size: 50px;
+    font-weight: 100;
+}
+
+.navbar-options li a {
+    display: inline-block;
+    position: relative;
+    background-image: linear-gradient(to right, #3E83C8, #3E83C8 50%, #000000 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    font-weight: 500;
+    padding: 5px 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.navBottonLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    width: 67px;
+    height: 32px;
+    color: white;
+    background-color: #3E83C8;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.navBottonLogin:hover {
+    background-image: linear-gradient(to right, #3E83C8, #3E83C8 50%, #FC9C01 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+    transition: 0.7s !important;
+}
+
+.navBottonCadast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    width: 101px;
+    height: 32px;
+    color: white;
+    background-color: #54595E;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.7s !important;
+}
+
+.navBottonCadast:hover {
+    background-image: linear-gradient(to right, #54595E, #54595E 50%, #FC9C01 50%);
+    background-size: 200% 100%;
+    background-position: 100%;
+}
+
+
+.nav-row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    gap: 10vh;
+}
+
+.selecionado {
+    display: inline-block;
+    position: relative;
+    background-image: linear-gradient(to right, #C50000, #C50000 50%, #0007ab 50%) !important;
+    background-size: 200% 100%;
+    background-position: 100%;
+    font-weight: 500;
+    padding: 5px 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+.navbar-options li a:hover {
+    background-position: 0;
+}
