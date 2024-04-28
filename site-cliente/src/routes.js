@@ -5,10 +5,9 @@ import Agendamento from "./pages/agendarHorario/AgendamentoHorario"
 import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados"
 import MeusAgendamentos from "./pages/meus-agendamentos/MeusAgendamentos"
 import FinalizarAgendamento from './pages/finalizarAgendamento/FinalizarAgendamento'
-
+import ListaServico from "./pages/listaServicos/ListaServico";
 import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
 import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
-import ListaServico from "./pages/listaServicos/ListaServico";
 
 import Login from "./pages/login/Login";
 
