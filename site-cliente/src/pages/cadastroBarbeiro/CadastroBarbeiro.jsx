@@ -1,6 +1,6 @@
 import api from "../../api";
 import styles from "./CadastroBarbeiro.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImgBarra from '../../utils/assets/barra-lateral.svg'
 import NavBar from '../../components/navbar-pos-login/NavBar';
@@ -38,7 +38,7 @@ function CadastroBarbeiro() {
             toast.success("Novo Barbeiro criado com sucesso!");
             sessionStorage.setItem("editado",
                 JSON.stringify(objetoCadastrado));
-            navigate("/login")
+            navigate("/barbeiros")
         }).catch(() => {
             toast.error("Ocorreu um erro ao salvar os dados,por favor, tente novamente.");
         })
@@ -46,10 +46,10 @@ function CadastroBarbeiro() {
     const handleInputChange = (event, setStateFunction) => {
         setStateFunction(event.target.value);
     }
-    const handleBack = () => {
-        navigate("/login");
+    // const handleBack = () => {
+    //     navigate("/login");
 
-    }
+    // }
     
 
     return (
