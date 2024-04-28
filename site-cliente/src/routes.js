@@ -5,6 +5,13 @@ import Agendamento from "./pages/agendarHorario/AgendamentoHorario"
 import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados"
 import MeusAgendamentos from "./pages/meus-agendamentos/MeusAgendamentos"
 import FinalizarAgendamento from './pages/finalizarAgendamento/FinalizarAgendamento'
+
+import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados";
+import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
+import EditarBarbeiro from "./pages/editarBarbeiro/EditarBarbeiro";
+
+import Login from "./pages/login/Login";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function Rotas() {
@@ -18,6 +25,9 @@ function Rotas() {
                     <Route path="/editar-meus-dados" element={<EditarMeusDados/>}/>
                     <Route path="/meus-agendamentos" element={<MeusAgendamentos/>}/>
                     <Route path="/finalizar-agendamento" element={<FinalizarAgendamento/>}/>
+                    <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro/>}/>
+                    <Route path="/editar-barbeiro" element={<EditarBarbeiro/>}/>
+                    <Route path="/login" element={<Login/>}/>
                 </Routes>
             </BrowserRouter>
         </>
