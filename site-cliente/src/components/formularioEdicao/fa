@@ -1,0 +1,12 @@
+import React from 'react';
+
+function FileInputComponent({ handleFileChange }) {
+    return (
+        <div>
+            <label htmlFor="input_foto" id="nome_imagem">Clique aqui para selecionar uma imagem</label>
+            <input className="foto" type="file" id="input_foto" style={{ display: 'none' }} onChange={handleFileChange} />
+        </div>
+    );
+}
+
+export default FileInputComponent;
