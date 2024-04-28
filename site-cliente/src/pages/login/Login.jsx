@@ -31,7 +31,7 @@ function Login() {
                 <img src={ImgBarra} className={style["barraLeft"]} alt="" srcSet="" />
                 <img src={ImgBarra} className={style["barraRight"]} alt="" srcSet="" />
                 <NavBar />
-                <div className={style["container-title"]}><h1 className={style["title"]}>CADASTRAR BARBEIRO</h1></div>
+                <div className={style["container-title"]}><h1 className={style["title"]}>LOGIN</h1></div>
                 <div className={style["container-form"]}>
                     <div className={style["container-input"]}>
                         <p>EMAIL</p>
