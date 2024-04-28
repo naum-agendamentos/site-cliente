@@ -5,10 +5,8 @@ import Agendamento from "./pages/agendarHorario/AgendamentoHorario"
 import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados"
 import MeusAgendamentos from "./pages/meus-agendamentos/MeusAgendamentos"
 import FinalizarAgendamento from './pages/finalizarAgendamento/FinalizarAgendamento'
-
-import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados";
 import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
-import EditarBarbeiro from "./pages/editarBarbeiro/EditarBarbeiro";
+import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
 
 import Login from "./pages/login/Login";
 
