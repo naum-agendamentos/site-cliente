@@ -6,6 +6,8 @@ import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
 import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
 import Login from "./pages/login/Login";
 import CadastroCliente from "./pages/cadastroCliente/CadastroCliente";
+import CadastroServiço from "./pages/cadastrarServico/CadastroServico";
+import EditarServico from "./pages/editarServico/EditarServico"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -21,6 +23,10 @@ function Rotas() {
                     <Route path="/editar-barbeiro" element={<EditarBarbeiro/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/cadastro-cliente" element={<CadastroCliente/>}/>
+                    <Route path="/cadastro-servico" element={<CadastroServiço/>}/> 
+                    <Route path="/editar-servico" element={<EditarServico/>}/>
+                    
+               
                 </Routes>
             </BrowserRouter>
         </>
