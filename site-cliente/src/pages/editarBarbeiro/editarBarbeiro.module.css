@@ -1,146 +1,102 @@
-/* Importação de fontes */
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-.body {
-    width: 100vw;
-    height: 100vh;
-    font-family: Roboto;
-}
-
-.globalReset {
-    padding: 0;
+body{
     margin: 0;
-    box-sizing: border-box;
+    padding: 0;
 }
-
-.selectDisable {
-    user-select: none;
-}
-
-.scrollbar {
-    width: 5px;
-}
-
-.scrollbarThumb {
-    background: #00000055;
-}
-
-.scrollbarTrack {
-    background: linear-gradient(to bottom, #747483 30%, #b4b5c4 70%);
-}
-
-.banner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: start;
-    background-size: cover;
-    height: 100vh;
+.container{
     width: 100%;
-}
-
-.validarConta {
-    margin-top: 4%;
-    width: 30vw;
     height: 100vh;
-    font-size: roboto;
-    font-weight: 900;
     display: flex;
+    position: relative;
     flex-direction: column;
-    align-items: center;
 }
-
-.paragraph {
-    width: 95%;
-    font-size: 24px;
-    font-weight: 400;
-    color: rgb(0, 0, 0);
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 28px;
+.container-title{
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    width: 100%;
+    height: 7vh;
+    text-align: center;
 }
-
-.input {
-    text-align: left;
-    width: 80%;
-    padding: 1rem;
-    margin: 5px;
-    display: flex;
-    font-family: Roboto;
-    width: 445px;
-    height: 38px;
-    border-color: #0f26fc93;
-    border-radius: 6px;
+.title{
+    font-size: 40px;
+    color: #050505;
 }
-
-.label {
-    width: 95%;
-    font-size: 16px;
-    font-weight: 400;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 900;
-    line-height: 28px;
-    color: #5F5F5F;
-    margin-bottom: 5px;
-}
-
-.btnSalvarEditar {
-    display: flex;
-    justify-content: space-between;
-    gap: 25px;
-}
-
-.button {
-    margin-top: 30px;
-    font-weight: 900;
-    font-size: 24px;
-    width: 162px;
-    height: 43px;
-    color: #b4b5c4;
+.container-form{
+    width: 100%;
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 56px;
-    border: none;
-    color: #FFFFFF;
-    background-color: #303030;
-    border-radius: 15px;
-    transition: 1s;
-    cursor: pointer;
+    flex-direction: column;
 }
-
-.btnSalvar {
-    background-color: #169d00;
-    cursor: pointer;
-}
-
-.buttonHover:hover {
-    border: solid 2px #ffffff93;
-    cursor: pointer;
-    transition: 1s;
-}
-
-.header1 {
-    margin-top: 25%;
-    margin-bottom: 20px;
-    width: 801px;
+.container-input{
+    width: 532px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
     color: #000000;
-    height: 56px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 900;
-    font-size: 48px;
-    line-height: 56px;
-    text-align: center;
-    background-clip: text;
+}
+.container-input p{
+    font-weight: 800;
+}
+.input-form{
+    width: 100%;
+    height: 38px;
+    border: 2px solid gray;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+.container-btn{
+    gap: 16px;
+    margin-top: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-alterar{
+    width: 162px;
+    height: 45px;
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: #000000;
+    color: #ffffff;
+}
+.button-cancelar{
+    width: 162px;
+    height: 45px;
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.button-alterar:hover{
+    border: 1px solid #ffffff;
+    scale:1.1;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.button-cancelar:hover{
+    border: 1px solid #ffffff;
+    scale:1.1;
+    transition: 0.3s;
+    cursor: pointer;
+
+}
+
+
+/* barras laterais */
+.barraLeft{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.barraRight{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
 }

@@ -52,6 +52,11 @@ function Login() {
                                 onChange={(e) => handleInputChange(e, setSenha)}
                             />
                         </div>
+                        <div className={style["container-btn"]}>
+                            <button className={style["button-alterar"]} type="button" 
+                        onClick={handleLogin}>ENTRAR</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
