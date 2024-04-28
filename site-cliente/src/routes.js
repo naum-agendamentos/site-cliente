@@ -5,6 +5,7 @@ import Agendamento from "./pages/agendarHorario/AgendamentoHorario"
 import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados"
 import MeusAgendamentos from "./pages/meus-agendamentos/MeusAgendamentos"
 import FinalizarAgendamento from './pages/finalizarAgendamento/FinalizarAgendamento'
+import ListaServico from "./pages/listaServicos/ListaServico";
 import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
 import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
 
@@ -26,6 +27,7 @@ function Rotas() {
                     <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro/>}/>
                     <Route path="/editar-barbeiro" element={<EditarBarbeiro/>}/>
                     <Route path="/login" element={<Login/>}/>
+                    <Route path="/lista-servico" element={<ListaServico/>}/>
                 </Routes>
             </BrowserRouter>
         </>

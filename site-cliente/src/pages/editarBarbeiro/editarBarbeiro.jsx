@@ -1,6 +1,6 @@
 import api from "../../api";
 import { toast } from "react-toastify";
-import styles from './editarBarbeiro.module.css'
+import styles from './editarBarbeiro.module.css';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import ImgBarra from '../../utils/assets/barra-lateral.svg'
