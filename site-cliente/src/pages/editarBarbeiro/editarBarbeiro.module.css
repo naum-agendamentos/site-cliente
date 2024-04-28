@@ -1,54 +1,47 @@
+/* Importação de fontes */
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-
-
-body {
+.body {
     width: 100vw;
     height: 100vh;
     font-family: Roboto;
-   
- 
 }
 
-* {
+.globalReset {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-.select-disable {
+.selectDisable {
     user-select: none;
 }
 
-
-body::-webkit-scrollbar {
+.scrollbar {
     width: 5px;
 }
 
-body::-webkit-scrollbar-thumb {
+.scrollbarThumb {
     background: #00000055;
 }
 
-body::-webkit-scrollbar-track {
+.scrollbarTrack {
     background: linear-gradient(to bottom, #747483 30%, #b4b5c4 70%);
 }
-
-
 
 .banner {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  text-align: start;
+    text-align: start;
     background-size: cover;
     height: 100vh;
     width: 100%;
-
 }
 
-.validarconta {
+.validarConta {
     margin-top: 4%;
     width: 30vw;
     height: 100vh;
@@ -57,26 +50,21 @@ body::-webkit-scrollbar-track {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-
 }
 
-
-p {
-    width:95%;
+.paragraph {
+    width: 95%;
     font-size: 24px;
     font-weight: 400;
     color: rgb(0, 0, 0);
     font-family: Roboto;
-
     font-style: normal;
-font-weight: 900;
-font-size: 24px;
-line-height: 28px;
-
-
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
 }
-input {
+
+.input {
     text-align: left;
     width: 80%;
     padding: 1rem;
@@ -88,37 +76,32 @@ input {
     border-color: #0f26fc93;
     border-radius: 6px;
 }
-label{
+
+.label {
     width: 95%;
     font-size: 16px;
     font-weight: 400;
-
     font-family: Roboto;
     font-style: normal;
-font-weight: 900;
-line-height: 28px;
-
-color: #5F5F5F;
-margin-bottom: 5px;
-
+    font-weight: 900;
+    line-height: 28px;
+    color: #5F5F5F;
+    margin-bottom: 5px;
 }
 
-.btn-salvar-editar{
-
+.btnSalvarEditar {
     display: flex;
     justify-content: space-between;
     gap: 25px;
 }
 
-
-button {
+.button {
     margin-top: 30px;
-    
     font-weight: 900;
     font-size: 24px;
     width: 162px;
     height: 43px;
-   color: #b4b5c4;
+    color: #b4b5c4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,42 +113,26 @@ button {
     line-height: 56px;
     border: none;
     color: #FFFFFF;
-    background-color:#303030;
+    background-color: #303030;
     border-radius: 15px;
     transition: 1s;
     cursor: pointer;
 }
- .btn-salvar {
-    background-color:#169d00;
+
+.btnSalvar {
+    background-color: #169d00;
     cursor: pointer;
 }
 
-
-
-@keyframes MoveBackgroundPosition {
-    0% {
-        background-position: 0% 50%
-    }
-
-    50% {
-        background-position: 100% 50%
-    }
-
-    100% {
-        background-position: 0% 50%
-    }
-}
-
-button:hover {
-
+.buttonHover:hover {
     border: solid 2px #ffffff93;
     cursor: pointer;
     transition: 1s;
 }
-h1 {
+
+.header1 {
     margin-top: 25%;
-    margin-bottom: 20PX;
-    /* LOGIN */
+    margin-bottom: 20px;
     width: 801px;
     color: #000000;
     height: 56px;
@@ -176,5 +143,4 @@ h1 {
     line-height: 56px;
     text-align: center;
     background-clip: text;
-  
 }
