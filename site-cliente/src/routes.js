@@ -3,8 +3,9 @@ import Home from "./pages/home/Home";
 import MeusDados from "./pages/meusDados/MeusDados";
 import EditarMeusDados from "./pages/editarMeusDados/EditarMeusDados";
 import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
-import EditarBarbeiro from "./pages/editarBarbeiro/EditarBarbeiro";
+import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
 import Login from "./pages/login/Login";
+import CadastroCliente from "./pages/cadastroCliente/CadastroCliente";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -19,7 +20,7 @@ function Rotas() {
                     <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro/>}/>
                     <Route path="/editar-barbeiro" element={<EditarBarbeiro/>}/>
                     <Route path="/login" element={<Login/>}/>
-
+                    <Route path="/cadastro-cliente" element={<CadastroCliente/>}/>
                 </Routes>
             </BrowserRouter>
         </>
