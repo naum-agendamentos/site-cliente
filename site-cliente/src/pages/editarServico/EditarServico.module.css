@@ -54,14 +54,6 @@ body{
     justify-content: center;
     align-items: center;
 }
-.button-alterar{
-    width: 162px;
-    height: 45px;
-    font-size: 24px;
-    border-radius: 6px;
-    background-color: #000000;
-    color: #ffffff;
-}
 .button-cancelar{
     width: 162px;
     height: 45px;
@@ -69,6 +61,18 @@ body{
     border-radius: 6px;
     background-color: #C50000;
     color: #ffffff;
+    border: 1px solid #000000;
+margin-top: -200px;
+}
+.button-alterar{
+    width: 162px;
+    height: 45px;
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: #000000;
+    color: #ffffff;
+    margin-top: -200px;
+
 }
 .button-alterar:hover{
     border: 1px solid #ffffff;
@@ -76,13 +80,7 @@ body{
     transition: 0.3s;
     cursor: pointer;
 }
-.button-cancelar:hover{
-    border: 1px solid #ffffff;
-    scale:1.1;
-    transition: 0.3s;
-    cursor: pointer;
 
-}
 
 
 /* barras laterais */
@@ -100,4 +98,12 @@ body{
     position: absolute;
     right: 0;
     top: 0;
+}
+.tesoura{
+    margin-left: 400px; 
+    margin-top: -105px;
+    width: 250px;
+    height: 250px;
+    background: url(../../utils/assets/tesora-removebg-preview\ 1.png);
+    mix-blend-mode: normal;
 }
