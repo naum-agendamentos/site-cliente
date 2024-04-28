@@ -1,0 +1,181 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+.container-barbers{
+    margin-top: 10vh;
+    margin-bottom: 1vh;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+.subcontainer-barber{
+    width: 40%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.asset-barber{
+    width: 112px;
+    height: 112px;
+    margin: 1vh;
+    border: 1px solid #303030;
+}
+.asset-barber:hover{
+    cursor: pointer;
+    transition: 0.5s;
+    scale: 1.1;
+}
+
+.container-monthday{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+.subcontainer-monthday{
+    width: 50%;
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #000000;
+}
+.monthday{
+    font-weight: 600;
+    font-size: 24px;
+    color: #001BAB;
+}
+.container-days{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subcontainer-days{
+    width: 60%;
+    height: 106px;
+    display: flex;
+    flex-direction: row;
+}
+.container-arrow{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-arrow{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-style: none;
+    background-color: #001BAB;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 40px;
+}
+.btn-arrow:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: 0.5s;
+}
+.container-box-days{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.box-days{
+    width: 74px;
+    height: 58px;
+    border: 1px solid #001BAB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    margin: 1vh;
+    cursor: pointer;
+}
+.dayText{
+    color: #001BAB;
+    font-weight: 600;
+}
+.container-btns{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subcontainer-btns{
+    width: 20%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+}
+.btn-salvar{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #001BAB;
+    width: 126px;
+    height: 43px;
+}
+.btn-salvar:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: 0.5s;
+}
+.btn-cancelar{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #C50000;
+    width: 126px;
+    height: 43px;
+}
+.btn-cancelar:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: 0.5s;
+}
+
+/* barras laterais */
+.barraLeft{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.barraRight{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
