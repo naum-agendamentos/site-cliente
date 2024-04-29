@@ -1,0 +1,61 @@
+
+.barbeiros {
+    top: 2vh;
+    height: 10vh;
+    display: flex;
+    left: 6%;
+}
+
+.section-title {
+    font-family: 'Oswald';
+    font-size: 40px;
+    font-weight: 400;
+    color: black;
+    line-height: 59px;
+    text-align: left;
+    list-style-type: none;
+}
+.content-barbeiros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 10vh;
+}
+
+
+
+.content-barbeiros::after {
+    content: '';
+    height: 2rem;
+    flex-basis: 100%;
+}
+
+.content-barbeiros::before {
+    content: '';
+    height: 1rem;
+    flex-basis: 100%;
+}
+
+.content-barbeiros .botoes {
+    display: none;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .barbeiros {
+        flex-basis: calc(99% - 20px);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .barbeiros {
+        flex-basis: calc(45% - 20px);
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .barbeiros {
+        flex-basis: calc(100% - 20px);
+    }
+}

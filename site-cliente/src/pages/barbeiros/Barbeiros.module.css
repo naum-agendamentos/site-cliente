@@ -1,0 +1,105 @@
+
+.barbeiros {
+    top: 2vh;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 72%;
+}
+
+.section-title {
+    font-family: 'Oswald';
+    font-size: 40px;
+    font-weight: 400;
+    color: black;
+    line-height: 59px;
+    text-align: left;
+    list-style-type: none;
+}
+
+.add-barb {
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    align-items: center; 
+}
+
+
+.add-barb a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: rgba(253, 253, 253, 1);
+    background-color: #000000;
+    width: 52px;
+    height: 51px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-barb a:hover {
+    box-shadow: 5px 4px 15px 0px rgba(24, 24, 24, 0.57);
+    transition: 0.7s;
+}
+
+.content-barbeiros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 10vh;
+    
+}
+
+.content-barbeiros::after {
+    content: '';
+    height: 2rem;
+    flex-basis: 100%;
+}
+
+.content-barbeiros::before {
+    content: '';
+    height: 1rem;
+    flex-basis: 100%;
+}
+.botao:first-child {
+    background-color: #6C757D;
+}
+
+.botao:first-child:hover {
+    background-color: #363c42;
+}
+
+.botao:nth-child(2) {
+    background-color: #b9a26b;
+}
+
+.botao:nth-child(2):hover {
+    background-color: #756744;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .barbeiros {
+        flex-basis: calc(99% - 20px);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .barbeiros {
+        flex-basis: calc(45% - 20px);
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .barbeiros {
+        flex-basis: calc(100% - 20px);
+    }
+}

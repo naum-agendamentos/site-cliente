@@ -1,19 +1,20 @@
 import api from "../../api";
 import { toast } from "react-toastify";
-import styles from './editarBarbeiro.module.css';
-import { useNavigate } from "react-router-dom";
+
+import styles from './editarBarbeiro.module.css'
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import ImgBarra from '../../utils/assets/barra-lateral.svg'
 import NavBar from '../../components/navbar-pos-login/NavBar';
 
 function EditarBarbeiro() {
     const navigate = useNavigate();
-    const { idUser } = { idUser: 1 };
+    const { id } = useParams();
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState(''); 
     const [confirmarSenha, setConfirmarSenha] = useState('');
-    const [telefone, setTelefone] = useState('');
+    const [celular, setCelular] = useState('');
     const [descricao, setDescricao] = useState('');
     const [foto, setFoto] = useState(null);
     
@@ -28,17 +29,17 @@ function EditarBarbeiro() {
         }
 
         try {
-            await api.put(`/${idUser}`, {
+            await api.put(`/${id}`, {
                 nome,
                 email,
                 senha,
                 confirmarSenha,
-                telefone,
+                celular,
                 descricao,
                 foto
             });
             toast.success('Dados editados com sucesso!');
-            navigate("/login");
+            navigate("/barbeiros");
         } catch (error) {
             toast.error('Ocorreu um erro ao salvar os dados. Por favor, tente novamente.');
         }
@@ -51,14 +52,14 @@ function EditarBarbeiro() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/${idUser}`);
+                const response = await api.get(`/${id}`);
                 const { data } = response;
-                const { nome, email, senha, confirmarSenha, telefone, descricao, foto } = data;
+                const { nome, email, senha, confirmarSenha, celular, descricao, foto } = data;
                 setNome(nome);
                 setEmail(email);
                 setSenha(senha);
                 setConfirmarSenha(confirmarSenha);
-                setTelefone(telefone);
+                setCelular(celular);
                 setDescricao(descricao);
                 setFoto(foto);
             } catch (error) {
@@ -67,7 +68,7 @@ function EditarBarbeiro() {
         };
 
         fetchData();
-    }, [idUser]);
+    }, [id]);
 
     return (
         <>
@@ -75,7 +76,7 @@ function EditarBarbeiro() {
                     <img src={ImgBarra} className={styles["barraLeft"]} alt="" srcSet="" />
                     <img src={ImgBarra} className={styles["barraRight"]} alt="" srcSet="" />
                     <NavBar />
-                    <div className={styles["container-title"]}><h1 className={styles["title"]}>CADASTRAR BARBEIRO</h1></div>
+                    <div className={styles["container-title"]}><h1 className={styles["title"]}>EDITAR BARBEIRO</h1></div>
                     <div className={styles["container-form"]}>
                         <div className={styles["container-input"]}>
                         <p>EMAIL</p>
@@ -96,12 +97,12 @@ function EditarBarbeiro() {
                         />
                     </div>
                     <div className={styles["container-input"]}>
-                        <p>TELEFONE</p>
+                        <p>celular</p>
                         <input className={styles["input-form"]}
                             type="text"
                             placeholder="Ex: 11 999999999"
-                            value={telefone}
-                            onChange={(e) => handleInputChange(e, setTelefone)}
+                            value={celular}
+                            onChange={(e) => handleInputChange(e, setCelular)}
                         />
                     </div>
                     <div className="container-input"><div className={styles["container-input"]}>      <p>SENHA</p>

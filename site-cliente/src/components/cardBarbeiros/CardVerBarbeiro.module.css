@@ -1,0 +1,83 @@
+.imagem-container {
+    box-shadow: 15px 4px 15px 0px rgba(63, 63, 63, 0.274);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 267px;
+    height: 324px;
+    border-radius: 10px;
+    background-color: #303030;
+    background: #303030;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    transition: 0.6s !important;
+    overflow: hidden;
+    gap: 2%;
+}
+
+.imagem-container:hover {
+    transform: translate3d(-1vw, -3vh, 0) scale(1.05) !important;
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    box-shadow: 3px 6px 15px 0px rgba(0, 0, 0, 0.39), 13px 24px 27px 0px rgba(0, 0, 0, 0.34), 30px 54px 37px 0px rgba(0, 0, 0, 0.20), 53px 95px 44px 0px rgba(0, 0, 0, 0.06), 82px 149px 48px 0px rgba(0, 0, 0, 0.01) !important;
+    transition: 0.6s !important;
+    cursor: default;
+}
+
+
+
+.parte-imagem {
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.imagem {
+    width: 224px;
+    height: 212px;
+    border-radius: 10px;
+    border: 1px solid #000000;
+}
+
+.texto p {
+    margin-left: 7%;
+    font-family: "Roboto";
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.texto p span {
+    font-size: 24px;
+}
+
+
+@media screen and (max-width: 1700px) {
+    .card-musica {
+        width: 18vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 1450px) {
+    .card-musica {
+        width: 24vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .card-musica {
+        width: 24vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .card-musica {
+        width: 35vw;
+        height: 45vh;
+    }
+}
