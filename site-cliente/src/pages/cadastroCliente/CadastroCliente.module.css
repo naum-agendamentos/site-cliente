@@ -1,4 +1,3 @@
-
 body{
     margin: 0;
     padding: 0;
@@ -48,7 +47,6 @@ body{
     padding-left: 5px;
 }
 .container-btn{
-    gap: 16px;
     margin-top: 3vh;
     display: flex;
     justify-content: center;
@@ -62,21 +60,8 @@ body{
     background-color: #000000;
     color: #ffffff;
 }
-.button-cancelar{
-    width: 162px;
-    height: 45px;
-    font-size: 24px;
-    border-radius: 6px;
-    background-color: #C50000;
-    color: #ffffff;
-}
+
 .button-alterar:hover{
-    border: 1px solid #ffffff;
-    scale:1.1;
-    transition: 0.3s;
-    cursor: pointer;
-}
-.button-cancelar:hover{
     border: 1px solid #ffffff;
     scale:1.1;
     transition: 0.3s;
@@ -100,4 +85,19 @@ body{
     position: absolute;
     right: 0;
     top: 0;
+}
+.h5-txt{
+    margin-left: 300px;
+margin-bottom:24px;
+    font-size: 16px;
+    color: #000000;
+    margin-top: 2vh;
+    font-family: roboto;
+}
+.h4-txt{
+    margin-bottom: 24px;
+    font-family: "Roboto";
+    font-size: 16px;
+    color: #ff0000;
+    margin-top: 2vh;
 }
