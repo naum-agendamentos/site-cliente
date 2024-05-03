@@ -13,7 +13,7 @@ const Barbeiros = () => {
     function recuperarValorDoCard() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros?idBarbearia=1',
+            url: 'http://localhost:8080/barbeiros',
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
