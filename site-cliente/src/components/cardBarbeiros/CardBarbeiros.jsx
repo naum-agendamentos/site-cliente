@@ -4,8 +4,9 @@ import React from "react";
 import styles from "./CardBarbeiros.module.css";
 // Importa uma imagem padrão para ser usada caso nenhuma imagem específica seja fornecida
 import capaImg from "../../utils/assets/logo/logoHeader.png";
-import api from "../../api";
+//import api from "../../api";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 import { useNavigate } from "react-router-dom"; // Importa o hook useNavigate para redirecionamento de rotas
 
@@ -15,11 +16,11 @@ const CardBarbeiros = ({
     foto,
     nome,
     email,
-    celular
+    telefone
 }) => {
     const navigate = useNavigate(); // Inicializa o hook de navegação
 
-    const editar = (id) => {
+    const handleEdit = (id) => {
         navigate(`/editar-barbeiro/${id}`);
     };
 
@@ -27,26 +28,31 @@ const CardBarbeiros = ({
         if (window.confirm("Tem certeza que deseja deletar este barbeiro?")) {
 
 
-            api.delete(`/${id}`)
-                .then((response) => {
-
-                    console.log('Barbeiro deletado!', response.data);
-                    toast.success("Barbeiro deletado!");
+            const options = {
+                method: 'PUT',
+                url: `http://localhost:8080/barbeiros/desativar/${id}`,
+                headers: {
+                  Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+              };
+              
+              axios.request(options).then(function (response) {
+                console.log(response.data);
+                toast.success("Barbeiro deletado!");
 
                     setTimeout(() => {
                         window.location.reload();
                     }, 2000);
-                })
-                .catch((error) => {
-                    console.error('Erro ao deletar Barbeiro', error);
-                    toast.error("Erro ao deletar Barbeiro");
-                });
-
-        }
-    };
-
-
-
+              }).catch(function (error) {
+                console.error(error);
+                toast.error("Erro ao deletar Barbeiro");
+              });
+                
+            }
+        };
+        
+        
+        
     return (
         // Contêiner principal do cartão
         <div>
@@ -63,12 +69,12 @@ const CardBarbeiros = ({
                 <div className={styles["texto"]}>
                     <p><span>{nome || "N/A"}</span></p>
                     <p>Email: {email || "N/A"}</p>
-                    <p>Celular: {celular || "N/A"}</p>
+                    <p>telefone: {telefone || "N/A"}</p>
                 </div>
 
                 <div className={styles["botoes"]}>
                     {/* Botão para editar as informações da música */}
-                    <button onClick={() => editar(id)} className={styles["botao"]}>EDITAR</button>
+                    <button onClick={() => handleEdit(id)} className={styles["botao"]}>EDITAR</button>
                     {/* Botão para excluir a música */}
                     <button onClick={() => handleDelete(id)} className={styles["botao"]}>EXCLUIR</button>
                 </div>

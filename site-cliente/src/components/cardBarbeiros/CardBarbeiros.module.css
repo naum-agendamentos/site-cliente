@@ -28,19 +28,20 @@
     border: 1px solid #000000;
 }
 
-.texto p {
-    margin-left: 6%;
+.imagem-container .texto p {
+    margin-left: 8%;
     font-family: "Roboto";
     font-size: 16px;
     font-weight: 400;
     cursor: pointer;
+    margin-bottom: 0;
 }
 
-.texto p span {
+.imagem-container .texto p span {
     font-size: 24px;
 }
 
-.botoes {
+.imagem-container .botoes {
     padding: 10px;
     display: flex;
     background-color: transparent;
@@ -48,13 +49,13 @@
     gap: 50px;
 }
 
-.botao {
+.imagem-container .botao {
     border: none;
     cursor: pointer;
     background-color: lightgray;
 }
 
-.botoes button {
+.imagem-container .botoes button {
     width: 86px;
     height: 30px;
     border: none;
@@ -68,19 +69,19 @@
     transition: background-color 0.3s ease;
 }
 
-.botao:first-child {
+.imagem-container .botao:first-child {
     background-color: #3E83C8;
 }
 
-.botao:first-child:hover {
+.imagem-container .botao:first-child:hover {
     background-color: #3169a1;
 }
 
-.botao:nth-child(2) {
+.imagem-container .botao:nth-child(2) {
     background-color: #CB3737;
 }
 
-.botao:nth-child(2):hover {
+.imagem-container .botao:nth-child(2):hover {
     background-color: #b12e2e;
 }
 

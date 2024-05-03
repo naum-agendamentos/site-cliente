@@ -1,5 +1,5 @@
 import api from "../../api";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import style from "./login.module.css"
 import { useNavigate } from "react-router-dom";
 import ImgBarra from "../../utils/assets/barra-lateral.svg";
@@ -15,12 +15,28 @@ function Login() {
         setStateFunction(event.target.value);
     }
     const handleLogin = () => {
-        api.post("/login", {
+        api.post("usuarios/login", {
             email,
             senha
         }).then((response) => {
-            sessionStorage.setItem("token", response.data.token);
-            navigate("/home");
+            const { data } = response;
+            const { userId, token, tipo } = data;
+
+            console.log(tipo)
+            console.log(token)
+            sessionStorage.setItem('token', token)
+            sessionStorage.setItem('userId', userId)
+
+            if (tipo === "BARBEIRO") {
+                sessionStorage.setItem("token", response.data.token);
+                navigate("/barbeiros");
+            }
+            else {
+                sessionStorage.setItem("token", response.data.token);
+                navigate("/finalizar-agendamento");
+            }
+            
+            
         }).catch(() => {
             toast.error("Email ou senha inválidos!");
         })

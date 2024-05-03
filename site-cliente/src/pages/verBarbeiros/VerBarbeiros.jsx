@@ -10,7 +10,7 @@ const VerBarbeiros = () => {
     const [cardsData, setCardsData] = useState();
 
     function recuperarValorDoCard() {
-        api.get().then((response) => {
+        api.get("barbeiros").then((response) => {
             const { data } = response;
             console.log(response)
             setCardsData(data)
@@ -83,6 +83,10 @@ const VerBarbeiros = () => {
         recuperarValorDoCard();
     }, []) // O array vazio como segundo argumento significa que o efeito será executado apenas uma vez, após a montagem inicial do componente
 
+
+    const token = sessionStorage.getItem('token');
+
+    console.log(token);
     // Renderiza o componente
     return (
         // Fragmento React para agrupar os elementos retornados
@@ -103,7 +107,7 @@ const VerBarbeiros = () => {
                                     foto={data.foto}
                                     nome={data.nome}
                                     email={data.email}
-                                    celular={data.celular}
+                                    telefone={data.telefone}
                                 />
                             </div>
                         ))}

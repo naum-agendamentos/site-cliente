@@ -3,8 +3,21 @@ import styles from './Footer.module.css';
 
 import logoFooter from '../../utils/assets/logo/LogoVetorizadaFooter.png';
 import setaFooter from '../../utils/assets/arrow-climb-up.png';
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+
+
+    const navigate = useNavigate(); // Inicializa o hook de navegação
+
+    const login = () => { // Função chamada ao clicar em cancelar
+        navigate("/login"); // Redireciona para a página de músicas
+    };
+    const cadastroCliente = () => { // Função chamada ao clicar em cancelar
+        navigate("/cadastro-cliente"); // Redireciona para a página de músicas
+    };
+
+
     return (
         <footer className={styles["footer"]} id="Footer">
             <div className={styles["container-content"]}>
@@ -21,8 +34,8 @@ const Footer = () => {
                     </ul>
                     <ul>
                         <li></li>
-                        <li><a href="#Login">Login</a></li>
-                        <li><a href="#Cadastro">Cadastro</a></li>
+                        <li><a onClick={login} href="#Login">Login</a></li>
+                        <li><a onClick={cadastroCliente} href="#Cadastro">Cadastro</a></li>
                         <li></li>
                         <li></li>
                         <li></li>
@@ -39,7 +52,7 @@ const Footer = () => {
                 </div>
 
 
-                <a href="#subir"> <img className={styles["select-disable"]} src={setaFooter} alt="Seta para subir"/>
+                <a href="#Home"> <img className={styles["select-disable"]} src={setaFooter} alt="Seta para subir"/>
                 </a>
 
             </div>

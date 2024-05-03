@@ -12,7 +12,7 @@ const CardBarbeiros = ({
     foto,
     nome,
     email,
-    celular
+    telefone
 }) => {
     // const navigate = useNavigate(); // Inicializa o hook de navegação
 
@@ -37,7 +37,7 @@ const CardBarbeiros = ({
                 <div className={styles["texto"]}>
                     <p><span>{nome || "N/A"}</span></p>
                     <p>Email: {email || "N/A"}</p>
-                    <p>Celular: {celular || "N/A"}</p>
+                    <p>Celular: {telefone || "N/A"}</p>
                 </div>
             </div>
         </div>

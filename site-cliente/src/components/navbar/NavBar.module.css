@@ -96,13 +96,11 @@ nav a {
     background-color: #3E83C8;
     border-radius: 6px;
     cursor: pointer;
+    transition: 0.3s !important;
 }
 
 .navBottonLogin:hover {
-    background-image: linear-gradient(to right, #3E83C8, #3E83C8 50%, #FC9C01 50%);
-    background-size: 200% 100%;
-    background-position: 100%;
-    transition: 0.7s !important;
+    scale: 1.09;
 }
 
 .navBottonCadast {
@@ -120,13 +118,11 @@ nav a {
     background-color: #54595E;
     border-radius: 6px;
     cursor: pointer;
-    transition: 0.7s !important;
+    transition: 0.3s !important;
 }
 
 .navBottonCadast:hover {
-    background-image: linear-gradient(to right, #54595E, #54595E 50%, #FC9C01 50%);
-    background-size: 200% 100%;
-    background-position: 100%;
+   scale: 1.09;
 }
 
 

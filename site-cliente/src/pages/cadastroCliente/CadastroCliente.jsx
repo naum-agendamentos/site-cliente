@@ -2,15 +2,15 @@ import api from "../../api";
 import { toast } from "react-toastify";
 import styles from './CadastroCliente.module.css';
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ImgBarra from '../../utils/assets/barra-lateral.svg';
-import NavBar from '../../components/navbar-pos-login/NavBar';
+import NavBar from '../../components/navbar/NavBar';
 
 function CadastroCliente() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [nome, setNome] = useState("");
-    const [celular, setCelular] = useState("");
+    const [telefone, setTelefone] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
 
@@ -23,13 +23,13 @@ function CadastroCliente() {
             email,
             nome,
             senha,
-            celular,
+            telefone,
         };
-        api.post(``, {
+        api.post(`clientes`, {
             email,
             nome,
             senha,
-            celular,
+            telefone,
 
         }).then(() => {
             toast.success("Novo Cliente criado com sucesso!");
@@ -43,10 +43,10 @@ function CadastroCliente() {
     const handleInputChange = (event, setStateFunction) => {
         setStateFunction(event.target.value);
     }
-    const handleBack = () => {
-        navigate("/login");
+    // const handleBack = () => {
+    //     navigate("/login");
 
-    }
+    // }
 
 
     return (
@@ -84,8 +84,8 @@ function CadastroCliente() {
                             className={styles["input-form"]}
                             type="text"
                             placeholder="Ex: 11 999999999"
-                            value={celular}
-                            onChange={(e) => handleInputChange(e, setCelular)}
+                            value={telefone}
+                            onChange={(e) => handleInputChange(e, setTelefone)}
                         />
                     </div>
                     <div className={styles["container-input"]}>
