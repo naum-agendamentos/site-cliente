@@ -2,7 +2,6 @@ import api from "../../api";
 import React, { useState } from "react";
 import style from "./login.module.css"
 import { useNavigate } from "react-router-dom";
-import ImgBarra from "../../utils/assets/barra-lateral.svg";
 import NavBar from "../../components/navbar/NavBar";
 import { toast } from "react-toastify";
 
@@ -35,45 +34,48 @@ function Login() {
                 sessionStorage.setItem("token", response.data.token);
                 navigate("/finalizar-agendamento");
             }
-            
-            
+
+
         }).catch(() => {
             toast.error("Email ou senha inválidos!");
         })
     }
     return (
         <>
-            <div className={style["container"]}>
-                <img src={ImgBarra} className={style["barraLeft"]} alt="" srcSet="" />
-                <img src={ImgBarra} className={style["barraRight"]} alt="" srcSet="" />
-                <NavBar />
-                <div className={style["container-title"]}><h1 className={style["title"]}>LOGIN</h1></div>
-                <div className={style["container-form"]}>
-                    <div className={style["container-input"]}>
-                        <p>EMAIL</p>
-                        <input
-                            className={style["input-form"]}
-                            type="text"
-                            placeholder="usuario@gmail.com"
-                            value={email}
-                            onChange={(e) => handleInputChange(e, setEmail)}
-                        />
-                        <div className={style["container-input"]}>
-                            <p>SENHA</p>
-                            <input
-                                className={style["input-form"]}
-                                type="password"
-                                placeholder="***********"
-                                value={senha}
-                                onChange={(e) => handleInputChange(e, setSenha)}
-                            />
-                        </div>
-                        <div className={style["container-btn"]}>
-                            <button className={style["button-alterar"]} type="button" 
-                        onClick={handleLogin}>ENTRAR</button>
-                        </div>
+            <div class="borda-gradiente-left">
+                <div class="borda-gradiente-right">
+                    <div className={style["container"]}>
 
+                        <NavBar />
+                        <div className={style["container-title"]}><h1 className={style["title"]}>LOGIN</h1></div>
+                        <div className={style["container-form"]}>
+                            <div className={style["container-input"]}>
+                                <p>EMAIL</p>
+                                <input
+                                    className={style["input-form"]}
+                                    type="text"
+                                    placeholder="usuario@gmail.com"
+                                    value={email}
+                                    onChange={(e) => handleInputChange(e, setEmail)}
+                                />
+                                <div className={style["container-input"]}>
+                                    <p>SENHA</p>
+                                    <input
+                                        className={style["input-form"]}
+                                        type="password"
+                                        placeholder="***********"
+                                        value={senha}
+                                        onChange={(e) => handleInputChange(e, setSenha)}
+                                    />
+                                </div>
+                                <div className={style["container-btn"]}>
+                                    <button className={style["button-alterar"]} type="button"
+                                        onClick={handleLogin}>ENTRAR</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </>

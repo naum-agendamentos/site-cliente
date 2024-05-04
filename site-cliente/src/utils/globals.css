@@ -9,3 +9,45 @@ body {
     padding: 0;
     font-family: "Oswald", sans-serif;
 }
+
+.borda-gradiente-left {
+    position: relative;
+    overflow: hidden;
+    /* Para ocultar partes do gradiente que ultrapassam as bordas */
+}
+
+.borda-gradiente-left::before,
+.borda-gradiente-left::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5vh;
+    background: linear-gradient(to right, #0007AB 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #C50000 66.66%);
+    /* gradiente com as cores especificadas */
+}
+
+.borda-gradiente-left::before {
+    left: 0;
+}
+
+
+.borda-gradiente-right {
+    position: relative;
+    overflow: hidden;
+}
+
+.borda-gradiente-right::before,
+.borda-gradiente-right::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5vh;
+    background: linear-gradient(to right, #0007AB 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #C50000 66.66%);
+    /* gradiente com as cores especificadas */
+}
+
+.borda-gradiente-right::after {
+    right: 0;
+}

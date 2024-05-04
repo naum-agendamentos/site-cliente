@@ -40,9 +40,9 @@ function CadastroServiço() {
         }
     };
 
-    const handleCancel = () => {
-        navigate('/login');
-    };
+    // const handleCancel = () => {
+    //     navigate('/login');
+    // };
 
     useEffect(() => {
         const fetchData = async () => {

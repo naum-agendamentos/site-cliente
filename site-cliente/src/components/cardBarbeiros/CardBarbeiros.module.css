@@ -24,8 +24,16 @@
 .imagem {
     width: 224px;
     height: 212px;
+    max-width: 224px;
+    max-height: 212px;
     border-radius: 10px;
     border: 1px solid #000000;
+}
+.texto {
+    max-width: 224px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .imagem-container .texto p {

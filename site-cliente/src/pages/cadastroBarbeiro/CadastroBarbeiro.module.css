@@ -4,13 +4,13 @@ body{
 }
 .container{
     width: 100%;
-    height: 100vh;
+    height: 112vh;
     display: flex;
     position: relative;
     flex-direction: column;
 }
 .container-title{
-    margin-top: 10vh;
+    margin-top: 5vh;
     margin-bottom: 5vh;
     width: 100%;
     height: 7vh;

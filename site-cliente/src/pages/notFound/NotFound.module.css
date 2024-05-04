@@ -1,0 +1,28 @@
+.content {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.content h1 {
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    color: #000;
+    text-shadow: 6px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.content h1 span {
+    font-size: 200px;
+    background: linear-gradient(to right, #0007AB 33.33%, #ffffff 33.33%, #000000 66.66%, #C50000 66.66%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+

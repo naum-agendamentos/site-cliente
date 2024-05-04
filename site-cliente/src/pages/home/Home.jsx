@@ -84,7 +84,7 @@ const HomePage = () => {
 
 
             <section className={styles["Servicos"]} id="Servicos">
-                <h1 className={styles["section-title-servicos"]} element-anime="left">TIPOS DE SERVIÇO
+                <h1 className={styles["section-title-servicos"]}>TIPOS DE SERVIÇO
                 </h1>
                 <div className={styles["cards"]}>
                     <div className={styles["servicos-info"]}>

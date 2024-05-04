@@ -1,22 +1,33 @@
 // Importa as dependências necessárias, incluindo React, estilos específicos, componentes e a imagem do logotipo.
-import api from "../../api"; // Importa a instância da API para fazer chamadas HTTP
+//import api from "../../api"; // Importa a instância da API para fazer chamadas HTTP
 import styles from "./VerBarbeiros.module.css"; // Importa o arquivo de estilos CSS para este componente
 import React, { useState, useEffect } from "react"; // Importa React, useState e useEffect de 'react'
 import NavbarBarbeiros from "../../components/navbarBarbeiro/NavbarBarbeiro"; // Importa o componente NavBar
 import CardBarbeiros from "../../components/cardBarbeiros/CardVerBarbeiro"; // Importa o componente CardBarbeiros
 // import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const VerBarbeiros = () => {
     const [cardsData, setCardsData] = useState();
 
     function recuperarValorDoCard() {
-        api.get("barbeiros").then((response) => {
-            const { data } = response;
-            console.log(response)
-            setCardsData(data)
-        }).catch(() => {
-            console.log("Deu erro, tente novamente!") // Caso haja um erro na requisição, exibe uma mensagem no console
-        })
+        const options = {
+            method: 'GET',
+            url: 'http://localhost:8080/barbeiros',
+            headers: {
+              'User-Agent': 'insomnia/8.6.1',
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        };
+        
+        axios.request(options)
+            .then(function (response) {
+                // Atualiza o estado cardsData com os dados recebidos da API
+                setCardsData(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     }
 
     // const navigate = useNavigate(); // Inicializa o hook de navegação
@@ -108,6 +119,7 @@ const VerBarbeiros = () => {
                                     nome={data.nome}
                                     email={data.email}
                                     telefone={data.telefone}
+                                    descricao={data.descricao}
                                 />
                             </div>
                         ))}

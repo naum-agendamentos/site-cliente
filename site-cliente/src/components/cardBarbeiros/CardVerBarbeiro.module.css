@@ -4,7 +4,7 @@
     flex-direction: column;
     text-align: left;
     width: 267px;
-    height: 324px;
+    height: 364px;
     border-radius: 10px;
     background-color: #303030;
     background: #303030;
@@ -28,20 +28,27 @@
 
 
 
-.parte-imagem {
+.imagem-container .parte-imagem {
     margin-top: 2%;
     display: flex;
     justify-content: center;
 }
 
-.imagem {
-    width: 224px;
-    height: 212px;
+.imagem-container .imagem {
+    max-width: 224px;
+    max-height: 212px;
     border-radius: 10px;
     border: 1px solid #000000;
 }
 
-.texto p {
+.imagem-container .texto {
+    max-width: 224px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.imagem-container .texto p {
     margin-left: 8%;
     font-family: "Roboto";
     font-size: 16px;
@@ -50,7 +57,7 @@
     margin-bottom: 0;
 }
 
-.texto p span {
+.imagem-container .texto p span {
     font-size: 24px;
 }
 
