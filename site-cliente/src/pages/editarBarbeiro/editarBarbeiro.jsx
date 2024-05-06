@@ -110,15 +110,7 @@ function EditarBarbeiro() {
                         <NavBar />
                         <div className={styles["container-title"]}><h1 className={styles["title"]}>EDITAR BARBEIRO</h1></div>
                         <div className={styles["container-form"]}>
-                            <div className={styles["container-input"]}>
-                                <p>EMAIL</p>
-                                <input className={styles["input-form"]}
-                                    type="text"
-                                    placeholder="usuario@gmail.com"
-                                    value={email}
-                                    onChange={(e) => handleInputChange(e, setEmail)}
-                                />
-                            </div>
+
                             <div className={styles["container-input"]}>
                                 <p>NOME</p>
                                 <input className={styles["input-form"]}
@@ -129,14 +121,15 @@ function EditarBarbeiro() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                                <p>telefone</p>
+                                <p>EMAIL</p>
                                 <input className={styles["input-form"]}
                                     type="text"
-                                    placeholder="Ex: 11 999999999"
-                                    value={telefone}
-                                    onChange={(e) => handleInputChange(e, setTelefone)}
+                                    placeholder="usuario@gmail.com"
+                                    value={email}
+                                    onChange={(e) => handleInputChange(e, setEmail)}
                                 />
                             </div>
+
                             <div className="container-input"><div className={styles["container-input"]}>      <p>SENHA</p>
                                 <input className={styles["input-form"]}
                                     type="password"
@@ -152,6 +145,15 @@ function EditarBarbeiro() {
                                         placeholder="***********"
                                         value={confirmarSenha}
                                         onChange={(e) => handleInputChange(e, setConfirmarSenha)}
+                                    />
+                                </div>
+                                <div className={styles["container-input"]}>
+                                    <p>telefone</p>
+                                    <input className={styles["input-form"]}
+                                        type="text"
+                                        placeholder="Ex: 11 999999999"
+                                        value={telefone}
+                                        onChange={(e) => handleInputChange(e, setTelefone)}
                                     />
                                 </div>
                                 <div className={styles["container-input"]}>

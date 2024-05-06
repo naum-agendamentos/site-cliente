@@ -2,7 +2,7 @@
 import styles from "./CadastroBarbeiro.module.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from '../../components/navbar-pos-login/NavBar';
+import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
 import { toast } from "react-toastify";
 function CadastroBarbeiro() {

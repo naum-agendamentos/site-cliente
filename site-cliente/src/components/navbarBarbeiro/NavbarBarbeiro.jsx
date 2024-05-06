@@ -10,6 +10,10 @@ const NavbarBarbeiros = () => {
         navigate(`/barbeiros`);
     };
 
+    const verBarbeiroAgend = () => {
+        navigate(`/ver-barbeiros`);
+    };
+
     const sair = () => {
         navigate(`/login`);
         sessionStorage.clear();
@@ -19,7 +23,7 @@ const NavbarBarbeiros = () => {
             <img src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
             <ul className={styles["navbar"]}>
                 <li onClick={barbeiro} className={styles["option"]}>Barbeiros</li>
-                <li className={styles["option"]}>Agendamentos</li>
+                <li onClick={verBarbeiroAgend} className={styles["option"]}>Agendamentos</li>
                 <li className={styles["option"]}>Dashboard</li>
                 <li className={styles["option"]}>Serviços</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>

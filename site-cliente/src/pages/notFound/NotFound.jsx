@@ -1,6 +1,7 @@
 import React from "react"; // Importa React, necessário para usar JSX e componentes
 import styles from "./NotFound.module.css"; // Importa o arquivo CSS para estilização do componente
 import NavBar from "../../components/navbar/NavBar"; // Importa o componente NavBar
+import foto404 from "../../utils/assets/404.png";
 
 // Define o componente funcional NotFound
 const NotFound = () => {
@@ -12,10 +13,8 @@ const NotFound = () => {
                     <NavBar /> {/* Inclui a NavBar no topo da página, passando o logo como propriedade */}
                     <div className={styles["content"]}> {/* Define um contêiner com classe para estilização específica */}
                         <h1>Página não encontrada
-                            <br />
-                        <span>404</span>    
                         </h1> {/* Título exibido para o usuário indicando que a página não foi encontrada */}
-
+                        <img src={foto404} alt="pagina não encontrada 404" className={styles["imgNotFound"]} />
                     </div>
                 </div>
             </div>
