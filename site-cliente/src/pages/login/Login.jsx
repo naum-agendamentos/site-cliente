@@ -9,6 +9,7 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    
 
     const handleInputChange = (event, setStateFunction) => {
         setStateFunction(event.target.value);
@@ -28,10 +29,12 @@ function Login() {
 
             if (tipo === "BARBEIRO") {
                 sessionStorage.setItem("token", response.data.token);
+                toast.success("Login realizado com sucesso!")
                 navigate("/barbeiros");
             }
             else {
                 sessionStorage.setItem("token", response.data.token);
+                toast.success("Login realizado com sucesso!")
                 navigate("/finalizar-agendamento");
             }
 
