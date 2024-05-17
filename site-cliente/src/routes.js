@@ -8,15 +8,14 @@ import FinalizarAgendamento from './pages/finalizarAgendamento/FinalizarAgendame
 import ListaServico from "./pages/listaServicos/ListaServico";
 import CadastroBarbeiro from "./pages/cadastroBarbeiro/CadastroBarbeiro";
 import EditarBarbeiro from "./pages/editarBarbeiro/editarBarbeiro";
-
 import VisualizarBarbeiros from "./pages/barbeiros/Barbeiros";
 import VerBarbeiros from "./pages/verBarbeiros/VerBarbeiros";
 import NotFound from "./pages/notFound/NotFound";
-
 import Login from "./pages/login/Login";
 import CadastroCliente from "./pages/cadastroCliente/CadastroCliente";
 import CadastroServiço from "./pages/cadastrarServico/CadastroServico";
 import EditarServico from "./pages/editarServico/EditarServico";
+import Dashboard from "./pages/dashboard/dashboard";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -34,13 +33,13 @@ function Rotas() {
                     <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro/>}/>
                     <Route path="/editar-barbeiro/:id" element={<EditarBarbeiro/>}/>
                     <Route path="/login" element={<Login/>}/>
-
                     <Route path="/barbeiros" element={<VisualizarBarbeiros/>}/>
                     <Route path="/ver-barbeiros" element={<VerBarbeiros/>}/>
                     <Route path="/cadastro-cliente" element={<CadastroCliente/>}/>
                     <Route path="/cadastro-servico" element={<CadastroServiço/>}/> 
                     <Route path="/editar-servico" element={<EditarServico/>}/>
                     <Route path="/lista-servico" element={<ListaServico/>}/>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/*" element={<NotFound/>}/>
 
                 </Routes>
