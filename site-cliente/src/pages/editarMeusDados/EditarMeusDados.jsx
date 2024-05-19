@@ -1,120 +1,281 @@
-import api from '../../api';
+//import api from '../../api';
 import { toast } from 'react-toastify';
 import style from './EditarMeuDados.module.css';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import NavBar from '../../components/navbar-pos-login/NavBar';
-import ImgBarra from '../../utils/assets/barra-lateral.svg';
+//import ImgBarra from '../../utils/assets/barra-lateral.svg';
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const EditarMeusDados = () => {
     const navigate = useNavigate();
-    const { idUser } = { idUser: 1 };
+    //const { idUser } = { idUser: 1 };
+    const { id } = useParams();
     const [email, setEmail] = useState('');
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
 
+    const [erroEmail, setErroEmail] = useState("");
+    const [inputValidEmail, setInputValidEmail] = useState("input-form");
+
+    const [erroNome, setErroNome] = useState("");
+    const [inputValidNome, setInputValidNome] = useState("input-form");
+
+    const [erroTelefone, setErroTelefone] = useState("");
+    const [inputValidTelefone, setInputValidTelefone] = useState("input-form");
+
+    const [erroSenha, seterroSenha] = useState("");
+    const [inputValidSenha, setInputValidSenha] = useState("input-form");
+
+    const [erroConfSenha, seterroConfSenha] = useState("");
+    const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
+
     const handleInputChange = (event, setStateFunction) => {
-        setStateFunction(event.target.value);
+        const value = event.target.value;
+        setStateFunction(value);
+    }
+
+    const handleEmailBlur = (event) => {
+        const value = event.target.value;
+        const regexEmail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        if (!value.match(regexEmail)) {
+            setErroEmail("Insira um email válido");
+            setInputValidEmail("input-error");
+        } else {
+            setErroEmail("");
+            setInputValidEmail("input-form");
+        }
+    }
+
+    const handleNomeBlur = (event) => {
+        const value = event.target.value;
+
+        if (value === "") {
+            setErroNome("Nome não pode estar vazio");
+            setInputValidNome("input-error");
+        } else {
+            setErroNome("");
+            setInputValidNome("input-form");
+        }
+    }
+
+    const handleTelefoneBlur = (event) => {
+        const value = event.target.value;
+        const regexTel = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
+
+        if (!value.match(regexTel) || value.length !== 11) {
+            setErroTelefone("Insira um telefone válido");
+            setInputValidTelefone("input-error");
+        } else {
+            setErroTelefone("");
+            setInputValidTelefone("input-form");
+        }
+    }
+
+    const handleSenhaBlur = (event) => {
+        const value = event.target.value;
+
+        if (value.length < 6) {
+            seterroSenha("A senha deve conter no mínimo 6 dígitos");
+            setInputValidSenha("input-error");
+        } else {
+            seterroSenha("");
+            setInputValidSenha("input-form");
+        }
+    }
+
+    const handleConfSenhaBlur = (event) => {
+        const value = event.target.value;
+
+        if (value !== senha) {
+            seterroConfSenha("As senhas não coincidem");
+            setInputValidConfSenha("input-error");
+        } else {
+            seterroConfSenha("");
+            setInputValidConfSenha("input-form");
+        }
+    }
+
+
+    const validateFields = () => {
+        handleNomeBlur({ target: { value: nome } });
+        handleEmailBlur({ target: { value: email } });
+        handleSenhaBlur({ target: { value: senha } });
+        handleConfSenhaBlur({ target: { value: confirmarSenha } });
+        handleTelefoneBlur({ target: { value: telefone } });
+
+        return !(
+            erroNome || erroEmail || erroSenha || erroConfSenha || erroTelefone
+        );
     };
+
     const handleSave = async () => {
-        if (senha !== confirmarSenha) {
-            toast.error('As senhas não coincidem. Por favor, verifique.');
-            return;
-        }
-        try {
-            await api.put(`/${idUser}`, {
-                email,
-                nome,
-                telefone,
-                senha,
-                confirmarSenha
+
+        if (validateFields() && nome && email && senha && confirmarSenha && telefone) {
+            const options = {
+                method: 'PUT',
+                url: `http://localhost:8080/clientes/${id}`,
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                },
+                data: {
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    telefone: telefone
+                }
+            };
+
+            axios.request(options).then(function (response) {
+                console.log(response.data);
+                toast.success('Dados editados com sucesso!');
+                sessionStorage.setItem("editado", JSON.stringify(response.data));
+                navigate(`/meus-dados/${id}`)
+            }).catch(function (error) {
+                console.error(error);
+                toast.error('Ocorreu um erro ao salvar os dados. Por favor, tente novamente.');
             });
-            toast.success('Dados editados com sucesso!');
-            navigate("/login");
-        } catch (error) {
-            toast.error('Ocorreu um erro ao salvar os dados. Por favor, tente novamente.');
+        } else {
+            toast.error("Preencha todos os campos corretamente.");
         }
     };
-  
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get(`/${idUser}`);
-                const { data } = response;
-                const { email, nome, telefone, senha, confirmarSenha } = data;
-                setEmail(email);
-                setNome(nome);
-                setTelefone(telefone);
-                setSenha(senha);
-                setConfirmarSenha(confirmarSenha);
-            } catch (error) {
-                toast.error('Ocorreu um erro ao buscar os dados. Por favor, tente novamente.');
+        const options = {
+            method: 'GET',
+            url: `http://localhost:8080/clientes/${id}`,
+            headers: {
+                'User-Agent': 'insomnia/8.6.1',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
-        fetchData();
-    }, [idUser]);
+
+        axios.request(options)
+            .then(async function () {
+
+                const fetchData = async () => {
+                    try {
+                        const response = await axios.request({
+                            method: 'GET',
+                            url: `http://localhost:8080/clientes/${id}`,
+                            headers: options.headers
+                        });
+                        const { data } = response;
+                        const { nome, email, telefone } = data;
+                        setNome(nome);
+                        setEmail(email);
+                        setTelefone(telefone);
+                    } catch (error) {
+                        console.log("Erro ao buscar os detalhes do Cliente: ", error);
+                    }
+                };
+
+                fetchData();
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }, [id]);
+
+    const handleCancel = () => {
+        navigate(`/meus-dados/${id}`)
+    };
 
     return (
         // Fragmento React para agrupar múltiplos elementos sem adicionar um nó extra ao DOM
         <>
-            <div className={style["container"]}>
-            <img src={ImgBarra} className={style["barraLeft"]} alt="" srcset="" />
-            <img src={ImgBarra} className={style["barraRight"]} alt="" srcset="" />
-            <NavBar />
-            <div className={style["container-title"]}><h1 className={style["title"]}>EDITAR DADOS</h1></div>
-                <div className={style["container-form"]}>
-                    <div className={style["container-input"]}>
-                        <p>EMAIL</p>
-                        <input className={style["input-form"]} 
-                        type="text" 
-                        placeholder="EX: usuario@gmail.com"
-                        value={email}
-                        onChange={(e) => handleInputChange(e, setEmail)}
-                        />
-                    </div>
-                    <div className={style["container-input"]}>
-                        <p>NOME</p>
-                        <input className={style["input-form"]} 
-                        type="text" 
-                        placeholder="EX: usuario"
-                        value={nome}
-                        onChange={(e) => handleInputChange(e, setNome)}
-                        />
-                    </div>
-                    <div className={style["container-input"]}>
-                        <p>TELEFONE</p>
-                        <input className={style["input-form"]}
-                         type="text"
-                        placeholder="EX: 11 999999999"
-                        value={telefone}
-                        onChange={(e) => handleInputChange(e, setTelefone)}
-                        />
-                    </div>
-                    <div className={style["container-input"]}>
-                        <p>SENHA</p>
-                        <input className={style["input-form"]}
-                         type="password"
-                          placeholder="*********"
-                            value={senha}
-                            onChange={(e) => handleInputChange(e, setSenha)}
-                          />
-                    </div>
-                    <div className={style["container-input"]}>
-                        <p>CONFIRMAR SENHA</p>
-                        <input className={style["input-form"]} 
-                        type="password" 
-                        placeholder="*********"
-                        value={confirmarSenha}
-                        onChange={(e) => handleInputChange(e, setConfirmarSenha)}
-                        />
-                    </div>
-                    <div className={style["container-btn"]}>
-                       <button className={style["button-alterar"]} type="button"
-                        onClick={handleSave}>
-                            SALVAR
-                            </button>
+            <div className="borda-gradiente-left">
+                <div className="borda-gradiente-right">
+                    <div className={style["container"]}>
+                        <NavBar />
+                        <div className={style["container-title"]}><h1 className={style["title"]}>EDITAR DADOS</h1></div>
+                        <div className={style["container-form"]}>
+                            <div className={style["container-input"]}>
+                                <div className={style["info-up-inputs"]}>
+                                    <p>EMAIL</p>
+                                    {erroEmail && <span>{erroEmail}</span>}
+                                </div>
+                                <input
+                                    className={style[inputValidEmail]}
+                                    type="text"
+                                    placeholder="usuario@gmail.com"
+                                    value={email}
+                                    onBlur={handleEmailBlur}
+                                    onChange={(e) => handleInputChange(e, setEmail)}
+                                />
+                            </div>
+                            <div className={style["container-input"]}>
+                                <div className={style["info-up-inputs"]}>
+                                    <p>NOME</p>
+                                    {erroNome && <span>{erroNome}</span>}
+                                </div>
+                                <input
+                                    className={style[inputValidNome]}
+                                    type="text"
+                                    placeholder="Ex: usuario"
+                                    value={nome}
+                                    onBlur={handleNomeBlur}
+                                    onChange={(e) => handleInputChange(e, setNome)}
+                                />
+                            </div>
+                            <div className={style["container-input"]}>
+                                <div className={style["info-up-inputs"]}>
+                                    <p>TELEFONE</p>
+                                    {erroTelefone && <span>{erroTelefone}</span>}
+                                </div>
+                                <input
+                                    className={style[inputValidTelefone]}
+                                    type="text"
+                                    placeholder="Ex: 11 999999999"
+                                    maxLength={11}
+                                    value={telefone}
+                                    onBlur={handleTelefoneBlur}
+                                    onChange={(e) => handleInputChange(e, setTelefone)}
+                                />
+                            </div>
+                            <div className={style["container-input"]}>
+                                <div className={style["info-up-inputs"]}>
+                                    <p>SENHA</p>
+                                    {erroSenha && <span>{erroSenha}</span>}
+                                </div>
+                                <input
+                                    className={style[inputValidSenha]}
+                                    type="password"
+                                    placeholder="***********"
+                                    value={senha}
+                                    onBlur={handleSenhaBlur}
+                                    onChange={(e) => handleInputChange(e, setSenha)}
+                                />
+                            </div>
+                            <div className={style["container-input"]}>
+                                <div className={style["info-up-inputs"]}>
+                                    <p>CONFIRMAR SENHA</p>
+                                    {erroConfSenha && <span>{erroConfSenha}</span>}
+                                </div>
+                                <input
+                                    className={style[inputValidConfSenha]}
+                                    type="password"
+                                    placeholder="***********"
+                                    value={confirmarSenha}
+                                    onBlur={handleConfSenhaBlur}
+                                    onChange={(e) => handleInputChange(e, setConfirmarSenha)}
+                                />
+                            </div>
+                            <div className={style["container-btn"]}>
+                                <button className={style["button-alterar"]} type="button"
+                                    onClick={handleSave}>
+                                    EDITAR
+                                </button>
+                                <button className={style["button-cancelar"]} type="button"
+                                    onClick={handleCancel}>
+                                    CANCELAR
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

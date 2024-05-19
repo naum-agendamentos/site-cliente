@@ -13,11 +13,17 @@ const NavbarBarbeiros = () => {
     const verBarbeiroAgend = () => {
         navigate(`/ver-barbeiros`);
     };
+    
+    const servicos = () => {
+        navigate(`/lista-servico`);
+    };
 
     const sair = () => {
         navigate(`/login`);
         sessionStorage.clear();
     };
+
+    
     return (
         <div className={styles["container-navbar"]} id='nav'>
             <img src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
@@ -25,7 +31,7 @@ const NavbarBarbeiros = () => {
                 <li onClick={barbeiro} className={styles["option"]}>Barbeiros</li>
                 <li onClick={verBarbeiroAgend} className={styles["option"]}>Agendamentos</li>
                 <li className={styles["option"]}>Dashboard</li>
-                <li className={styles["option"]}>Serviços</li>
+                <li onClick={servicos} className={styles["option"]}>Serviços</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>
 

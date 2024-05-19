@@ -39,6 +39,25 @@ body{
 .container-input p{
     font-weight: 800;
 }
+
+.info-up-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-up-inputs span {
+    font-size: 18px;
+    color: red;
+}
+
+.input-error {
+    width: 100%;
+    height: 38px;
+    border: 2px solid red;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+
 .input-form{
     width: 100%;
     height: 38px;
@@ -49,8 +68,11 @@ body{
 .container-btn{
     margin-top: 3vh;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 16px;
+    
 }
 .button-alterar{
     width: 162px;
@@ -67,6 +89,23 @@ body{
     transition: 0.3s;
     cursor: pointer;
 
+}
+
+.button-cancelar{
+    width: 162px;
+    height: 45px;
+    font-size: 24px;
+    border-radius: 6px;
+    background-color: #C50000;
+    border: none;
+    color: #ffffff;
+}
+
+.button-cancelar:hover{
+    border: 1px solid #ffffff;
+    scale:1.1;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
 

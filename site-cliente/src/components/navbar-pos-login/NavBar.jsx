@@ -1,17 +1,37 @@
 import React from 'react';
 import styles from './NavBar.module.css';
 import logoTmNav from '../../utils/assets/logo/LogoVetorizada-grande.png';
+import { useNavigate } from "react-router-dom";
 const NavBar = () => {
+
+    const navigate = useNavigate();
+
+    const meusDados = () => {
+        navigate(`/meus-dados/${sessionStorage.getItem("userId")}`);
+    };
+
+    const servicos = () => {
+        navigate(`/agendanento-horario`);
+    };
+
+    const meusAgendamento = () => {
+        navigate(`/meus-agendamentos`);
+    };
+    
+    const sair = () => {
+        navigate(`/login`);
+        sessionStorage.clear();
+    };
+
     return (
         <div className={styles["container-navbar"]} id='nav'>
             <img src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
             <ul className={styles["navbar"]}>
-                <li className={styles["option"]}>Agendamentos</li>
-                <li className={styles["option"]}>Meus Agendamentos</li>
-                <li className={styles["option"]}>Mural</li>
-                <li className={styles["option"]}>Meus Dados</li>
+                <li onClick={servicos} className={styles["option"]}>Serviços</li>
+                <li onClick={meusAgendamento} className={styles["option"]}>Meus Agendamentos</li>
+                <li onClick={meusDados} className={styles["option"]}>Meus Dados</li>
                 <li className={styles["option"]}>Avaliar</li>
-                <li className={styles["option"]}>Sair</li>
+                <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>
 
         </div>

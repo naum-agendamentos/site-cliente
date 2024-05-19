@@ -13,19 +13,30 @@ function CadastroCliente() {
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
 
+    const [erroEmail, setErroEmail] = useState("");
+    const [inputValidEmail, setInputValidEmail] = useState("input-form");
+
+    const [erroNome, setErroNome] = useState("");
+    const [inputValidNome, setInputValidNome] = useState("input-form");
+
+    const [erroTelefone, setErroTelefone] = useState("");
+    const [inputValidTelefone, setInputValidTelefone] = useState("input-form");
+
+    const [erroSenha, seterroSenha] = useState("");
+    const [inputValidSenha, setInputValidSenha] = useState("input-form");
+
+    const [erroConfSenha, seterroConfSenha] = useState("");
+    const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
+
     const handleInputChange = (event, setStateFunction) => {
         const value = event.target.value;
         setStateFunction(value);
     }
 
-    const [erroEmail, setErroEmail] = useState("");
-    const [inputValidEmail, setInputValidEmail] = useState("input-form");
-
     const handleEmailBlur = (event) => {
         const value = event.target.value;
         const regexEmail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    
-        // Verifica se o valor do email corresponde ao padrão de email
+
         if (!value.match(regexEmail)) {
             setErroEmail("Insira um email válido");
             setInputValidEmail("input-error");
@@ -35,14 +46,10 @@ function CadastroCliente() {
         }
     }
 
-    const [erroNome, setErroNome] = useState("");
-    const [inputValidNome, setInputValidNome] = useState("input-form");
-
     const handleNomeBlur = (event) => {
         const value = event.target.value;
-    
-        // Verifica se o valor do email corresponde ao padrão de email
-        if (value === "" ) {
+
+        if (value === "") {
             setErroNome("Nome não pode estar vazio");
             setInputValidNome("input-error");
         } else {
@@ -51,14 +58,10 @@ function CadastroCliente() {
         }
     }
 
-    const [erroTelefone, setErroTelefone] = useState("");
-    const [inputValidTelefone, setInputValidTelefone] = useState("input-form");
-
     const handleTelefoneBlur = (event) => {
         const value = event.target.value;
-        const regexTel = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/;
-    
-        // Verifica se o valor do email corresponde ao padrão de email
+        const regexTel = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
+
         if (!value.match(regexTel) || value.length !== 11) {
             setErroTelefone("Insira um telefone válido");
             setInputValidTelefone("input-error");
@@ -68,16 +71,11 @@ function CadastroCliente() {
         }
     }
 
-
-    const [erroSenha, seterroSenha] = useState("");
-    const [inputValidSenha, setInputValidSenha] = useState("input-form");
-
     const handleSenhaBlur = (event) => {
         const value = event.target.value;
-    
-        // Verifica se o valor do email corresponde ao padrão de email
-        if (value.length < 6 ) {
-            seterroSenha("A senha deve conter no minimo 6 digitos");
+
+        if (value.length < 6) {
+            seterroSenha("A senha deve conter no mínimo 6 dígitos");
             setInputValidSenha("input-error");
         } else {
             seterroSenha("");
@@ -85,14 +83,10 @@ function CadastroCliente() {
         }
     }
 
-    const [erroConfSenha, seterroConfSenha] = useState("");
-    const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
-
     const handleConfSenhaBlur = (event) => {
         const value = event.target.value;
-    
-        // Verifica se o valor do email corresponde ao padrão de email
-        if (value !== senha ) {
+
+        if (value !== senha) {
             seterroConfSenha("As senhas não coincidem");
             setInputValidConfSenha("input-error");
         } else {
@@ -101,38 +95,39 @@ function CadastroCliente() {
         }
     }
 
-    
-
     const handleSave = () => {
-        const objetoCadastrado = {
-            email,
-            nome,
-            senha,
-            telefone,
-        };
-        api.post(`clientes`, {
-            email,
-            nome,
-            senha,
-            telefone,
+        handleEmailBlur({ target: { value: email } });
+        handleNomeBlur({ target: { value: nome } });
+        handleTelefoneBlur({ target: { value: telefone } });
+        handleSenhaBlur({ target: { value: senha } });
+        handleConfSenhaBlur({ target: { value: confirmarSenha } });
 
-        }).then(() => {
-            toast.success("Novo Cliente criado com sucesso!");
-            sessionStorage.setItem("editado",
-                JSON.stringify(objetoCadastrado));
-            navigate("/login")
-        }).catch(() => {
-            toast.error("Ocorreu um erro ao salvar os dados,por favor, tente novamente.");
-        })
+        const todosCamposVazios = !email && !nome && !telefone && !senha && !confirmarSenha;
+
+        if (erroEmail || erroNome || erroTelefone || erroSenha || erroConfSenha || todosCamposVazios) {
+            toast.error("Preencha todos os campos corretamente.");
+        } else {
+            const objetoCadastrado = {
+                email,
+                nome,
+                senha,
+                telefone,
+            };
+            api.post(`clientes`, {
+                email,
+                nome,
+                senha,
+                telefone,
+            }).then(() => {
+                toast.success("Novo Cliente criado com sucesso!");
+                sessionStorage.setItem("editado",
+                    JSON.stringify(objetoCadastrado));
+                navigate("/login")
+            }).catch(() => {
+                toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            })
+        }
     };
-    // const handleInputChange = (event, setStateFunction) => {
-    //     setStateFunction(event.target.value);
-    // }
-    // const handleBack = () => {
-    //     navigate("/login");
-
-    // }
-
 
     return (
         <>
@@ -145,8 +140,8 @@ function CadastroCliente() {
                         <div className={styles["container-form"]}>
                             <div className={styles["container-input"]}>
                                 <div className={styles["info-up-inputs"]}>
-                                <p>EMAIL</p>
-                                {erroEmail && <span>{erroEmail}</span>}
+                                    <p>EMAIL</p>
+                                    {erroEmail && <span>{erroEmail}</span>}
                                 </div>
                                 <input
                                     className={styles[inputValidEmail]}
@@ -158,9 +153,9 @@ function CadastroCliente() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
-                                <p>NOME</p>
-                                {erroNome && <span>{erroNome}</span>}
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>NOME</p>
+                                    {erroNome && <span>{erroNome}</span>}
                                 </div>
                                 <input
                                     className={styles[inputValidNome]}
@@ -172,9 +167,9 @@ function CadastroCliente() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
-                                <p>TELEFONE</p>
-                                {erroTelefone && <span>{erroTelefone}</span>}
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>TELEFONE</p>
+                                    {erroTelefone && <span>{erroTelefone}</span>}
                                 </div>
                                 <input
                                     className={styles[inputValidTelefone]}
@@ -187,9 +182,9 @@ function CadastroCliente() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
-                                <p>SENHA</p>
-                                {erroSenha && <span>{erroSenha}</span>}
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>SENHA</p>
+                                    {erroSenha && <span>{erroSenha}</span>}
                                 </div>
                                 <input
                                     className={styles[inputValidSenha]}
@@ -201,9 +196,9 @@ function CadastroCliente() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
-                                <p>CONFIRMAR SENHA</p>
-                                {erroConfSenha && <span>{erroConfSenha}</span>}
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>CONFIRMAR SENHA</p>
+                                    {erroConfSenha && <span>{erroConfSenha}</span>}
                                 </div>
                                 <input
                                     className={styles[inputValidConfSenha]}
