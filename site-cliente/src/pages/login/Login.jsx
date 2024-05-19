@@ -10,10 +10,32 @@ function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
+    const [inputValidEmail, setInputValidEmail] = useState("input-form");
+
+    const [inputValidSenha, setInputValidSenha] = useState("input-form");
+    
+
     const handleInputChange = (event, setStateFunction) => {
         setStateFunction(event.target.value);
     }
     const handleLogin = () => {
+
+        if (email === "" || senha === "") {
+            toast.error("Preencha todos os campos");
+            if (email === "") {
+                setInputValidEmail("input-error");
+            } else {
+                setInputValidEmail("input-form");
+            }
+            if (senha === "") {
+                setInputValidSenha("input-error");
+            } else {
+                setInputValidSenha("input-form");
+            }
+        } else {
+            setInputValidEmail("input-form");
+            setInputValidSenha("input-form");
+
         api.post("usuarios/login", {
             email,
             senha
@@ -28,17 +50,20 @@ function Login() {
 
             if (tipo === "BARBEIRO") {
                 sessionStorage.setItem("token", response.data.token);
+                toast.success("Login realizado com sucesso!")
                 navigate("/barbeiros");
             }
             else {
                 sessionStorage.setItem("token", response.data.token);
-                navigate("/finalizar-agendamento");
+                toast.success("Login realizado com sucesso!")
+                navigate(`/meus-dados/${sessionStorage.getItem("userId")}`);
             }
 
 
         }).catch(() => {
-            toast.error("Email ou senha inválidos!");
+            toast.error("Email ou senha inválidos");
         })
+    }
     }
     return (
         <>
@@ -52,7 +77,7 @@ function Login() {
                             <div className={style["container-input"]}>
                                 <p>EMAIL</p>
                                 <input
-                                    className={style["input-form"]}
+                                    className={style[inputValidEmail]}
                                     type="text"
                                     placeholder="usuario@gmail.com"
                                     value={email}
@@ -61,7 +86,7 @@ function Login() {
                                 <div className={style["container-input"]}>
                                     <p>SENHA</p>
                                     <input
-                                        className={style["input-form"]}
+                                        className={style[inputValidSenha]}
                                         type="password"
                                         placeholder="***********"
                                         value={senha}

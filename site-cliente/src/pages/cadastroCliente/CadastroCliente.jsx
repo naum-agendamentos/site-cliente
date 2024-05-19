@@ -13,40 +13,121 @@ function CadastroCliente() {
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
 
-    const handleSave = () => {
-        if (senha !== confirmarSenha) {
-            toast.error("As senhas não coincidem!");
-            return;
-        }
-        const objetoCadastrado = {
-            email,
-            nome,
-            senha,
-            telefone,
-        };
-        api.post(`clientes`, {
-            email,
-            nome,
-            senha,
-            telefone,
+    const [erroEmail, setErroEmail] = useState("");
+    const [inputValidEmail, setInputValidEmail] = useState("input-form");
 
-        }).then(() => {
-            toast.success("Novo Cliente criado com sucesso!");
-            sessionStorage.setItem("editado",
-                JSON.stringify(objetoCadastrado));
-            navigate("/login")
-        }).catch(() => {
-            toast.error("Ocorreu um erro ao salvar os dados,por favor, tente novamente.");
-        })
-    };
+    const [erroNome, setErroNome] = useState("");
+    const [inputValidNome, setInputValidNome] = useState("input-form");
+
+    const [erroTelefone, setErroTelefone] = useState("");
+    const [inputValidTelefone, setInputValidTelefone] = useState("input-form");
+
+    const [erroSenha, seterroSenha] = useState("");
+    const [inputValidSenha, setInputValidSenha] = useState("input-form");
+
+    const [erroConfSenha, seterroConfSenha] = useState("");
+    const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
+
     const handleInputChange = (event, setStateFunction) => {
-        setStateFunction(event.target.value);
+        const value = event.target.value;
+        setStateFunction(value);
     }
-    // const handleBack = () => {
-    //     navigate("/login");
 
-    // }
+    const handleEmailBlur = (event) => {
+        const value = event.target.value;
+        const regexEmail = /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+        if (!value.match(regexEmail)) {
+            setErroEmail("Insira um email válido");
+            setInputValidEmail("input-error");
+        } else {
+            setErroEmail("");
+            setInputValidEmail("input-form");
+        }
+    }
+
+    const handleNomeBlur = (event) => {
+        const value = event.target.value;
+
+        if (value === "") {
+            setErroNome("Nome não pode estar vazio");
+            setInputValidNome("input-error");
+        } else {
+            setErroNome("");
+            setInputValidNome("input-form");
+        }
+    }
+
+    const handleTelefoneBlur = (event) => {
+        const value = event.target.value;
+        const regexTel = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
+
+        if (!value.match(regexTel) || value.length !== 11) {
+            setErroTelefone("Insira um telefone válido");
+            setInputValidTelefone("input-error");
+        } else {
+            setErroTelefone("");
+            setInputValidTelefone("input-form");
+        }
+    }
+
+    const handleSenhaBlur = (event) => {
+        const value = event.target.value;
+
+        if (value.length < 6) {
+            seterroSenha("A senha deve conter no mínimo 6 dígitos");
+            setInputValidSenha("input-error");
+        } else {
+            seterroSenha("");
+            setInputValidSenha("input-form");
+        }
+    }
+
+    const handleConfSenhaBlur = (event) => {
+        const value = event.target.value;
+
+        if (value !== senha) {
+            seterroConfSenha("As senhas não coincidem");
+            setInputValidConfSenha("input-error");
+        } else {
+            seterroConfSenha("");
+            setInputValidConfSenha("input-form");
+        }
+    }
+
+    const handleSave = () => {
+        handleEmailBlur({ target: { value: email } });
+        handleNomeBlur({ target: { value: nome } });
+        handleTelefoneBlur({ target: { value: telefone } });
+        handleSenhaBlur({ target: { value: senha } });
+        handleConfSenhaBlur({ target: { value: confirmarSenha } });
+
+        const todosCamposVazios = !email && !nome && !telefone && !senha && !confirmarSenha;
+
+        if (erroEmail || erroNome || erroTelefone || erroSenha || erroConfSenha || todosCamposVazios) {
+            toast.error("Preencha todos os campos corretamente.");
+        } else {
+            const objetoCadastrado = {
+                email,
+                nome,
+                senha,
+                telefone,
+            };
+            api.post(`clientes`, {
+                email,
+                nome,
+                senha,
+                telefone,
+            }).then(() => {
+                toast.success("Novo Cliente criado com sucesso!");
+                sessionStorage.setItem("editado",
+                    JSON.stringify(objetoCadastrado));
+                navigate("/login")
+            }).catch(() => {
+                toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
+            })
+        }
+    };
 
     return (
         <>
@@ -58,52 +139,73 @@ function CadastroCliente() {
                             <h1 className={styles["title"]}>CADASTRAR</h1></div>
                         <div className={styles["container-form"]}>
                             <div className={styles["container-input"]}>
-                                <p>EMAIL</p>
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>EMAIL</p>
+                                    {erroEmail && <span>{erroEmail}</span>}
+                                </div>
                                 <input
-                                    className={styles["input-form"]}
+                                    className={styles[inputValidEmail]}
                                     type="text"
                                     placeholder="usuario@gmail.com"
                                     value={email}
+                                    onBlur={handleEmailBlur}
                                     onChange={(e) => handleInputChange(e, setEmail)}
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                                <p>NOME</p>
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>NOME</p>
+                                    {erroNome && <span>{erroNome}</span>}
+                                </div>
                                 <input
-                                    className={styles["input-form"]}
+                                    className={styles[inputValidNome]}
                                     type="text"
                                     placeholder="Ex: usuario"
                                     value={nome}
+                                    onBlur={handleNomeBlur}
                                     onChange={(e) => handleInputChange(e, setNome)}
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                                <p>TELEFONE</p>
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>TELEFONE</p>
+                                    {erroTelefone && <span>{erroTelefone}</span>}
+                                </div>
                                 <input
-                                    className={styles["input-form"]}
+                                    className={styles[inputValidTelefone]}
                                     type="text"
                                     placeholder="Ex: 11 999999999"
+                                    maxLength={11}
                                     value={telefone}
+                                    onBlur={handleTelefoneBlur}
                                     onChange={(e) => handleInputChange(e, setTelefone)}
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                                <p>SENHA</p>
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>SENHA</p>
+                                    {erroSenha && <span>{erroSenha}</span>}
+                                </div>
                                 <input
-                                    className={styles["input-form"]}
+                                    className={styles[inputValidSenha]}
                                     type="password"
                                     placeholder="***********"
                                     value={senha}
+                                    onBlur={handleSenhaBlur}
                                     onChange={(e) => handleInputChange(e, setSenha)}
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                                <p>CONFIRMAR SENHA</p>
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>CONFIRMAR SENHA</p>
+                                    {erroConfSenha && <span>{erroConfSenha}</span>}
+                                </div>
                                 <input
-                                    className={styles["input-form"]}
+                                    className={styles[inputValidConfSenha]}
                                     type="password"
                                     placeholder="***********"
                                     value={confirmarSenha}
+                                    onBlur={handleConfSenhaBlur}
                                     onChange={(e) => handleInputChange(e, setConfirmarSenha)}
                                 />
                             </div>
