@@ -13,6 +13,10 @@ const NavbarBarbeiros = () => {
     const verBarbeiroAgend = () => {
         navigate(`/ver-barbeiros`);
     };
+
+    const dashboard = () => {
+        navigate(`/dashboard`);
+    };
     
     const servicos = () => {
         navigate(`/lista-servico`);
@@ -30,7 +34,7 @@ const NavbarBarbeiros = () => {
             <ul className={styles["navbar"]}>
                 <li onClick={barbeiro} className={styles["option"]}>Barbeiros</li>
                 <li onClick={verBarbeiroAgend} className={styles["option"]}>Agendamentos</li>
-                <li className={styles["option"]}>Dashboard</li>
+                <li onClick={dashboard} className={styles["option"]}>Dashboard</li>
                 <li onClick={servicos} className={styles["option"]}>Serviços</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>

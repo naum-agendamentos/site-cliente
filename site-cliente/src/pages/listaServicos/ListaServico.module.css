@@ -68,6 +68,21 @@ body{
     color: #0007AB;
 }
 
+.not-services {
+    display: flex;
+    justify-content: right;
+
+    font-family: 'STIX Two Math';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    color: #000;
+}
+
+.not-services h1 {
+    
+}
+
 /* barras laterais */
 .barraLeft{
     width: 35px;

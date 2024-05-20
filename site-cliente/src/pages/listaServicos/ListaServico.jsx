@@ -12,7 +12,6 @@ const ListaServico = () => {
     const [servicos, setServicos] = useState([]);
     const navigate = useNavigate();
     
-
     useEffect(() => {
         const options = {
             method: 'GET',
@@ -26,8 +25,6 @@ const ListaServico = () => {
 
         axios.request(options)
             .then(function (response) {
-                
-
                 setServicos(response.data);
                 console.log(response.data);
             })
@@ -35,7 +32,6 @@ const ListaServico = () => {
                 console.error(error);
             });
     }, []); 
-
 
     const handleCadast = () => {
         navigate("/cadastro-servico");
@@ -101,23 +97,31 @@ const ListaServico = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider">
-                                        {servicos.map((servico) => (
-                                            <tr key={servico.id}>
-                                                <th scope="row">{servico.id || "N/D"}</th>
-                                                <td className={style["txt-td"]}>{servico.nomeServico || "N/D"}</td>
-                                                <td className={style["txt-td"]}>{servico.preco || "N/D"}</td>
-                                                <td className={style["txt-td"]}>
-                                                    <button className={style["btn"]}>
-                                                        <img onClick={() => handleEdit(servico.id)} className={style["img-btn"]} src={BtnEdit} alt="Edit" />
-                                                    </button>
-                                                </td>
-                                                <td className={style["txt-td"]}>
-                                                    <button className={style["btn"]}>
-                                                        <img onClick={() => handleDelete(servico.id)} className={style["img-btn"]} src={BtnDelete} alt="Delete" />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        {servicos.length > 0 ? (
+                                            servicos.map((servico) => (
+                                                <tr key={servico.id}>
+                                                    <th scope="row">{servico.id || "N/D"}</th>
+                                                    <td className={style["txt-td"]}>{servico.nomeServico || "N/D"}</td>
+                                                    <td className={style["txt-td"]}>{servico.preco || "N/D"}</td>
+                                                    <td className={style["txt-td"]}>
+                                                        <button className={style["btn"]}>
+                                                            <img onClick={() => handleEdit(servico.id)} className={style["img-btn"]} src={BtnEdit} alt="Edit" />
+                                                        </button>
+                                                    </td>
+                                                    <td className={style["txt-td"]}>
+                                                        <button className={style["btn"]}>
+                                                            <img onClick={() => handleDelete(servico.id)} className={style["img-btn"]} src={BtnDelete} alt="Delete" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <div className={style["not-services"]}>
+                                                <h1>
+                                                    Não há serviços cadastrados
+                                                </h1>
+                                            </div>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>

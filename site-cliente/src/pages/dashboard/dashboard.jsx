@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './dashboard.module.css';
 import BarChartComponent from '../../components/barChart/BarChartComponent';
+import NavbarBarbeiros from '../../components/navbarBarbeiro/NavbarBarbeiro';
 
 const Dashboard = () => {
   const data = [
@@ -13,14 +14,20 @@ const Dashboard = () => {
     { name: 'Jul', uv: 3490, pv: 4300, amt: 2100 },
   ];
 
+
   return (
-    <div className={styles.dashboard}>
-      <h1>Dashboard</h1>
-      <div className={styles.charts}>
-        <BarChartComponent data={data} title="Chart 1" />
-        <BarChartComponent data={data} title="Chart 2" />
-        <BarChartComponent data={data} title="Chart 3" />
-        <BarChartComponent data={data} title="Chart 4" />
+    <div class="borda-gradiente-left">
+      <div class="borda-gradiente-right">
+        <div className={styles.dashboard}>
+          <NavbarBarbeiros />
+          <h1>Dashboard</h1>
+          <div className={styles.charts}>
+            <BarChartComponent data={data} title="Chart 1" />
+            <BarChartComponent data={data} title="Chart 2" />
+            <BarChartComponent data={data} title="Chart 3" />
+            <BarChartComponent data={data} title="Chart 4" />
+          </div>
+        </div>
       </div>
     </div>
   );
