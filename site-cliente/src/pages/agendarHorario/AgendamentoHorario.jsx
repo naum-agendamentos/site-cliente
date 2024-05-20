@@ -3,8 +3,12 @@ import style from './AgendamentoHorario.module.css';
 import NavBar from '../../components/navbar-pos-login/NavBar';
 //import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import Mapa from '../../utils/assets/MapsLocalizacao.png';
-
-const meusAgendamentos = () => {
+import { useNavigate } from "react-router-dom";
+const MeusAgendamentos = () => {
+    const navigate = useNavigate();
+    const finalizar = () => {
+        navigate(`/finalizar-agendamento`);
+    };
     return (
         // Fragmento React para agrupar múltiplos elementos sem adicionar um nó extra ao DOM
         <>
@@ -137,7 +141,7 @@ const meusAgendamentos = () => {
                                         </div>
 
                                     </div>
-                                    <button className={style["btn-finalizar-agendamento"]}>Finalizar Agendamento</button>
+                                    <button onClick={finalizar} className={style["btn-finalizar-agendamento"]}>Finalizar Agendamento</button>
                                 </div>
                                 <div className={style["container-right"]}>
                                     <div className={style["container-funcionamento"]}>
@@ -188,4 +192,4 @@ const meusAgendamentos = () => {
         </>
     );
 };
-export default meusAgendamentos;
+export default MeusAgendamentos;

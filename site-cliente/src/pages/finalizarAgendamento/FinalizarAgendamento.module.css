@@ -36,7 +36,7 @@ body{
 .asset-barber:hover{
     cursor: pointer;
     transition: 0.5s;
-    scale: 1.1;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .container-monthday{
@@ -67,8 +67,10 @@ body{
 }
 .subcontainer-days{
     width: 60%;
-    height: 106px;
+    height: 115px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: row;
 }
 .container-arrow{
@@ -96,14 +98,17 @@ body{
     scale: 1.1;
     transition: 0.5s;
 }
-.container-box-days{
-    width: 80%;
+.container-box-days {
+    width: 85%;
     height: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
+    white-space: nowrap; 
 }
-.box-days{
+
+.boxDays{
     width: 74px;
     height: 58px;
     border: 1px solid #001BAB;
@@ -114,10 +119,33 @@ body{
     border-radius: 6px;
     margin: 1vh;
     cursor: pointer;
-}
-.dayText{
     color: #001BAB;
     font-weight: 600;
+}
+.boxDays:hover{
+    transition: 0.5s;
+    transform: scale(1.1);
+    background-color: #001BAB;
+    color: #FFFFFF;
+}
+.boxHover:hover{
+    color: #FFFFFF;
+}
+.daySelected{
+    width: 74px;
+    height: 58px;
+    border: 1px solid #001BAB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    margin: 1vh;
+    cursor: pointer;
+    font-weight: 600;
+    transform: scale(1.1);
+    background-color: #001BAB;
+    color: #FFFFFF;
 }
 .container-btns{
     width: 100%;
@@ -125,6 +153,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1vh;
 }
 .subcontainer-btns{
     width: 20%;
@@ -132,7 +161,7 @@ body{
     display: flex;
     justify-content: space-between;
 }
-.btn-salvar{
+.btnSalvar{
     border-style: none;
     border-radius: 6px;
     font-size: 24px;
@@ -142,7 +171,18 @@ body{
     width: 126px;
     height: 43px;
 }
-.btn-salvar:hover{
+.btnSalvarDisabled{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: 600;
+    opacity: 0.6;
+    background-color: #001BAB;
+    width: 126px;
+    height: 43px;
+}
+.btnSalvar:hover{
     cursor: pointer;
     scale: 1.1;
     transition: 0.5s;
@@ -178,4 +218,51 @@ body{
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.daysDisabled{
+    pointer-events: none;
+    opacity: 0.6;
+}
+.daysNotSelected{
+    width: 74px;
+    height: 58px;
+    border: 1px solid #001BAB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    margin: 1vh;
+    cursor: pointer;
+    font-weight: 600;
+    color: #001BAB;
+    opacity: 0.6;
+}
+.daysNotSelected:hover{
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
+
+.containerTimerDesabilited{
+    pointer-events: none;
+    opacity: 0.6;
+}
+.barberSelected{
+    transition: 0.5s;
+    transform: scale(1.1);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.barberNotSelected{
+    transition: 1s;
+    filter: grayscale(100%);
+}
+
+
+.react-multiple-carousel__arrow {
+    background-color: #C50000;
+}
+.react-multiple-carousel__arrow--right{
+    background-color: #001BAB;
 }
