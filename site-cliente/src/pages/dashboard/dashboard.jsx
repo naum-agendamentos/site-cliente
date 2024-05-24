@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from './dashboard.module.css';
 import BarChartComponent from '../../components/barChart/BarChartComponent';
+import NavbarBarbeiros from '../../components/navbarBarbeiro/NavbarBarbeiro';
 
 const Dashboard = () => {
   const [data1, setData1] = useState([]);
@@ -38,6 +39,7 @@ const Dashboard = () => {
       <BarChartComponent data={{ labels: data2.labels, datasets: [{ label: 'Data 2', data: data2.values }] }} />
       <BarChartComponent data={{ labels: data3.labels, datasets: [{ label: 'Data 3', data: data3.values }] }} />
       <BarChartComponent data={{ labels: data4.labels, datasets: [{ label: 'Data 4', data: data4.values }] }} />
+
       </div>
     </div>
   );

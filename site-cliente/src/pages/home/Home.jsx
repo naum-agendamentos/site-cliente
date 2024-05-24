@@ -71,7 +71,7 @@ const HomePage = () => {
 
                             <div>
                                 <br /><br />
-                                <a href="#agendar" element-anime="center">AGENDAR</a>
+                                <a onClick={login} href="#agendar" element-anime="center">AGENDAR</a>
                             </div>
                         </div>
                         <div className={styles["img-barbeiro"]}>

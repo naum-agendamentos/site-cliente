@@ -22,6 +22,13 @@ const Barbeiros = () => {
         
         axios.request(options)
             .then(function (response) {
+                const { data } = response;
+                if (data.length > 0) {
+                    // Armazena o ID da barbearia do primeiro barbeiro na sessão
+                    sessionStorage.setItem("idBarbearia", data[0].barbearia.id);
+                } else {
+                    console.error("A resposta da API está vazia");
+                }
                 // Atualiza o estado cardsData com os dados recebidos da API
                 setCardsData(response.data);
             })

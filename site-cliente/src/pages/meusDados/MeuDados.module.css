@@ -45,6 +45,13 @@ body{
     font-weight: 800;
     font-size: 24px;
 }
+.text-box-data {
+    font-size: 18px;
+    max-width: 85%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .container-button-box-data{
     margin-top: 3vh;
 }
