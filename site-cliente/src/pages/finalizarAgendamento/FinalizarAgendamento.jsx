@@ -3,7 +3,7 @@ import style from './FinalizarAgendamento.module.css';
 import NavBar from '../../components/navbar-pos-login/NavBar';
 import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import Barber from '../../utils/assets/barbeiroAgendamento.png';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import { format, addDays } from 'date-fns';
@@ -18,11 +18,21 @@ const MeusAgendamentos = () => {
 
     //Listar Barbeiro chamada
     const [cardsData, setCardsData] = useState();
+    const queryServicoString = useParams();
+    const [servicosSelectedsJson,setServicoJson] = useState([{}]);
 
-    function recuperarValorDoCard() {
+    useEffect(() => {
+        const paramsServico = new URLSearchParams(queryServicoString);
+
+        const jsonConvert = JSON.parse(paramsServico.get('servicos'));
+        setServicoJson(jsonConvert);
+    },[queryServicoString]);
+    
+    
+    function recuperarValorBarbeiro() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/finalizar-agendamento',
+            url: 'http://localhost:8080/barbeiros',
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -46,10 +56,17 @@ const MeusAgendamentos = () => {
             });
     }
 
+    useEffect(() => {
+        recuperarValorBarbeiro();
+    }, [])
+    
 
     const navigate = useNavigate();
     const cancelar = () => {
-        navigate(`/agendanento-horario`);
+        const urlServicos = encodeURIComponent(JSON.stringify(servicosSelectedsJson));
+        console.log("Cancelar "+urlServicos)
+
+        navigate(`/agendanento-horario/${urlServicos}`);
     };
 
 
@@ -92,7 +109,7 @@ const MeusAgendamentos = () => {
           const diaMes = format(data, 'dd');
           const mes = format(data, 'MM');
           proximosDias.push({ diaSemanaAbreviado, mes,diaMes,data });
-          console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
+        // console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
         }
     
         return proximosDias;
@@ -163,9 +180,9 @@ const MeusAgendamentos = () => {
                 <div className={style["container-barbers"]}>
                     <div className={style["subcontainer-barber"]}>
                         {cardsData && cardsData.map((data, index) => (
-                            <img key={index} onClick={() => buttonBarber(1)} className={`${style["asset-barber"]} 
+                            <img key={index} onClick={() => buttonBarber(data.id)} className={`${style["asset-barber"]} 
                             ${barberSelected === 0 ? '' :
-                            barberSelected === 1 ? style.barberSelected :
+                            barberSelected === data.id ? style.barberSelected :
                             style.barberNotSelected}`} 
                             src={data.foto} alt="" 
                             />

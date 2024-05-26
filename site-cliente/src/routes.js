@@ -26,10 +26,10 @@ function Rotas() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/meus-dados/:id" element={<MeusDados/>}/>
-                    <Route path="/agendanento-horario" element={<Agendamento/>}/>
+                    <Route path="/agendanento-horario/:servicos" element={<Agendamento/>}/>
                     <Route path="/editar-meus-dados/:id" element={<EditarMeusDados/>}/>
                     <Route path="/meus-agendamentos" element={<MeusAgendamentos/>}/>
-                    <Route path="/finalizar-agendamento" element={<FinalizarAgendamento/>}/>
+                    <Route path="/finalizar-agendamento/:servicos" element={<FinalizarAgendamento/>}/>
                     <Route path="/cadastro-barbeiro" element={<CadastroBarbeiro/>}/>
                     <Route path="/editar-barbeiro/:id" element={<EditarBarbeiro/>}/>
                     <Route path="/login" element={<Login/>}/>
@@ -40,6 +40,7 @@ function Rotas() {
                     <Route path="/editar-servico/:id" element={<EditarServico/>}/>
                     <Route path="/lista-servico" element={<ListaServico/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    
                     <Route path="/*" element={<NotFound/>}/>
 
                 </Routes>
