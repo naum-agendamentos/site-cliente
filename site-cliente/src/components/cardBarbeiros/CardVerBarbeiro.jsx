@@ -5,10 +5,14 @@ import styles from "./CardVerBarbeiro.module.css";
 // Importa uma imagem padrão para ser usada caso nenhuma imagem específica seja fornecida
 import capaImg from "../../utils/assets/logo/logoHeader.png";
 
+import { useNavigate } from "react-router-dom";
+
+
 // import { useNavigate } from "react-router-dom"; // Importa o hook useNavigate para redirecionamento de rotas
 
 // Define o componente CardMusica como uma função que recebe propriedades
 const CardBarbeiros = ({
+    id,
     foto,
     nome,
     email,
@@ -21,12 +25,18 @@ const CardBarbeiros = ({
     //     navigate("/editar-barbeiro"); // Redireciona para a página de músicas
     // };
 
+    const navigate = useNavigate();
+
+    const handleAgend = (id) => {
+        navigate(`/agendamentos-barbeiro/${id}`);
+    };
+
 
     return (
         // Contêiner principal do cartão
         <div>
             {/* Contêiner para a imagem */}
-            <div className={styles["imagem-container"]}>
+            <div className={styles["imagem-container"]} onClick={() => handleAgend(id)}>
                 <div className={styles["parte-imagem"]}>
                 {/* Exibe a imagem da música; usa imagemSrc se fornecido, caso contrário usa capaImg */}
                 <img src={foto ? foto : capaImg} alt="Imagem"

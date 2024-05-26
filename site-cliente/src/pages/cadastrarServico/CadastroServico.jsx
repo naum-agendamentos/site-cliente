@@ -79,6 +79,7 @@ function CadastroServiço() {
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     preco: preco,
+                    tempoServico: tempoDuracao,
                     nomeServico: nome
                 },
                 headers: {
