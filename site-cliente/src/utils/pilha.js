@@ -1,59 +1,45 @@
-class PilhaObj {
-    // Atributos
-    constructor(capacidade) {
-        this.pilha = new Array(capacidade);
-        this.topo = -1;
+// pilha.js
+export class PilhaObj {
+    constructor(tamanho) {
+        this.tamanho = tamanho;
+        this.pilha = [];
     }
 
-    // Método isEmpty
-    isEmpty() {
-        return this.topo === -1;
-    }
-
-    // Método isFull
-    isFull() {
-        return this.topo === this.pilha.length - 1;
-    }
-
-    // Método push
-    push(info) {
-        if (this.isFull()) {
-            throw new Error("Pilha cheia!");
+    push(element) {
+        if (this.pilha.length < this.tamanho) {
+            this.pilha.push(element);
         } else {
-            this.pilha[++this.topo] = info;
+            throw new Error("Pilha cheia");
         }
     }
 
-    // Método pop
     pop() {
         if (this.isEmpty()) {
             throw new Error("Pilha vazia");
         }
-        return this.pilha[this.topo--];
+        return this.pilha.pop();
     }
 
-    // Método peek
     peek() {
         if (this.isEmpty()) {
-            throw new Error("Pilha vazia");
+            return null;
         }
-        return this.pilha[this.topo];
+        return this.pilha[this.pilha.length - 1];
     }
 
-    // Método exibe
-    exibe() {
-        for (let i = this.topo; i >= 0; i--) {
-            console.log(this.pilha[i]);
-        }
+    isEmpty() {
+        return this.pilha.length === 0;
     }
 
-    // Getter para topo
     getTopo() {
-        if (this.isEmpty()) {
-            return -1;
-        }
-        return this.topo + 1;
+        return this.pilha.length;
+    }
+
+    serialize() {
+        return JSON.stringify(this.pilha);
+    }
+
+    deserialize(serializedPilha) {
+        this.pilha = JSON.parse(serializedPilha);
     }
 }
-
-export {PilhaObj};
