@@ -16,6 +16,7 @@ import CadastroCliente from "./pages/cadastroCliente/CadastroCliente";
 import CadastroServiço from "./pages/cadastrarServico/CadastroServico";
 import EditarServico from "./pages/editarServico/EditarServico";
 import Dashboard from "./pages/dashboard/dashboard";
+import MeusAgendamentosBarbeiro from "./pages/meusAgendamentoBarbeiro/MeusAgendamentosBarbeiro";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -40,6 +41,7 @@ function Rotas() {
                     <Route path="/editar-servico/:id" element={<EditarServico/>}/>
                     <Route path="/lista-servico" element={<ListaServico/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/agendamentos-barbeiro/:id" element={<MeusAgendamentosBarbeiro/>}/>
                     <Route path="/*" element={<NotFound/>}/>
 
                 </Routes>
