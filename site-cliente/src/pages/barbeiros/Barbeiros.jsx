@@ -7,6 +7,7 @@ import CardBarbeiros from "../../components/cardBarbeiros/CardBarbeiros"; // Imp
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const Barbeiros = () => {
     const [cardsData, setCardsData] = useState();
 
