@@ -82,7 +82,7 @@ const AgendBarb = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div className={styles['calendar-container']}>

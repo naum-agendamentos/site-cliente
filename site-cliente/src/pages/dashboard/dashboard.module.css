@@ -1,17 +1,10 @@
 .dashboard {
-    padding: 20px;
-  }
-  
-  .charts {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  
-  .chart {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  width: 100%;
+}
+
+.charts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px 180px;
+}
