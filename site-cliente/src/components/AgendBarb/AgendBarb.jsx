@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styles from './AgendBarb.module.css';
 import axios from 'axios';
+import { useParams } from "react-router-dom";
 
 const localizer = momentLocalizer(moment);
 
@@ -33,22 +34,53 @@ const formats = {
 
 const AgendBarb = () => {
   const [events, setEvents] = useState([]);
-  
+  const { id } = useParams();
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://662a666667df268010a3c38f.mockapi.io/barbearias/agendamento');
-        const eventData = response.data.map(item => ({
-          title: `${item.servico} - ${item.nome}`,
-          start: moment(item.data, 'DD/MM/YYYY HH:mm').toDate(),
-          end: moment(item.data, 'DD/MM/YYYY HH:mm').add(item.tempo, 'minutes').toDate(),
-        }));
-        setEvents(eventData);
+
+        const options = {
+          method: 'GET',
+          url: `http://localhost:8080/agendamentos/barbeiro/${id}`,
+          headers: {
+            'User-Agent': 'insomnia/8.6.1',
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          }
+        };
+        axios.request(options)
+          .then(function (response) {
+
+            if (response.data && response.data.length > 0) {
+              console.log(response.data);
+
+              const eventData = response.data.map(item => {
+                const { dataHoraAgendamento, cliente, servicos } = item;
+                const { nome: nomeCliente } = cliente;
+            
+                const totalTempoServico = servicos.reduce((total, servico) => total + servico.tempoServico, 0);
+                const nomesServicos = servicos.map(servico => servico.nomeServico).join(', ');
+            
+                return {
+                  title: `${nomesServicos} - ${nomeCliente}`,
+                  start: moment(dataHoraAgendamento).toDate(),
+                  end: moment(dataHoraAgendamento).add(totalTempoServico, 'minutes').toDate()
+                };
+              });
+              setEvents(eventData);
+            } else {
+              console.error("A resposta da API está vazia");
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    
+
     fetchData();
   }, []);
 

@@ -16,7 +16,7 @@ import CadastroCliente from "./pages/cadastroCliente/CadastroCliente";
 import CadastroServiço from "./pages/cadastrarServico/CadastroServico";
 import EditarServico from "./pages/editarServico/EditarServico";
 import Dashboard from "./pages/dashboard/dashboard";
-import MeusAgendamentosBarbeiro from "./pages/meusAgendamentoBarbeiro/MeusAgendamentosBarbeiro";
+import MeusAgendamentosBarbeiro from "./pages/meusAgendamentoBarbeiro/MeusAgendamentoBarbeiro";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
