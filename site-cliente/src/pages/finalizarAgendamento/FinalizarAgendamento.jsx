@@ -7,19 +7,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import { format, addDays } from 'date-fns';
-import { da, ptBR } from 'date-fns/locale';
+import { da, ptBR, tr } from 'date-fns/locale';
 
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { toast } from "react-toastify";
 
 
 const MeusAgendamentos = () => {
-
+    
     //Listar Barbeiro chamada
     const [cardsData, setCardsData] = useState();
     const queryServicoString = useParams();
     const [servicosSelectedsJson,setServicoJson] = useState([{}]);
+
 
     useEffect(() => {
         const paramsServico = new URLSearchParams(queryServicoString);
@@ -70,33 +72,78 @@ const MeusAgendamentos = () => {
     };
 
 
-    const [isDateDisabled, setDateDisabled] = useState(true);
     const [barberSelected, setBarberSelected] = useState(0);
-    const [isHourDisabled, setHourDisabled] = useState(true);
-    const [daySelected, setDaySelected] = useState(null);
-    const [hourSelected, setHourSelected] = useState(null);
-    const [buttonsDisabled, setButtonsDisabled] = useState(true);
-    
+    const [agendamentosExistentes,setAgendaementosExistentes] = useState();
 
-    //DATE***********************************************************
+    function recuperarAgendamentosExistentes(idBarber) {
+        console.log("ID BARBER "+idBarber);
+        const options = {
+            method: 'GET',
+            url: `http://localhost:8080/agendamentos/barbeiro/${idBarber}`,
+            headers: {
+              'User-Agent': 'insomnia/8.6.1',
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        };
+        
+        axios.request(options)
+            .then(function (response) {
+                setAgendaementosExistentes(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+
     const buttonBarber = (idBarber) => {
         setDateDisabled(false);
         setBarberSelected(idBarber);
+        recuperarAgendamentosExistentes(idBarber);
     };
 
-    const buttonDay = (day) => {
-        setDaySelected(day)
+
+    const [isDateDisabled, setDateDisabled] = useState(true);
+    const [isHourDisabled, setHourDisabled] = useState(true);
+    const [daySelected, setDaySelected] = useState(null);
+    const [buttonsDisabled, setButtonsDisabled] = useState(true);
+    const matrizHorariosAgendados = [];
+
+    //DATE***********************************************************
+
+    const buttonDay = (indexDay,dataCompleta) => {
+        setDaySelected(dataCompleta)
         setHourDisabled(false)
-        console.log("dayselected: "+daySelected)
-        console.log("Day enviado: "+ day)
-        console.log("DIA DA VEZ: "+daySelected === day)
     }
 
-    const buttonHour = (hour) => {
-        setHourSelected(hour)
-        setButtonsDisabled(false)
-    }
+    var horariosProibidos = [];
+    function verificarHoraDisabled(hour){
+        if(agendamentosExistentes != null && daySelected != null){
+            for(const agendamento of agendamentosExistentes){
+
+                const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                if(diaHoraAgendamento[0] == daySelected){
+                    const horarioReservado = diaHoraAgendamento[1].split(":");
+                    const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] +"."+ horarioReservado[1]);
     
+                    horariosProibidos.push(horarioReservadoConvertidoInicio);
+                    // var somaTempoServicoReservado = 0;
+                    const dataAumentada = new Date(agendamento.dataHoraAgendamento);
+                    for(const servico of agendamento.servicos){
+                        const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
+                        horariosProibidos.push(horarioConvertidoSoma);
+                        dataAumentada.setMinutes(dataAumentada.getMinutes() + servico.tempoServico);
+                    }
+                }
+
+                // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
+                // matrizHorariosAgendados.push(dataHoraInicioeFim);
+                // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
+                
+            }
+        }
+        return horariosProibidos.includes(hour);
+    }
 
     const gerarProximosDias = (dias) => {
         const hoje = new Date();
@@ -106,18 +153,87 @@ const MeusAgendamentos = () => {
           const data = addDays(hoje, i);
           const diaSemanaAbreviado = format(data, 'EEE', { locale: ptBR });
         //   console.log("DIAS ABREVIADO "+diaSemanaAbreviado)
-          const diaMes = format(data, 'dd');
+          const dia = format(data, 'dd');
           const mes = format(data, 'MM');
-          proximosDias.push({ diaSemanaAbreviado, mes,diaMes,data });
-        // console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
+          const ano = format(data, 'yyyy');
+          proximosDias.push({ diaSemanaAbreviado, dia, mes,ano,data });
+          // console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
         }
-    
         return proximosDias;
-      };
+    };
 
+   
     //HOURS***********************************************************
-    const oppeningHour = [9,9.30,10,10.30,11,11.30,12,12.30,14,14.30,15,15.30,16,16.30,17,17.30]; //horário funcionamento 
+    //const oppeningHour = [9,9.30,10,10.30,11,11.30,12,12.30,14,14.30,15,15.30,16,16.30,17,17.30]; //horário funcionamento 
+    const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
+    const [hourSelected, setHourSelected] = useState(null);
+    const horasSelecionadas = [];
+    const buttonHour = (value) => {
+
+        var hour = parseFloat(value).toFixed(2);
+        var horaMinutosFormatado = hour.replace(".",":");
+
+        var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
+
+        for(var i = 0; i < servicosSelectedsJson.length; i++ ){
+            dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + servicosSelectedsJson[i].tempo);
+            
+            const dataServicoEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+
+
+            if(horariosProibidos.includes(dataServicoEscolhidaConvertida)){  
+
+                const dataEscolhidaVerificacaoHorarioFloat = dataServicoEscolhidaConvertida.toFixed(2);
+                const dataEscolhidaVerificacaoReplace  =  dataEscolhidaVerificacaoHorarioFloat.replace(".",":");
+
+
+                const dataEscolhidaVerificacaoHorario = new Date(daySelected+" "+dataEscolhidaVerificacaoReplace+":00");
+
+                dataEscolhidaVerificacaoHorario.setMinutes(dataEscolhidaVerificacaoHorario.getMinutes() - 30);
+
+                const convercaoDataEscolhidaVerificacao = parseFloat(dataEscolhidaVerificacaoHorario.getHours() + "."+dataEscolhidaVerificacaoHorario.getMinutes());
+
+
+                if(i != (servicosSelectedsJson.length - 1) || horariosProibidos.includes(convercaoDataEscolhidaVerificacao)){
+                    return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
+                    
+                } 
+            }
+        }
+
+        dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
+        var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+        horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+        for(const service of servicosSelectedsJson){
+            dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
+            dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+            horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+        }
+        console.log("Horas selecionadas "+horasSelecionadas);
+        console.log("Hora da vez "+parseFloat(value).toFixed(2));
+        console.log("Teste "+ horasSelecionadas.includes(parseFloat(value).toFixed(2)));
+        setHourSelected(parseFloat(value));
+        setButtonsDisabled(false);  
+    }
+
     
+    function somaTempoServico(){
+        var soma = 0;
+
+        for(const servico of servicosSelectedsJson){
+            soma += servico.tempo;
+        }
+        console.log("Tempo de servico "+soma);
+
+        return soma;
+    }
+
+
+
+    var valuesGerados = 0;
+    function gerarValues(value){
+        return value + valuesGerados;
+    }
 
     //CAROUSEL***********************************************************
     const responsive = {
@@ -170,7 +286,7 @@ const MeusAgendamentos = () => {
         }
     };
 
-      const dias = gerarProximosDias(60);
+    const dias = gerarProximosDias(60);
     return (
         <>
             <div className={style["container"]}>
@@ -212,18 +328,19 @@ const MeusAgendamentos = () => {
                                  }}
                                 >
                                 {
-                                    dias.map((dia,index) => (
+                                    dias.map((data,index) => (
                                         <React.Fragment key={index}>
                                             <button className={`
                                                 ${
                                                     daySelected === null ? style.boxDays:
-                                                    daySelected === index ? style.daySelected:
+                                                    daySelected === (data.ano+"-"+data.mes+"-"+data.dia) ? style.daySelected:
                                                     style.daysNotSelected
                                                 }
                                             `} 
-                                                onClick={() => buttonDay(index)}>
-                                                <p>{dia.diaSemanaAbreviado.slice(0,3)}</p>
-                                                <p>{dia.diaMes}/{dia.mes}</p>
+                                                //
+                                                onClick={() => buttonDay(index,(data.ano+"-"+data.mes+"-"+data.dia))}>
+                                                <p>{data.diaSemanaAbreviado.slice(0,3)}</p>
+                                                <p>{data.dia}/{data.mes}</p>
                                             </button>
                                         </React.Fragment>
                                     ))
@@ -260,20 +377,25 @@ const MeusAgendamentos = () => {
                             >
 
                                 {
-                                    oppeningHour.map((hour) => ( // Remova o segundo parâmetro "oppeningHour"
+                                    // const [data, hora] = dataHoraAgendamento.split('T');
+
+                                    // // Dividir a data nos componentes ano, mês e dia
+                                    // const [ano, mes, dia] = data.split('-');
+                                    oppeningHour.map((hour,index) => ( // Remova o segundo parâmetro "oppeningHour"
                                     <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
-                                        <button className={`
+                                        <button disabled={verificarHoraDisabled(hour)} id={"idBtnHour"+index}className={`
                                             ${
-                                                hourSelected === null ? style.boxDays :
-                                                hourSelected === hour ? style.daySelected :
-                                                style.daysNotSelected
+                                                verificarHoraDisabled(hour) ? style.daysNotSelected:   
+                                                horasSelecionadas.includes(hour.toFixed(2)) ? style.boxDays:
+                                                style.daySelected
+                                                
                                             }
                                         `} 
-                                            onClick={() => buttonHour(hour)}> {/* Use hour como argumento da função buttonHour */}
-                                            <p>{hour.toFixed(2).replace(".",":")}</p>
+                                            onClick={ () => buttonHour(hour)}> 
+                                            <p>{ verificarHoraDisabled(hour) ? "Reservado" : hour.toFixed(2).replace(".",":")}</p>
                                         </button>
                                     </React.Fragment>
-                                ))
+                                )) 
                                 }
                             </Carousel>
                             <div className={style["container-arrow"]}>

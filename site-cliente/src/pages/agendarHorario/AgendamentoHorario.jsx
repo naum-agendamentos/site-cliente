@@ -44,6 +44,7 @@ const MeusAgendamentos = () => {
             .then(function (response) {
                 const { data } = response;
                 if (data.length > 0) {
+                    console.log("Servicos "+ data[0]);
                     sessionStorage.setItem("idBarbearia", data[0].barbearia.id);
                 } else {
                     console.error("A resposta da API está vazia");
