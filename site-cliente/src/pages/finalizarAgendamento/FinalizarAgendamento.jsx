@@ -113,6 +113,7 @@ const MeusAgendamentos = () => {
 
     const buttonDay = (indexDay,dataCompleta) => {
         voltarSlide();
+        setButtonsDisabled(true);
         setDaySelected(dataCompleta);
         setHourSelected(null);
         setHourDisabled(false);
@@ -233,22 +234,22 @@ const MeusAgendamentos = () => {
         setButtonsDisabled(false);  
     }
     
-    function verificarHoraHabilited(value){
-        if(hourSelected != null){
-            var horasSelecionadas = [];
-    
-            var horaMinutosFormatado = hourSelected.replace(".",":");
-    
-            var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00")
-    
-            dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
-            var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-            horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
-            for(const service of servicosSelectedsJson){
-                dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
-                dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+        function verificarHoraHabilited(value){
+            if(hourSelected != null){
+                var horasSelecionadas = [];
+        
+                var horaMinutosFormatado = hourSelected.replace(".",":");
+        
+                var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00")
+        
+                dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
+                var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
                 horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
-            }
+                for(const service of servicosSelectedsJson){
+                    dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
+                    dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+                    horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+                }
 
 
             if(parseFloat(parseFloat(value).toFixed(2)) >= parseFloat(horasSelecionadas[0]) && parseFloat(parseFloat(value).toFixed(2)) < parseFloat(horasSelecionadas[horasSelecionadas.length - 1])){
