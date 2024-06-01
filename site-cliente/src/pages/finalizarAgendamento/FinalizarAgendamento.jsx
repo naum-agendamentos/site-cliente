@@ -112,8 +112,10 @@ const MeusAgendamentos = () => {
     //DATE***********************************************************
 
     const buttonDay = (indexDay,dataCompleta) => {
-        setDaySelected(dataCompleta)
-        setHourDisabled(false)
+        voltarSlide();
+        setDaySelected(dataCompleta);
+        setHourSelected(null);
+        setHourDisabled(false);
     }
 
     var horariosProibidos = [];
@@ -132,6 +134,7 @@ const MeusAgendamentos = () => {
                     for(const servico of agendamento.servicos){
                         const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
                         horariosProibidos.push(horarioConvertidoSoma);
+                        
                         dataAumentada.setMinutes(dataAumentada.getMinutes() + servico.tempoServico);
                     }
                 }
@@ -164,11 +167,11 @@ const MeusAgendamentos = () => {
 
    
     //HOURS***********************************************************
-    //const oppeningHour = [9,9.30,10,10.30,11,11.30,12,12.30,14,14.30,15,15.30,16,16.30,17,17.30]; //horário funcionamento 
-    const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
+    const oppeningHour = [9,9.30,10,10.30,11,11.30,12,12.30,13,13.30,14,14.30,15,15.30,16,16.30,17,17.30]; //horário funcionamento 
+    // const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
     const [hourSelected, setHourSelected] = useState(null);
-    const horasSelecionadas = [];
     const buttonHour = (value) => {
+        var horasSelecionadas = [];
 
         var hour = parseFloat(value).toFixed(2);
         var horaMinutosFormatado = hour.replace(".",":");
@@ -201,19 +204,61 @@ const MeusAgendamentos = () => {
             }
         }
 
-        dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
+        dataServicoEscolhida = new Date(daySelected + " " + horaMinutosFormatado + ":00");
         var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
         horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
-        for(const service of servicosSelectedsJson){
+
+        for (const service of servicosSelectedsJson) {
             dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
             dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+
+            // Cria uma cópia do objeto dataServicoEscolhida antes de modificar os minutos
+            var verificaHorario = new Date(dataServicoEscolhida);
+            verificaHorario.setMinutes(verificaHorario.getMinutes() - 30);
+
+            var verificaHorarioConvertido = parseFloat(verificaHorario.getHours() + "." + verificaHorario.getMinutes());
+            if(!oppeningHour.includes(dataEscolhidaConvertida) && !oppeningHour.includes(verificaHorarioConvertido)){
+                return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
+            }
             horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
         }
-        console.log("Horas selecionadas "+horasSelecionadas);
-        console.log("Hora da vez "+parseFloat(value).toFixed(2));
-        console.log("Teste "+ horasSelecionadas.includes(parseFloat(value).toFixed(2)));
-        setHourSelected(parseFloat(value));
+
+        if(horasSelecionadas.length != 0 && horariosProibidos.some(num => num > horasSelecionadas[0] && num < horasSelecionadas[horasSelecionadas.length - 1])){
+            return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
+        }
+
+        
+        console.log("horasSelecionadas "+horasSelecionadas);
+        setHourSelected(hour);
         setButtonsDisabled(false);  
+    }
+    
+    function verificarHoraHabilited(value){
+        if(hourSelected != null){
+            var horasSelecionadas = [];
+    
+            var horaMinutosFormatado = hourSelected.replace(".",":");
+    
+            var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00")
+    
+            dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
+            var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+            horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+            for(const service of servicosSelectedsJson){
+                dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
+                dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
+                horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+            }
+
+
+            if(parseFloat(parseFloat(value).toFixed(2)) >= parseFloat(horasSelecionadas[0]) && parseFloat(parseFloat(value).toFixed(2)) < parseFloat(horasSelecionadas[horasSelecionadas.length - 1])){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
     }
 
     
@@ -230,10 +275,6 @@ const MeusAgendamentos = () => {
 
 
 
-    var valuesGerados = 0;
-    function gerarValues(value){
-        return value + valuesGerados;
-    }
 
     //CAROUSEL***********************************************************
     const responsive = {
@@ -247,6 +288,16 @@ const MeusAgendamentos = () => {
     const carouselRefDays = useRef(null);
 
     const [currentSlideDays, setCurrentSlideDays] = useState(0);
+
+    function voltarSlide(){
+        console.log("curren");
+        if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
+            const previousSlide = currentSlideHours - currentSlideHours;
+            carouselRefHours.current.goToSlide(previousSlide);
+            setCurrentSlideHours(previousSlide);
+        }
+        
+    }
 
     const goToNext7SlidesDays = () => {
         if (carouselRefDays.current && currentSlideDays < 53) { //verifica se já está no último slide
@@ -386,8 +437,9 @@ const MeusAgendamentos = () => {
                                         <button disabled={verificarHoraDisabled(hour)} id={"idBtnHour"+index}className={`
                                             ${
                                                 verificarHoraDisabled(hour) ? style.daysNotSelected:   
-                                                horasSelecionadas.includes(hour.toFixed(2)) ? style.boxDays:
-                                                style.daySelected
+                                                verificarHoraHabilited(hour) ? style.daySelected:
+                                                style.boxDays
+                                                
                                                 
                                             }
                                         `} 
