@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 
 const MeusAgendamentos = () => {
     
+
     //Listar Barbeiro chamada
     const [cardsData, setCardsData] = useState();
     const queryServicoString = useParams();
@@ -123,21 +124,26 @@ const MeusAgendamentos = () => {
     function verificarHoraDisabled(hour){
         if(agendamentosExistentes != null && daySelected != null){
             for(const agendamento of agendamentosExistentes){
-
+                console.log("AGENDAMENTO DA VEZ => "+agendamento);
                 const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
                 if(diaHoraAgendamento[0] == daySelected){
                     const horarioReservado = diaHoraAgendamento[1].split(":");
                     const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] +"."+ horarioReservado[1]);
     
                     horariosProibidos.push(horarioReservadoConvertidoInicio);
+                    var soma = 0;
                     // var somaTempoServicoReservado = 0;
                     const dataAumentada = new Date(agendamento.dataHoraAgendamento);
                     for(const servico of agendamento.servicos){
-                        const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
-                        horariosProibidos.push(horarioConvertidoSoma);
-                        
-                        dataAumentada.setMinutes(dataAumentada.getMinutes() + servico.tempoServico);
+                        var condicao = servico.tempoServico / 30;
+                        while(condicao > 0){
+                            const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
+                            horariosProibidos.push(horarioConvertidoSoma);
+                            dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
+                            condicao --    
+                        }
                     }
+
                 }
 
                 // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
@@ -338,6 +344,45 @@ const MeusAgendamentos = () => {
         }
     };
 
+    function salvar() {
+        var hora = hourSelected;
+        hora = hora.replace(".", ":");
+        var data = new Date(daySelected + " " + hora + ":00");
+    
+        // Formatar a data no formato desejado
+        var dataFormatada = data.getFullYear() + "-" +
+                            ("0" + (data.getMonth() + 1)).slice(-2) + "-" +
+                            ("0" + data.getDate()).slice(-2) + "T" +
+                            ("0" + data.getHours()).slice(-2) + ":" +
+                            ("0" + data.getMinutes()).slice(-2) + ":" +
+                            ("0" + data.getSeconds()).slice(-2);
+    
+        const idServicos = [];
+        for (const service of servicosSelectedsJson) {
+            idServicos.push(service.id);
+        }
+    
+        const options = {
+            method: 'POST',
+            url: `http://localhost:8080/agendamentos?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem("userId")}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
+            headers: {
+                'User-Agent': 'insomnia/8.6.1',
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                'Content-Type': 'application/json'
+            }
+        };
+    
+        axios.request(options)
+            .then(function (response) {
+                toast.success("Agendado com Sucesso!");
+                console.log("Agendamento criado com sucesso:", response.data);
+            })
+            .catch(function (error) {
+                console.error("Erro ao criar agendamento:", error);
+            });
+    }
+    
+
     const dias = gerarProximosDias(60);
     return (
         <>
@@ -459,7 +504,7 @@ const MeusAgendamentos = () => {
                 </div>
                     <div className={style["container-btns"]}>
                         <div className={style["subcontainer-btns"]}>
-                            <button className={`${ buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`}>Salvar</button>
+                            <button className={`${ buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}>Salvar</button>
                             <button onClick={cancelar} className={style["btn-cancelar"]}>Cancelar</button>
                         </div>
                     </div>
