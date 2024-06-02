@@ -21,21 +21,126 @@ const MeusAgendamentos = () => {
     //Listar Barbeiro chamada
     const [cardsData, setCardsData] = useState();
     const queryServicoString = useParams();
+    const queryAgendamentoString = useParams();
+    const [agendamentoSelectedsJson,setAgendamentoJson] = useState([{}]);
     const [servicosSelectedsJson,setServicoJson] = useState([{}]);
 
+    
 
     useEffect(() => {
-        const paramsServico = new URLSearchParams(queryServicoString);
+        const paramsServico = new URLSearchParams(queryAgendamentoString);
+        const jsonStr = paramsServico.get('servicos');
+        if (jsonStr != null) {
+            const jsonConvert = JSON.parse(jsonStr);
+            if (jsonConvert != null) {
+                // Verifica se é um JSON de agendamento ou de serviço com base em uma chave específica
+                if (jsonConvert.dataHoraAgendamento != null) {
+                    setAgendamentoJson(jsonConvert);
+                    const servicosArray = jsonConvert.servicos.map(servico => ({
+                        id: servico.id,
+                        nome: servico.nomeServico,
+                        tempo: servico.tempoServico,
+                        preco: servico.preco
+                    }));
+                    setServicoJson(servicosArray);
 
-        const jsonConvert = JSON.parse(paramsServico.get('servicos'));
-        setServicoJson(jsonConvert);
-    },[queryServicoString]);
+                    setBarberSelected(jsonConvert.barbeiro.id);
+                    recuperarAgendamentosExistentes(jsonConvert.barbeiro.id);
+                    setDateDisabled(false);
+                    setButtonsDisabled(false);
+
+                    var dataCompleta = jsonConvert.dataHoraAgendamento.split("T");
+                    
+                    setDaySelected(dataCompleta[0]);
+                    setHourDisabled(false);
+                    var hora = dataCompleta[1].split(":");
+                    hora = parseFloat(hora[0] + "." + hora[1]).toFixed(2);
+                    
+                    var dataAgendamento = new Date(dataCompleta[0] + " " + dataCompleta[1]);
+
+                    console.log("Data Agendamento "+dataAgendamento)
+
+                    var dataAtual = new Date();
+                    var dataHoraAgendamento = new Date(dataCompleta[0] + " " + dataCompleta[1]);
+
+                    var timeDiff = Math.abs(dataHoraAgendamento - dataAtual); // Subtrai as duas datas
+
+                    // Converta a diferença de milissegundos em dias
+                    var diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                    if(diffDays < 7){
+                        diaAgendamentoSlide(0);
+                    }
+                    else{
+                        var soma = 0;
+
+                        while(soma < diffDays){
+                            soma += 7;
+                            if((soma+7) >= diffDays){
+                                diaAgendamentoSlide(soma);
+                            }
+                        }
+                    } 
+                    var horaProibida = false;
+                    for(const servico of servicosArray){
+                        var condicao = servico.tempo / 30;
+                        while(condicao > 0){
+                            const horarioConvertidoSoma = parseFloat(dataAgendamento.getHours() +"."+ dataAgendamento.getMinutes());
+                            horariosProibidos.push(horarioConvertidoSoma);
+                            dataAgendamento.setMinutes(dataAgendamento.getMinutes() + 30);
+                            condicao --    
+                        }
+                        var dataAgendamentoConvertida = parseFloat(parseFloat(dataAgendamento.getHours() + "." + dataAgendamento.getMinutes()).toFixed(2));
+                        // if(verificarHoraDisabled(dataAgendamentoConvertida)){
+                        //     horaProibida = true;
+                        //     toast.warning("Selecione um novo horario com disponibilidade.");
+                        //     break;
+                        // }
+
+                        // for(const agendamento of agendamentosExistentes){
+
+                        // }
+                    }
+                    // console.log("HORA PROIBIDA "+horaProibida);
+                    // if(horaProibida == false){
+                        setHourSelected(hora);
+                    // }else{
+                        // setHourSelected(null);
+                    //     setButtonsDisabled(true);
+                    // }
+
+
+                    //     if(verificarHoraDisabled(dataAgendamentoConvertida)){
+                    //         return toast.warning("Selecione um novo horario com a disponibilidade de " + somaTempoServico() + " minutos");
+                    //     }
+                    // }
+                   
+                    
+
+                    
+
+                    for(var i = 0; i < oppeningHour.length; i++){
+                        if(oppeningHour[i+3] >= hora){
+                            console.log("ENTREI NO IF");
+                            horaAgendamentoSlide(i);
+                            break;
+                        }
+                    }
+
+
+                } else {
+                    setServicoJson(jsonConvert);
+                    console.log("SERVICO");
+                }
+            }
+        }
+    }, [queryAgendamentoString]);
     
     
     function recuperarValorBarbeiro() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros',
+            url: 'http://localhost:8080/barbeiros/listar?idBarbearia=1',
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -68,10 +173,20 @@ const MeusAgendamentos = () => {
     const cancelar = () => {
         const urlServicos = encodeURIComponent(JSON.stringify(servicosSelectedsJson));
         console.log("Cancelar "+urlServicos)
-
-        navigate(`/agendanento-horario/${urlServicos}`);
+        if(agendamentoSelectedsJson.length <= 1){
+            navigate(`/agendanento-horario/${urlServicos}`);
+        }
+        else{
+            navigate(`/meus-agendamentos`);
+        }
     };
+    
+    const editarServico = () => {
+        const urlServicos = encodeURIComponent(JSON.stringify(agendamentoSelectedsJson));
+        
+        navigate(`/agendanento-horario/${urlServicos}`);
 
+    };
 
     const [barberSelected, setBarberSelected] = useState(0);
     const [agendamentosExistentes,setAgendaementosExistentes] = useState();
@@ -122,34 +237,74 @@ const MeusAgendamentos = () => {
 
     var horariosProibidos = [];
     function verificarHoraDisabled(hour){
-        if(agendamentosExistentes != null && daySelected != null){
-            for(const agendamento of agendamentosExistentes){
-                console.log("AGENDAMENTO DA VEZ => "+agendamento);
-                const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
-                if(diaHoraAgendamento[0] == daySelected){
-                    const horarioReservado = diaHoraAgendamento[1].split(":");
-                    const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] +"."+ horarioReservado[1]);
-    
-                    horariosProibidos.push(horarioReservadoConvertidoInicio);
-                    var soma = 0;
-                    // var somaTempoServicoReservado = 0;
-                    const dataAumentada = new Date(agendamento.dataHoraAgendamento);
-                    for(const servico of agendamento.servicos){
-                        var condicao = servico.tempoServico / 30;
-                        while(condicao > 0){
-                            const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
-                            horariosProibidos.push(horarioConvertidoSoma);
-                            dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
-                            condicao --    
+        if(agendamentoSelectedsJson.length <= 1){
+            if(agendamentosExistentes != null && daySelected != null){
+                for(const agendamento of agendamentosExistentes){
+                    const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                    if(diaHoraAgendamento[0] == daySelected){
+                        const horarioReservado = diaHoraAgendamento[1].split(":");
+                        const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] +"."+ horarioReservado[1]);
+        
+                        horariosProibidos.push(horarioReservadoConvertidoInicio);
+                        var soma = 0;
+                        // var somaTempoServicoReservado = 0;
+                        const dataAumentada = new Date(agendamento.dataHoraAgendamento);
+                        for(const servico of agendamento.servicos){
+                            var condicao = servico.tempoServico / 30;
+                            while(condicao > 0){
+                                const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
+                                horariosProibidos.push(horarioConvertidoSoma);
+                                dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
+                                condicao --    
+                            }
                         }
+    
                     }
-
+    
+                    // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
+                    // matrizHorariosAgendados.push(dataHoraInicioeFim);
+                    // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
+                    
                 }
+            }
+        }
+        else{
 
-                // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
-                // matrizHorariosAgendados.push(dataHoraInicioeFim);
-                // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
-                
+            if(agendamentosExistentes != null && daySelected != null){
+                for(const agendamento of agendamentosExistentes){
+                    const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                    if(diaHoraAgendamento[0] == daySelected){
+                        const horarioReservado = diaHoraAgendamento[1].split(":");
+                        const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] +"."+ horarioReservado[1]);
+        
+
+                        var dataCompleta = agendamentoSelectedsJson.dataHoraAgendamento.split("T");
+                        var hora = dataCompleta[1].split(":");
+                        hora = parseFloat(hora[0] +"."+ hora[1]);
+                        if(hora != horarioReservadoConvertidoInicio){
+
+                            horariosProibidos.push(horarioReservadoConvertidoInicio);
+                            var soma = 0;
+                            // var somaTempoServicoReservado = 0;
+                            const dataAumentada = new Date(agendamento.dataHoraAgendamento);
+                            for(const servico of agendamento.servicos){
+                                var condicao = servico.tempoServico / 30;
+                                while(condicao > 0){
+                                    const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
+                                    horariosProibidos.push(horarioConvertidoSoma);
+                                    dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
+                                    condicao --    
+                                }
+                            }
+                        }
+    
+                    }
+    
+                    // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
+                    // matrizHorariosAgendados.push(dataHoraInicioeFim);
+                    // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
+                    
+                }
             }
         }
         return horariosProibidos.includes(hour);
@@ -178,13 +333,14 @@ const MeusAgendamentos = () => {
     // const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
     const [hourSelected, setHourSelected] = useState(null);
     const buttonHour = (value) => {
+        console.log("HORA DA VEZ "+value);
         var horasSelecionadas = [];
 
         var hour = parseFloat(value).toFixed(2);
         var horaMinutosFormatado = hour.replace(".",":");
 
         var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
-
+        console.log("SERVICO JSON "+JSON.stringify(servicosSelectedsJson));
         for(var i = 0; i < servicosSelectedsJson.length; i++ ){
             dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + servicosSelectedsJson[i].tempo);
             
@@ -205,6 +361,7 @@ const MeusAgendamentos = () => {
 
 
                 if(i != (servicosSelectedsJson.length - 1) || horariosProibidos.includes(convercaoDataEscolhidaVerificacao)){
+                    console.log("HORA PROIBIDAS " + horariosProibidos);
                     return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
                     
                 } 
@@ -297,7 +454,6 @@ const MeusAgendamentos = () => {
     const [currentSlideDays, setCurrentSlideDays] = useState(0);
 
     function voltarSlide(){
-        console.log("curren");
         if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
             const previousSlide = currentSlideHours - currentSlideHours;
             carouselRefHours.current.goToSlide(previousSlide);
@@ -305,6 +461,7 @@ const MeusAgendamentos = () => {
         }
         
     }
+    
 
     const goToNext7SlidesDays = () => {
         if (carouselRefDays.current && currentSlideDays < 53) { //verifica se já está no último slide
@@ -313,6 +470,15 @@ const MeusAgendamentos = () => {
             setCurrentSlideDays(nextSlide);
         }
     };
+
+    function diaAgendamentoSlide(diferencaDias){
+        console.log();
+        if (carouselRefDays.current && currentSlideDays < 53) { //verifica se já está no último slide
+            const nextSlide = currentSlideDays + diferencaDias;
+            carouselRefDays.current.goToSlide(nextSlide);
+            setCurrentSlideDays(nextSlide);
+        }
+    }
 
     const goToPrevious7SlidesDays = () => {
         if (carouselRefDays.current && currentSlideDays >= 7) { //verifica se já está no primeiro slide
@@ -335,6 +501,14 @@ const MeusAgendamentos = () => {
             setCurrentSlideHours(nextSlide);
         }
     };
+
+    function horaAgendamentoSlide(diferencaHora){
+        if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
+            const nextSlide = currentSlideHours + diferencaHora;
+            carouselRefHours.current.goToSlide(nextSlide);
+            setCurrentSlideHours(nextSlide);
+        }
+    }
 
     const goToPrevious7SlidesHours = () => {
         if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
@@ -375,6 +549,7 @@ const MeusAgendamentos = () => {
         axios.request(options)
             .then(function (response) {
                 toast.success("Agendado com Sucesso!");
+                navigate(`/meus-agendamentos`);
                 console.log("Agendamento criado com sucesso:", response.data);
             })
             .catch(function (error) {
@@ -387,18 +562,27 @@ const MeusAgendamentos = () => {
     return (
         <>
             <div className={style["container"]}>
+                <div className={style["containerServicos"]}></div>
                 <img src={ImgBarra} className={style["barraLeft"]} alt="" />
                 <img src={ImgBarra} className={style["barraRight"]} alt="" />
                 <NavBar />
                 <div className={style["container-barbers"]}>
                     <div className={style["subcontainer-barber"]}>
                         {cardsData && cardsData.map((data, index) => (
-                            <img key={index} onClick={() => buttonBarber(data.id)} className={`${style["asset-barber"]} 
-                            ${barberSelected === 0 ? '' :
-                            barberSelected === data.id ? style.barberSelected :
-                            style.barberNotSelected}`} 
-                            src={data.foto} alt="" 
-                            />
+                            <div className={style["divBarber"]}>
+                                <img key={index} onClick={() => buttonBarber(data.id)} className={`${style["asset-barber"]} 
+                                ${barberSelected === 0 ? '' :
+                                barberSelected === data.id ? style.barberSelected :
+                                style.barberNotSelected}`} 
+                                src={data.foto} alt="" 
+                                />
+                                <p className={`
+                                ${barberSelected === 0 ? style.nomeBarbeiro :
+                                barberSelected === data.id ? style.nomeBarbeiroSelecionado :
+                                style.nomeBarbeiroNaoSelecionado}`} >{data.nome}</p>
+                            </div>
+                            
+                            
                         ))}
                         
                     </div>
@@ -503,9 +687,19 @@ const MeusAgendamentos = () => {
                     </div>
                 </div>
                     <div className={style["container-btns"]}>
-                        <div className={style["subcontainer-btns"]}>
+                        <div className={`
+                            ${
+                                agendamentoSelectedsJson.length <= 1 ? style["subcontainer-btns"]:
+                                style["subcontainer-btns-alterar"]
+                            }`}>
                             <button className={`${ buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}>Salvar</button>
                             <button onClick={cancelar} className={style["btn-cancelar"]}>Cancelar</button>
+                            <button onClick={editarServico} className={`${
+
+                                agendamentoSelectedsJson.length <= 1 ? style["btnAlterarServicosDisabled"]:
+                                style["btnEditar"]
+
+                            }`}>Editar Serviço</button>
                         </div>
                     </div>
             </div>

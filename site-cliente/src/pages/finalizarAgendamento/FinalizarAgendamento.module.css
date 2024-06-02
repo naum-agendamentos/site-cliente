@@ -161,6 +161,13 @@ body{
     display: flex;
     justify-content: space-between;
 }
+.subcontainer-btns-alterar{
+    width: 30%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+}
+
 .btnSalvar{
     border-style: none;
     border-radius: 6px;
@@ -171,6 +178,8 @@ body{
     width: 126px;
     height: 43px;
 }
+
+
 .btnSalvarDisabled{
     border-style: none;
     border-radius: 6px;
@@ -183,6 +192,27 @@ body{
     height: 43px;
 }
 .btnSalvar:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: 0.5s;
+}
+
+.btnEditar{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #001BAB;
+    border: 2px solid #001BAB;
+    font-weight: 600;
+    background-color: #ffffff;
+    width: 126px;
+    height: 43px;
+}
+.btnAlterarServicosDisabled{
+    display: none;
+}
+
+.btnEditar:hover{
     cursor: pointer;
     scale: 1.1;
     transition: 0.5s;
@@ -266,3 +296,32 @@ body{
 .react-multiple-carousel__arrow--right{
     background-color: #001BAB;
 }
+
+.divBarber{
+    width: fit-content;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.nomeBarbeiro{
+    color: #303030;
+    font-weight: 600;
+}
+
+.nomeBarbeiroSelecionado{
+    color: #001BAB;
+    font-weight: 600;
+}
+
+.nomeBarbeiroNaoSelecionado{
+    color: #303030;
+    opacity: 0.6;
+    font-weight: 600;
+}
+
+.toastServicos{
+    background-color: #001BAB;
+}
+

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 const MeusAgendamentos = () => {
     const [servicos, setServicos] = useState();
     const [servicoSelectedsJson, setServicosSelecteds] = useState([{}]);
+    const [agendamentoSelectedsJson, setAgendamentosSelecteds] = useState([{}]);
     const navigate = useNavigate();
     var listaServico = [];
 
@@ -20,8 +21,22 @@ const MeusAgendamentos = () => {
         const paramsServico = new URLSearchParams(queryServicoString);
 
         const jsonConvert = JSON.parse(paramsServico.get('servicos'));
-        setServicosSelecteds(jsonConvert);
-        console.log(jsonConvert);
+        if(jsonConvert != null){
+            if (jsonConvert.dataHoraAgendamento != null) {
+                const servicosArray = jsonConvert.servicos.map(servico => ({
+                    id: servico.id,
+                    nome: servico.nomeServico,
+                    tempo: servico.tempoServico,
+                    preco: servico.preco
+                }));
+                setAgendamentosSelecteds(jsonConvert);
+                setServicosSelecteds(servicosArray);
+            }
+            else{
+                setServicosSelecteds(jsonConvert);
+
+            }
+        }
     }, [queryServicoString]);
 
 
@@ -78,8 +93,29 @@ const MeusAgendamentos = () => {
         if (listaServico.length === 0) {
             toast.warning("Selecione algum serviço para conseguir finalizar o agendamento");
         } else {
-            const listaServicoString = JSON.stringify(listaServico);
-            navigate(`/finalizar-agendamento/${listaServicoString}`);
+            if(agendamentoSelectedsJson.length <= 1){
+                const listaServicoString = JSON.stringify(listaServico);
+                navigate(`/finalizar-agendamento/${listaServicoString}`);
+            }
+            else{
+
+                const novoAgendamento = {
+                    ...agendamentoSelectedsJson,
+                    servicos: listaServico.map(servico => ({
+                        id: servico.id,
+                        nomeServico: servico.nome,
+                        preco: servico.preco,
+                        tempoServico: servico.tempo
+                    }))
+                };
+    
+        
+
+        
+
+                navigate(`/finalizar-agendamento/${encodeURIComponent(JSON.stringify(novoAgendamento))}`);
+            }
+
         }
     };
 
