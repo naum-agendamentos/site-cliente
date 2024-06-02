@@ -24,7 +24,7 @@ const MeusAgendamentos = () => {
     const queryAgendamentoString = useParams();
     const [agendamentoSelectedsJson,setAgendamentoJson] = useState([{}]);
     const [servicosSelectedsJson,setServicoJson] = useState([{}]);
-
+    let agendamentoProibidoCalled = false;
     
 
     useEffect(() => {
@@ -48,7 +48,6 @@ const MeusAgendamentos = () => {
                     recuperarAgendamentosExistentes(jsonConvert.barbeiro.id);
                     setDateDisabled(false);
                     setButtonsDisabled(false);
-
                     var dataCompleta = jsonConvert.dataHoraAgendamento.split("T");
                     
                     setDaySelected(dataCompleta[0]);
@@ -81,43 +80,11 @@ const MeusAgendamentos = () => {
                             }
                         }
                     } 
-                    var horaProibida = false;
-                    for(const servico of servicosArray){
-                        var condicao = servico.tempo / 30;
-                        while(condicao > 0){
-                            const horarioConvertidoSoma = parseFloat(dataAgendamento.getHours() +"."+ dataAgendamento.getMinutes());
-                            horariosProibidos.push(horarioConvertidoSoma);
-                            dataAgendamento.setMinutes(dataAgendamento.getMinutes() + 30);
-                            condicao --    
-                        }
-                        var dataAgendamentoConvertida = parseFloat(parseFloat(dataAgendamento.getHours() + "." + dataAgendamento.getMinutes()).toFixed(2));
-                        // if(verificarHoraDisabled(dataAgendamentoConvertida)){
-                        //     horaProibida = true;
-                        //     toast.warning("Selecione um novo horario com disponibilidade.");
-                        //     break;
-                        // }
-
-                        // for(const agendamento of agendamentosExistentes){
-
-                        // }
-                    }
-                    // console.log("HORA PROIBIDA "+horaProibida);
-                    // if(horaProibida == false){
-                        setHourSelected(hora);
-                    // }else{
-                        // setHourSelected(null);
-                    //     setButtonsDisabled(true);
-                    // }
-
-
-                    //     if(verificarHoraDisabled(dataAgendamentoConvertida)){
-                    //         return toast.warning("Selecione um novo horario com a disponibilidade de " + somaTempoServico() + " minutos");
-                    //     }
-                    // }
-                   
-                    
 
                     
+                    agendamentoProibido(hora,dataCompleta,servicosArray,dataHoraAgendamento,jsonConvert.barbeiro.id,jsonConvert.id)
+                    
+
 
                     for(var i = 0; i < oppeningHour.length; i++){
                         if(oppeningHour[i+3] >= hora){
@@ -136,6 +103,105 @@ const MeusAgendamentos = () => {
         }
     }, [queryAgendamentoString]);
     
+
+    function agendamentoProibido(hora,dataCompleta,servicosArray,dataHoraAgendamento,barbeiro,idAgendamento){
+        if(!agendamentoProibidoCalled){
+
+            console.log("agendamentoProibido")
+            const options = {
+                method: 'GET',
+                url: `http://localhost:8080/agendamentos/barbeiro/${barbeiro}`,
+                headers: {
+                'User-Agent': 'insomnia/8.6.1',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+            
+            axios.request(options)
+                .then(function (response) {
+                    var retornados = response.data;
+                    for(const agendamento of retornados){
+                        var dataAgendamentoExistente = agendamento.dataHoraAgendamento.split("T");
+                        var dataHoraAgendamentoExistente = new Date(dataAgendamentoExistente[0] + " " + dataAgendamentoExistente[1]);
+
+                        if(dataAgendamentoExistente[0] == dataCompleta[0] && agendamento.id != idAgendamento){
+
+                            var datasOcupadas = [];
+            
+                            for(const servico of agendamento.servicos){
+
+                                var dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                console.log("Data hora existente "+  dataAgendamentoConvertida);
+                                console.log("Data hora existente "+  dataAgendamentoConvertida);
+                                datasOcupadas.push(dataAgendamentoConvertida);
+                                var condicao = servico.tempo / 30;
+                                if(condicao == 0){
+                                    dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + servico.tempo);
+                                    dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+            
+                                    datasOcupadas.push(dataAgendamentoConvertida);
+                                }
+                                else{
+                                    while(condicao > 0){
+                                        dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + 30);
+                                        condicao --;
+                                        dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+            
+                                        datasOcupadas.push(dataAgendamentoConvertida);
+                                    }
+                                }
+                            }
+                            console.log("horas proibidas "+datasOcupadas);
+            
+            
+                            for(const servico of servicosArray){
+                                var dataAgendamentoConvertida = parseFloat(dataHoraAgendamento.getHours() + "." + dataHoraAgendamento.getMinutes());
+                                console.log("DATA AGENDADA "+dataAgendamentoConvertida);
+                                if(datasOcupadas.includes(dataAgendamentoConvertida)){
+                                    setHourSelected(null);
+                                    setButtonsDisabled(true);
+                                    if(!agendamentoProibidoCalled){
+                                        agendamentoProibidoCalled = true;
+                                        return toast.warning("Selecione um novo horário com disponibilidade");
+                                    }
+                                }
+                                
+            
+                                var condicao = servico.tempo / 30;
+                                
+                                while(condicao > 0){
+                                
+                                    dataAgendamentoConvertida = parseFloat(dataHoraAgendamento.getHours() + "." + dataHoraAgendamento.getMinutes());
+            
+                                    console.log("data somada "+dataAgendamentoConvertida);
+                                    console.log("data somada "+datasOcupadas.includes(dataAgendamentoConvertida));
+                                    if(datasOcupadas.includes(dataAgendamentoConvertida)){
+                                        setHourSelected(null);
+                                        setButtonsDisabled(true);
+                
+                                        if(!agendamentoProibidoCalled){
+                                            agendamentoProibidoCalled = true;
+                                            return toast.warning("Selecione um novo horário com disponibilidade");
+                                        }
+                                    }
+
+                                    dataHoraAgendamento.setMinutes(dataHoraAgendamento.getMinutes() + 30);
+                                    condicao --;
+                                }
+                                
+                            }
+                        }
+                    }
+                    if(!agendamentoProibidoCalled){
+                        setHourSelected(hora);
+                    }
+                    
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+    }
     
     function recuperarValorBarbeiro() {
         const options = {
@@ -260,10 +326,7 @@ const MeusAgendamentos = () => {
                         }
     
                     }
-    
-                    // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
-                    // matrizHorariosAgendados.push(dataHoraInicioeFim);
-                    // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
+
                     
                 }
             }
@@ -299,10 +362,6 @@ const MeusAgendamentos = () => {
                         }
     
                     }
-    
-                    // const dataHoraInicioeFim = [dataCompleta,horarioReservadoConvertidoInicio,horarioReservadoConvertidoFim];
-                    // matrizHorariosAgendados.push(dataHoraInicioeFim);
-                    // console.log("Tamanho da matriz " + matrizHorariosAgendados.length);
                     
                 }
             }
@@ -333,14 +392,12 @@ const MeusAgendamentos = () => {
     // const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
     const [hourSelected, setHourSelected] = useState(null);
     const buttonHour = (value) => {
-        console.log("HORA DA VEZ "+value);
         var horasSelecionadas = [];
 
         var hour = parseFloat(value).toFixed(2);
         var horaMinutosFormatado = hour.replace(".",":");
 
         var dataServicoEscolhida = new Date(daySelected+" "+horaMinutosFormatado+":00");
-        console.log("SERVICO JSON "+JSON.stringify(servicosSelectedsJson));
         for(var i = 0; i < servicosSelectedsJson.length; i++ ){
             dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + servicosSelectedsJson[i].tempo);
             
@@ -536,25 +593,50 @@ const MeusAgendamentos = () => {
             idServicos.push(service.id);
         }
     
-        const options = {
-            method: 'POST',
-            url: `http://localhost:8080/agendamentos?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem("userId")}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
-            headers: {
-                'User-Agent': 'insomnia/8.6.1',
-                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
-                'Content-Type': 'application/json'
-            }
-        };
-    
-        axios.request(options)
-            .then(function (response) {
-                toast.success("Agendado com Sucesso!");
-                navigate(`/meus-agendamentos`);
-                console.log("Agendamento criado com sucesso:", response.data);
-            })
-            .catch(function (error) {
-                console.error("Erro ao criar agendamento:", error);
-            });
+        if(agendamentoSelectedsJson.length <= 1){
+            const options = {
+                method: 'POST',
+                url: `http://localhost:8080/agendamentos?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem("userId")}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
+                headers: {
+                    'User-Agent': 'insomnia/8.6.1',
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+        
+            axios.request(options)
+                .then(function (response) {
+                    toast.success("Agendado com Sucesso!");
+                    navigate(`/meus-agendamentos`);
+                    console.log("Agendamento criado com sucesso:", response.data);
+                })
+                .catch(function (error) {
+                    console.error("Erro ao criar agendamento:", error);
+                });
+        }
+        else{
+            console.log("AGENDAMENTO SELECIONADO "+ agendamentoSelectedsJson.id);
+            const options = {
+                method: 'PUT',
+                url: `http://localhost:8080/agendamentos/${agendamentoSelectedsJson.id}%20?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem('userId')}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
+                headers: {
+                    'User-Agent': 'insomnia/8.6.1',
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+        
+            axios.request(options)
+                .then(function (response) {
+                    toast.success("Agendamento Atualizado com sucesso!");
+                    navigate(`/meus-agendamentos`);
+                    console.log("Agendamento atualizado com sucesso:", response.data);
+                })
+                .catch(function (error) {
+                    console.error("Erro ao atualizar agendamento:", error);
+                });
+        }
+        
     }
     
 
