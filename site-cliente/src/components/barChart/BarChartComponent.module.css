@@ -1,0 +1,59 @@
+
+.chart-container {
+    width: 500px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.541);
+}
+
+
+.chart-container h2 {
+    font-family: 'Oswald';
+    font-size: 24px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+    line-height: 59px;
+    text-align: center;
+}
+
+
+.chart-no-data {
+    font-family: 'Oswald';
+    font-size: 24px;
+    font-weight: 400;
+    color: rgb(255, 255, 255);
+    line-height: 59px;
+    text-align: center;
+}
+
+
+.chart-responsive-container {
+    width: 100%;
+}
+
+
+.chart-cartesian-grid {
+    stroke: #000000;
+}
+
+
+.chart-x-axis {
+    font-family: 'Oswald';
+    font-size: 24px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+    line-height: 59px;
+    text-align: center;
+}
+
+.chart-y-axis {
+    font-size: 18px;
+    color: rgb(0, 0, 0);   
+}
+
+.chart-bar {
+    cursor: pointer;
+    stroke-width: 1px; 
+    stroke: #000000; 
+}
