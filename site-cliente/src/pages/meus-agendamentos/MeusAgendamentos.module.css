@@ -103,6 +103,15 @@ body{
     border: 1px solid #ffffff;
     border-radius: 6px;
 }
+.btn-delete{
+    width: 10vh;
+    height: 43px;
+    margin: 1vh;
+    background-color: red;
+    color: #FFFFFF;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+}
 .btn-edit:hover{  
     scale:1.1;
     transition: 0.3s;

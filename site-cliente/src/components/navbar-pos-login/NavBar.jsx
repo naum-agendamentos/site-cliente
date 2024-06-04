@@ -11,7 +11,7 @@ const NavBar = () => {
     };
 
     const servicos = () => {
-        navigate(`/agendanento-horario`);
+        navigate(`/agendanento-horario/null`);
     };
 
     const meusAgendamento = () => {

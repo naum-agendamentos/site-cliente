@@ -64,7 +64,7 @@ body{
     flex-direction: row;
 }
 .box-name-service{
-    width: 80%;
+    width: 60%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -75,11 +75,17 @@ body{
     font-weight: 600;
 }
 .container-time{
-    width: 10%;
+    width: 12%;
     height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+.container-money{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .container-checkbox{
     width: 10%;
