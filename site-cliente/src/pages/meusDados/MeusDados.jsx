@@ -15,7 +15,8 @@ const MeusDados = () => {
 
     const options = {
         method: 'GET',
-        url: `http://localhost:8080/clientes/${2}`,
+        url: `http://localhost:8080/clientes/usuario`,
+        params: { idUsuario: sessionStorage.getItem("userId") },
         headers: {
             'User-Agent': 'insomnia/8.6.1',
             Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -25,7 +26,8 @@ const MeusDados = () => {
     axios.request(options)
         .then(function (response) {
             const { data } = response;
-            const { nome, email, telefone } = data;
+            const { id, nome, email, telefone } = data;
+            sessionStorage.setItem("idCliente", id);
             setNome(nome);
             setEmail(email);
             setTelefone(telefone);
@@ -36,8 +38,8 @@ const MeusDados = () => {
 
     const navigate = useNavigate(); // Inicializa o hook de navegação
 
-    const handleEdit = (id) => {
-        navigate(`/editar-meus-dados/${2}`);
+    const handleEdit = () => {
+        navigate(`/editar-meus-dados/${sessionStorage.getItem("idCliente")}`);
     };
 
 

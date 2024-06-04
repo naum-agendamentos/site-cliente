@@ -132,9 +132,9 @@ const EditarMeusDados = () => {
 
             axios.request(options).then(function (response) {
                 console.log(response.data);
-                toast.success('Dados editados com sucesso!');
+                toast.success('Dados editados com sucesso! Realize o login novamente');
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
-                navigate(`/meus-dados/${id}`)
+                navigate(`/login`)
             }).catch(function (error) {
                 console.error(error);
                 toast.error('Ocorreu um erro ao salvar os dados. Por favor, tente novamente.');
@@ -147,7 +147,8 @@ const EditarMeusDados = () => {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/clientes/${id}`,
+            url: `http://localhost:8080/clientes/usuario`,
+            params: { idUsuario: sessionStorage.getItem("userId") },
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -161,7 +162,8 @@ const EditarMeusDados = () => {
                     try {
                         const response = await axios.request({
                             method: 'GET',
-                            url: `http://localhost:8080/clientes/${id}`,
+                            url: `http://localhost:8080/clientes/usuario`,
+                            params: { idUsuario: sessionStorage.getItem("userId") },
                             headers: options.headers
                         });
                         const { data } = response;

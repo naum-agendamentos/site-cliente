@@ -78,6 +78,7 @@ function EditarServico() {
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     nomeServico: nome,
+                    tempoServico: tempoDuracao,
                     preco: preco
                 },
                 headers: {
@@ -116,8 +117,9 @@ function EditarServico() {
         axios.request(options)
             .then(function (response) {
                 const { data } = response;
-                const { nomeServico, preco } = data;
+                const { nomeServico, tempoServico, preco } = data;
                 setNome(nomeServico);
+                setTempoDuracao(tempoServico);
                 setPreco(preco);
                 console.log(response.data);
             })
