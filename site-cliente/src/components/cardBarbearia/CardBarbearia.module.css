@@ -1,0 +1,63 @@
+
+
+.imagem-container {
+    border: 1px solid rgba(255, 184, 0, 1);
+    box-shadow: 15px 4px 15px 0px rgba(143, 143, 143, 0.21);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 364px;
+    height: 230px;
+    background-color: rgba(0, 0, 0, 1);
+    transition: 0.6s !important;
+    overflow: hidden;
+}
+
+.imagem-container:hover {
+    transform: translate3d(-1vw, -3vh, 0) scale(1.05) !important;
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    box-shadow: 3px 6px 15px 0px rgba(0, 0, 0, 0.39), 13px 24px 27px 0px rgba(0, 0, 0, 0.34), 30px 54px 37px 0px rgba(0, 0, 0, 0.20), 53px 95px 44px 0px rgba(0, 0, 0, 0.06), 82px 149px 48px 0px rgba(0, 0, 0, 0.01) !important;
+    transition: 0.6s !important;
+    cursor: default;
+}
+
+.imagem {
+    width: 30%;
+    height: 30%;
+    padding: 5px;
+    border: 3px  solid rgba(255, 184, 0, 1);
+    object-fit: cover;
+}
+
+
+@media screen and (max-width: 1700px) {
+    .card-musica {
+        width: 18vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 1450px) {
+    .card-musica {
+        width: 24vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .card-musica {
+        width: 24vw;
+        height: 45vh;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .card-musica {
+        width: 35vw;
+        height: 45vh;
+    }
+}

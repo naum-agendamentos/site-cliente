@@ -17,6 +17,7 @@ import CadastroServiço from "./pages/cadastrarServico/CadastroServico";
 import EditarServico from "./pages/editarServico/EditarServico";
 import Dashboard from "./pages/dashboard/dashboard";
 import MeusAgendamentosBarbeiro from "./pages/meusAgendamentoBarbeiro/MeusAgendamentoBarbeiro";
+import AvaliacaoBarbearia from "./pages/avaliacaoBarbearia/avaliacao";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -42,6 +43,7 @@ function Rotas() {
                     <Route path="/lista-servico" element={<ListaServico/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/agendamentos-barbeiro/:id" element={<MeusAgendamentosBarbeiro/>}/>
+                    <Route path="/avaliacao-barbearia" element={<AvaliacaoBarbearia/>}/>
                     <Route path="/*" element={<NotFound/>}/>
 
                 </Routes>
