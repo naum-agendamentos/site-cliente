@@ -17,7 +17,9 @@ const NavBar = () => {
     const meusAgendamento = () => {
         navigate(`/meus-agendamentos`);
     };
-    
+    const Avaliacao = () => {
+    navigate(`/avaliacao-barbearia`)
+    };
     const sair = () => {
         navigate(`/login`);
         sessionStorage.clear();
@@ -30,7 +32,7 @@ const NavBar = () => {
                 <li onClick={servicos} className={styles["option"]}>Serviços</li>
                 <li onClick={meusAgendamento} className={styles["option"]}>Meus Agendamentos</li>
                 <li onClick={meusDados} className={styles["option"]}>Meus Dados</li>
-                <li className={styles["option"]}>Avaliar</li>
+                <li onClick={Avaliacao} className={styles["option"]}>Avaliar</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>
 

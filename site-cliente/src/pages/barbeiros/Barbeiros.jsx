@@ -121,7 +121,7 @@ const Barbeiros = () => {
                                     nome={data.nome}
                                     email={data.email}
                                     telefone={data.telefone}
-                                    onDelete={handleDelete} // Pass the handleDelete function as a prop
+                                    onDelete={handleDelete}
                                 />
                             </div>
                         ))}
