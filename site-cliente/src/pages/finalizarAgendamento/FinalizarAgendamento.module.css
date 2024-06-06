@@ -10,12 +10,17 @@ body{
     flex-direction: column;
 }
 .container-barbers{
-    margin-top: 10vh;
+    margin-top: 5vh;
     margin-bottom: 1vh;
     width: 100%;
     height: fit-content;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.p-selecao-barber{
+    color: #303030;
 }
 .subcontainer-barber{
     width: 40%;
@@ -325,3 +330,22 @@ body{
     background-color: #001BAB;
 }
 
+
+
+
+/* barras laterais */
+.barraLeft{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.barraRight{
+    width: 35px;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+}

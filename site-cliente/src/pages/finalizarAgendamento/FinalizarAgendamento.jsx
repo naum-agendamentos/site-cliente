@@ -16,7 +16,10 @@ import { toast } from "react-toastify";
 
 
 const MeusAgendamentos = () => {
-    
+    const HOJE = new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2,"0")+'-'+new Date().getDate().toString().padStart(2,"0");
+    const HORAATUAL = parseFloat(new Date().getHours());
+
+    // var HORAATUAL = parseFloat(Date().getHours().toFixed(2));
 
     //Listar Barbeiro chamada
     const [cardsData, setCardsData] = useState();
@@ -25,6 +28,7 @@ const MeusAgendamentos = () => {
     const [agendamentoSelectedsJson,setAgendamentoJson] = useState([{}]);
     const [servicosSelectedsJson,setServicoJson] = useState([{}]);
     let agendamentoProibidoCalled = false;
+
     
 
     useEffect(() => {
@@ -294,6 +298,9 @@ const MeusAgendamentos = () => {
     //DATE***********************************************************
 
     const buttonDay = (indexDay,dataCompleta) => {
+        
+    console.log('HOOOOOJJEEEEE '+HORAATUAL);
+    console.log('HOOOOOJJEEEEE CLICADO '+dataCompleta);
         voltarSlide();
         setButtonsDisabled(true);
         setDaySelected(dataCompleta);
@@ -368,6 +375,7 @@ const MeusAgendamentos = () => {
         }
         return horariosProibidos.includes(hour);
     }
+
 
     const gerarProximosDias = (dias) => {
         const hoje = new Date();
@@ -638,17 +646,23 @@ const MeusAgendamentos = () => {
         }
         
     }
+
+    function bloqueioHorasDataAlert(){
+
+        toast.error("Não é possível selecionar um horário do passado!");
+    }
     
 
     const dias = gerarProximosDias(60);
     return (
         <>
+            <div className="borda-gradiente-left">
+            <div className="borda-gradiente-right">
             <div className={style["container"]}>
                 <div className={style["containerServicos"]}></div>
-                <img src={ImgBarra} className={style["barraLeft"]} alt="" />
-                <img src={ImgBarra} className={style["barraRight"]} alt="" />
                 <NavBar />
                 <div className={style["container-barbers"]}>
+                    <p className={style["monthday"]}>SELECIONE UM BARBEIRO</p>
                     <div className={style["subcontainer-barber"]}>
                         {cardsData && cardsData.map((data, index) => (
                             <div className={style["divBarber"]}>
@@ -672,7 +686,7 @@ const MeusAgendamentos = () => {
                 <div className={`${style["container-date"]} ${isDateDisabled ? style.daysDisabled : ''}`}>
                     <div className={style["container-monthday"]}>
                         <div className={style["subcontainer-monthday"]}>
-                            <p className={style["monthday"]}>MÊS DIA</p>
+                            <p className={style["monthday"]}>SELECIONE UM DIA DO MÊS</p>
                         </div>
                     </div>
                     <div className={style["container-days"]}>
@@ -720,7 +734,7 @@ const MeusAgendamentos = () => {
                 <div className={`${isHourDisabled === true ? style.containerTimerDesabilited:''}`}>
                     <div className={style["container-monthday"]}>
                         <div className={style["subcontainer-monthday"]}>
-                            <p className={style["monthday"]}>HORÁRIO DE INÍCIO</p>
+                            <p className={style["monthday"]}>SELECIONE UM HORÁRIO DE INÍCIO</p>
                         </div>
                     </div>
                     <div className={style["container-days"]}>
@@ -748,6 +762,9 @@ const MeusAgendamentos = () => {
                                     <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
                                         <button disabled={verificarHoraDisabled(hour)} id={"idBtnHour"+index}className={`
                                             ${
+                                
+                
+                                                HOJE == daySelected && HORAATUAL >= hour? style.daysNotSelected:
                                                 verificarHoraDisabled(hour) ? style.daysNotSelected:   
                                                 verificarHoraHabilited(hour) ? style.daySelected:
                                                 style.boxDays
@@ -755,8 +772,8 @@ const MeusAgendamentos = () => {
                                                 
                                             }
                                         `} 
-                                            onClick={ () => buttonHour(hour)}> 
-                                            <p>{ verificarHoraDisabled(hour) ? "Reservado" : hour.toFixed(2).replace(".",":")}</p>
+                                            onClick={HOJE == daySelected && HORAATUAL >= hour? () => bloqueioHorasDataAlert(): () => buttonHour(hour)}> 
+                                            <p>{verificarHoraDisabled(hour) ? "Reservado" : hour.toFixed(2).replace(".",":")}</p>
                                         </button>
                                     </React.Fragment>
                                 )) 
@@ -784,6 +801,8 @@ const MeusAgendamentos = () => {
                             }`}>Editar Serviço</button>
                         </div>
                     </div>
+            </div>
+            </div>
             </div>
         </>
     );
