@@ -6,7 +6,7 @@ function CardBarbearia() {
     return (
         <div className={styles.card}>
             <img src={imagemParceiro} alt="Imagem da Barbearia" className={styles.imagem} />
-            
+
         </div>
     );
 }
