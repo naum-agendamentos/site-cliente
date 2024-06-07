@@ -2,17 +2,20 @@
     text-align: center;
     margin-top: 50px;
 }
-.h2-avaliacao{
+
+.h2-avaliacao {
     color: black;
-    
+
     padding: 20px;
 }
-.p-avaliacao{
+
+.p-avaliacao {
     font-size: 24px;
     color: black;
- 
+
 }
-.button-cadastrar{
+
+.button-cadastrar {
     margin-top: 8px;
     background-color: rgb(23, 178, 15);
     border-radius: 8px;
@@ -20,18 +23,13 @@
     height: 40px;
     color: #ffff;
     width: 264px;
+    cursor: pointer;
 }
+
 .stars {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-}
-
-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 2rem;
 }
 
 .on {
