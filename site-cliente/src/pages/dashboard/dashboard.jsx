@@ -8,7 +8,9 @@ const Dashboard = () => {
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
-  const [data4, setData4] = useState([]);
+  const [lucro, setLucro] = useState(0);
+  const [TotAgenHoje, setTotAgenHoje] = useState(0);
+  const [compAgend, setCompAgend] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -20,7 +22,9 @@ const Dashboard = () => {
         'http://localhost:8080/dashboards/cortes-por-barbeiro',
         'http://localhost:8080/dashboards/lucro-por-barbeiro',
         'http://localhost:8080/dashboards/top-servicos',
-        'http://localhost:8080/dashboards/agendamentos-semanais'
+        'http://localhost:8080/dashboards/lucro',
+        'http://localhost:8080/dashboards/total-agendamento-hoje',
+        'http://localhost:8080/dashboards/porcentagem-agendamento-hoje-ontem'
       ];
 
       const options = {
@@ -32,26 +36,56 @@ const Dashboard = () => {
 
       const responses = await Promise.all(endpoints.map(endpoint => axios.get(endpoint, options)));
 
-      setData1(responses[0].data.map(service => ({ name: service.nome, value: service.cortes })));
-      setData2(responses[1].data.map(service => ({ name: service.nome, value: service.lucro })));
-      setData3(responses[2].data.map(service => ({ name: service.nome, value: service.qtdMes })));
-      setData4(responses[3].data.map(service => ({ name: service.nome, value: service })));
+      setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 10), value: service.cortes })));
+      setData2(responses[1].data.map(service => ({ name: service.nome.slice(0, 10), value: service.lucro })));
+      setData3(responses[2].data.map(service => ({ name: service.nome.slice(0, 10), value: service.qtdMes })));
+      setLucro(responses[3].data);
+      setTotAgenHoje(responses[4].data);
+      setCompAgend(responses[5].data);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
 
+  const formatarValor = (TotAgenHoje, compAgend) => {
+    let sinal = '';
+    if (compAgend < 0) {
+      sinal = '-';
+    } else if (compAgend > 0) {
+      sinal = '+';
+    }
+  }
+
   return (
-    <div class="borda-gradiente-left">
-      <div class="borda-gradiente-right">
+    <div className="borda-gradiente-left">
+      <div className="borda-gradiente-right">
         <NavbarBarbeiros />
         <div className={styles["dashboard"]}>
-          <h1>Dashboard</h1>
+          <div className={styles["container-kpis"]}>
+              <div className={styles["bloco-kpi"]}>
+                  <p>Lucro total da Barbearia<br/>
+                  <span>R${lucro.toFixed(2)}</span>
+                 </p>
+              </div>
+              <div className={styles["bloco-kpi"]}>
+                  <p>Total Agendamentos no Dia<br/>
+                  <span> {TotAgenHoje} </span>
+                  <span className={compAgend < 0 ? styles["vermelho"] : compAgend > 0 ? styles["verde"] : styles["neutro"]}>
+                    {compAgend < 0 ? '-' : compAgend > 0 ? '+' : ''}{Math.abs(compAgend.toFixed(2))}% Que ontem
+                  </span>
+
+                 </p>
+              </div>
+              <div className={styles["bloco-kpi"]}>
+                  <p>Lucro total da Barbearia<br/>
+                  <span>R${lucro.toFixed(2)}</span>
+                 </p>
+              </div>
+          </div>
           <div className={styles["charts"]}>
             <BarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" />
             <BarChartComponent title="Barbeiro com mais lucros" data={data2} color="#82ca9d" />
             <BarChartComponent title="Top Serviços" data={data3} color="#ffc658" />
-            <BarChartComponent title="Serviços" data={data4} color="#ff7300" />
           </div>
         </div>
       </div>
