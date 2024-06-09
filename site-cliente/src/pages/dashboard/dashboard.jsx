@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [lucro, setLucro] = useState(0);
   const [TotAgenHoje, setTotAgenHoje] = useState(0);
   const [compAgend, setCompAgend] = useState(0);
+  const [mediaAva, setMediaAva] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -24,7 +25,8 @@ const Dashboard = () => {
         'http://localhost:8080/dashboards/top-servicos',
         'http://localhost:8080/dashboards/lucro',
         'http://localhost:8080/dashboards/total-agendamento-hoje',
-        'http://localhost:8080/dashboards/porcentagem-agendamento-hoje-ontem'
+        'http://localhost:8080/dashboards/porcentagem-agendamento-hoje-ontem',
+        'http://localhost:8080/dashboards/media-avaliacao/1'
       ];
 
       const options = {
@@ -42,19 +44,12 @@ const Dashboard = () => {
       setLucro(responses[3].data);
       setTotAgenHoje(responses[4].data);
       setCompAgend(responses[5].data);
+      setMediaAva(responses[6].data);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
 
-  const formatarValor = (TotAgenHoje, compAgend) => {
-    let sinal = '';
-    if (compAgend < 0) {
-      sinal = '-';
-    } else if (compAgend > 0) {
-      sinal = '+';
-    }
-  }
 
   return (
     <div className="borda-gradiente-left">
@@ -77,13 +72,14 @@ const Dashboard = () => {
                  </p>
               </div>
               <div className={styles["bloco-kpi"]}>
-                  <p>Lucro total da Barbearia<br/>
-                  <span>R${lucro.toFixed(2)}</span>
+                  <p>Média de avaliação<br/>
+                  <span>{mediaAva.toFixed(2)}</span>
+                  <span className={styles["estrela"]}> &#9733;</span>
                  </p>
               </div>
           </div>
           <div className={styles["charts"]}>
-            <BarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" />
+            <BarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" isFirstChart={true} />
             <BarChartComponent title="Barbeiro com mais lucros" data={data2} color="#82ca9d" />
             <BarChartComponent title="Top Serviços" data={data3} color="#ffc658" />
           </div>

@@ -75,6 +75,10 @@
   color: rgb(0, 0, 0);
 }
 
-
-
-
+.bloco-kpi p .estrela {
+  font-size: 40px;
+  color: gold;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  margin-left: 2vh;
+}
