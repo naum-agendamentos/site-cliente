@@ -38,9 +38,9 @@ const Dashboard = () => {
 
       const responses = await Promise.all(endpoints.map(endpoint => axios.get(endpoint, options)));
 
-      setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 10), value: service.cortes })));
-      setData2(responses[1].data.map(service => ({ name: service.nome.slice(0, 10), value: service.lucro })));
-      setData3(responses[2].data.map(service => ({ name: service.nome.slice(0, 10), value: service.qtdMes })));
+      setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 7), value: service.cortes })));
+      setData2(responses[1].data.map(service => ({ name: service.nome.slice(0, 7), value: service.lucro })));
+      setData3(responses[2].data.map(service => ({ name: service.nome.slice(0, 7), value: service.qtdMes })));
       setLucro(responses[3].data);
       setTotAgenHoje(responses[4].data);
       setCompAgend(responses[5].data);
