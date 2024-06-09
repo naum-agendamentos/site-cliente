@@ -283,6 +283,7 @@ const MeusAgendamentos = () => {
 
 
     const buttonBarber = (idBarber) => {
+        voltarSlide();
         setDateDisabled(false);
         setBarberSelected(idBarber);
         recuperarAgendamentosExistentes(idBarber);
