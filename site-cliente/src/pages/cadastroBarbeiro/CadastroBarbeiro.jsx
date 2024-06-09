@@ -167,10 +167,17 @@ function CadastroBarbeiro() {
                 JSON.stringify(response.data));
             navigate("/barbeiros")
 
-        }).catch(function (error) {
-            console.error(error);
-            toast.error("Ocorreu um erro ao salvar os dados,por favor, tente novamente.");
-        });
+        }).catch((error) => {
+                const status = error.response ? error.response.status : 'sem status';
+                const mensagem = error.response ? error.response.data : error.message;
+            
+                if (status === 409) {
+                    toast.error("Já existe um usuário com esse endereço de Email");
+                } else {
+                    toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
+                }
+                
+            });
     }
 
     };

@@ -15,6 +15,14 @@ const Barbeiros = () => {
     useEffect(() => {
         recuperarValorDoCard();
 
+        if (sessionStorage.getItem("AtivarToast") === "ativar") {
+            setTimeout(() => {
+                toast.info("Para desfazer a ação clique em CTRL + Z");
+            }, 1000);
+        }
+
+        sessionStorage.setItem("AtivarToast", "desativar");
+        
         const serializedPilha = sessionStorage.getItem("pilha");
         if (serializedPilha) {
             pilha.deserialize(serializedPilha);
@@ -85,14 +93,14 @@ const Barbeiros = () => {
                 toast.success("Barbeiro reativado!");
             }).catch(function (error) {
                 console.error(error);
-                toast.error("Erro ao reativado o Barbeiro");
+                toast.error("Erro ao reativar o Barbeiro");
             });
             sessionStorage.setItem("pilha", pilha.serialize());
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
         } else {
-            toast.warning("A pilha está vazia.");
+            toast.warning("Não há ações para desfazer");
         }
     };
 

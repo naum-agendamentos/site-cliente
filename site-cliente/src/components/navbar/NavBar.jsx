@@ -17,7 +17,9 @@ const NavBar = () => {
         navigate("/cadastro-cliente"); // Redireciona para a página de músicas
     };
 
-
+    const voltarHome = () => { 
+        navigate("/");
+    };
 
 
 
@@ -25,7 +27,7 @@ const NavBar = () => {
         <nav className={styles["Nav"]} id='nav'>
 
             <div>
-                <img src={logoTmNav} alt="logo-tm"/>
+                <img onClick={voltarHome} src={logoTmNav} className={styles["imagem-logo"]} alt="logo-tm"/>
             </div>
 
             <ul className={styles["navbar-options"]}>

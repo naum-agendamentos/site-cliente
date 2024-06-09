@@ -93,9 +93,9 @@ function CadastroServiço() {
                 toast.success("Novo serviço criado com sucesso!");
                 navigate("/lista-servico")
                 console.log(response.data);
-            }).catch(function (error) {
-                console.error(error);
-                toast.error("Ocorreu um erro ao salvar os dados,por favor, tente novamente.");
+            }).catch((error) => {
+                const mensagem = error.response ? error.response.data : error.message;
+                toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
             });
         }
     };

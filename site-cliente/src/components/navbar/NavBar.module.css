@@ -34,6 +34,15 @@ Nav {
     transition: 0.5s;
 }
 
+.imagem-logo {
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.imagem-logo:hover {
+    scale: 1.1;
+}
+
 
 nav a {
     list-style-type: none;

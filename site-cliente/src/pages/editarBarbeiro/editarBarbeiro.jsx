@@ -170,9 +170,16 @@ function EditarBarbeiro() {
                 toast.success('Dados editados com sucesso!');
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
                 navigate("/barbeiros")
-            }).catch(function (error) {
-                console.error(error);
-                toast.error('Ocorreu um erro ao salvar os dados. Por favor, tente novamente.');
+            }).catch((error) => {
+                const status = error.response ? error.response.status : 'sem status';
+                const mensagem = error.response ? error.response.data : error.message;
+            
+                if (status === 409) {
+                    toast.error("Já existe um usuário com esse endereço de Email");
+                } else {
+                    toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
+                }
+                
             });
         } else {
             toast.error("Preencha todos os campos corretamente.");
