@@ -63,7 +63,7 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosClientes() {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/agendamentos/cliente/${sessionStorage.getItem("userId")}`,
+            url: `http://localhost:8080/agendamentos/cliente/${sessionStorage.getItem("idCliente")}`,
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`

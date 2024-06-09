@@ -299,8 +299,6 @@ const MeusAgendamentos = () => {
 
     const buttonDay = (indexDay,dataCompleta) => {
         
-    console.log('HOOOOOJJEEEEE '+HORAATUAL);
-    console.log('HOOOOOJJEEEEE CLICADO '+dataCompleta);
         voltarSlide();
         setButtonsDisabled(true);
         setDaySelected(dataCompleta);
@@ -328,7 +326,7 @@ const MeusAgendamentos = () => {
                                 const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
                                 horariosProibidos.push(horarioConvertidoSoma);
                                 dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
-                                condicao --    
+                                condicao --;
                             }
                         }
     
@@ -363,7 +361,7 @@ const MeusAgendamentos = () => {
                                     const horarioConvertidoSoma = parseFloat(dataAumentada.getHours() +"."+ dataAumentada.getMinutes());
                                     horariosProibidos.push(horarioConvertidoSoma);
                                     dataAumentada.setMinutes(dataAumentada.getMinutes() + 30);
-                                    condicao --    
+                                    condicao --;
                                 }
                             }
                         }
@@ -396,7 +394,7 @@ const MeusAgendamentos = () => {
 
    
     //HOURS***********************************************************
-    const oppeningHour = [9,9.30,10,10.30,11,11.30,12,12.30,13,13.30,14,14.30,15,15.30,16,16.30,17,17.30]; //horário funcionamento 
+    const oppeningHour = [8,8.30,9,9.30,10,10.30,11,11.30,12,12.30,13,13.30,14,14.30,15,15.30,16,16.30,17,17.30,18,18.30,19,19.30]; //horário funcionamento 
     // const oppeningHour = [9,9.30,10,10.30,11,11.30,12];
     const [hourSelected, setHourSelected] = useState(null);
     const buttonHour = (value) => {
@@ -561,7 +559,7 @@ const MeusAgendamentos = () => {
 
     const goToNext7SlidesHours = () => {
         if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
-            const nextSlide = currentSlideHours + 3;
+            const nextSlide = currentSlideHours + 6;
             carouselRefHours.current.goToSlide(nextSlide);
             setCurrentSlideHours(nextSlide);
         }
@@ -576,42 +574,49 @@ const MeusAgendamentos = () => {
     }
 
     const goToPrevious7SlidesHours = () => {
-        if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
-            const previousSlide = currentSlideHours - 3;
+        if (carouselRefHours.current && currentSlideHours >= 6) { //verifica se já está no primeiro slide
+            const previousSlide = currentSlideHours - 6;
             carouselRefHours.current.goToSlide(previousSlide);
             setCurrentSlideHours(previousSlide);
         }
     };
 
     function salvar() {
-        var hora = hourSelected;
-        hora = hora.replace(".", ":");
+        var hora = hourSelected.replace(".", ":");
         var data = new Date(daySelected + " " + hora + ":00");
     
-        // Formatar a data no formato desejado
-        var dataFormatada = data.getFullYear() + "-" +
-                            ("0" + (data.getMonth() + 1)).slice(-2) + "-" +
-                            ("0" + data.getDate()).slice(-2) + "T" +
-                            ("0" + data.getHours()).slice(-2) + ":" +
-                            ("0" + data.getMinutes()).slice(-2) + ":" +
-                            ("0" + data.getSeconds()).slice(-2);
+        let ano = data.getFullYear();
+        let mes = (data.getMonth() + 1).toString().padStart(2, '0');
+        let dia = data.getDate().toString().padStart(2, '0');
+        let horas = data.getHours().toString().padStart(2, '0');
+        let minutos = data.getMinutes().toString().padStart(2, '0');
+        let segundos = data.getSeconds().toString().padStart(2, '0');
     
+        let dataFormatada = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
+
         const idServicos = [];
         for (const service of servicosSelectedsJson) {
             idServicos.push(service.id);
         }
     
-        if(agendamentoSelectedsJson.length <= 1){
+        console.log("Sericos "+ idServicos)
+    
+        if (agendamentoSelectedsJson.length <= 1) {
             const options = {
                 method: 'POST',
-                url: `http://localhost:8080/agendamentos?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem("userId")}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
+                url: `http://localhost:8080/agendamentos`,
+                params: {
+                    barbeiroId: barberSelected,
+                    clienteId: sessionStorage.getItem("idCliente"),
+                    servicoIds: idServicos.toString(),
+                    inicio: dataFormatada
+                },
                 headers: {
-                    'User-Agent': 'insomnia/8.6.1',
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                     'Content-Type': 'application/json'
                 }
             };
-        
+    
             axios.request(options)
                 .then(function (response) {
                     toast.success("Agendado com Sucesso!");
@@ -626,9 +631,14 @@ const MeusAgendamentos = () => {
             console.log("AGENDAMENTO SELECIONADO "+ agendamentoSelectedsJson.id);
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/agendamentos/${agendamentoSelectedsJson.id}%20?barbeiroId=${barberSelected}&clienteId=${sessionStorage.getItem('userId')}&servicoIds=${idServicos}&inicio=${encodeURIComponent(dataFormatada)}`,
+                url: `http://localhost:8080/agendamentos/${agendamentoSelectedsJson.id}`,
+                params: {
+                    barbeiroId: barberSelected,
+                    clienteId: sessionStorage.getItem("idCliente"),
+                    servicoIds: idServicos.toString(),
+                    inicio: dataFormatada
+                },
                 headers: {
-                    'User-Agent': 'insomnia/8.6.1',
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                     'Content-Type': 'application/json'
                 }
@@ -675,7 +685,7 @@ const MeusAgendamentos = () => {
                                 <p className={`
                                 ${barberSelected === 0 ? style.nomeBarbeiro :
                                 barberSelected === data.id ? style.nomeBarbeiroSelecionado :
-                                style.nomeBarbeiroNaoSelecionado}`} >{data.nome}</p>
+                                style.nomeBarbeiroNaoSelecionado}`} >{data.nome.slice(0,14)+"..."}</p>
                             </div>
                             
                             

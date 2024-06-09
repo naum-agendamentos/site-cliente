@@ -215,10 +215,9 @@ const MeusAgendamentos = () => {
 
                                     </div>
 
-                                    <div className={style["container-title-map"]}>
-                                        <h1 className={style["title-map"]}>NOSSA LOCALIZAÇÃO</h1>
-                                    </div>
-                                    <img className={style["map"]} src={Mapa} alt="" srcset="" />
+                                    
+                                    <iframe className={style["map"]} src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1828.7215274025448!2d-46.403833!3d-23.552526000000004!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce65a8f2ab6373%3A0x7f46e5f281cff8f3!2sBarbearia%20Tm!5e0!3m2!1spt-BR!2sbr!4v1717911257810!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Nossa localização"></iframe>
+                                    
                                     <div className={style["container-title-map"]}>
                                         <p className={style["subtitle-map"]}>ENDEREÇO: R. Castanho da Silva, 331 - Vila Abc</p>
                                     </div>
