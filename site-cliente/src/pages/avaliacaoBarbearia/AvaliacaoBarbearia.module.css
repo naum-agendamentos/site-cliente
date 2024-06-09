@@ -1,21 +1,27 @@
-.container {
+.container-avaliacao {
+    width: 100%;
+    height: 100vh;
+}
+
+
+.container-avalia {
     text-align: center;
     margin-top: 50px;
 }
 
-.h2-avaliacao {
+.container-avalia .h2-avaliacao {
     color: black;
 
     padding: 20px;
 }
 
-.p-avaliacao {
+.container-avalia .p-avaliacao {
     font-size: 24px;
     color: black;
 
 }
 
-.button-cadastrar {
+.container-avalia .button-cadastrar {
     margin-top: 8px;
     background-color: rgb(23, 178, 15);
     border-radius: 8px;
@@ -26,16 +32,24 @@
     cursor: pointer;
 }
 
-.stars {
+.container-avalia .stars {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.on {
+.container-avalia .on {
+    width: 50px;
+    font-size: 40px;
     color: gold;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
 
-.off {
+.container-avalia .off {
+    width: 50px;
+    font-size: 40px;
     color: grey;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }
