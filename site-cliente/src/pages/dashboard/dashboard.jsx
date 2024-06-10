@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from './dashboard.module.css';
 import BarChartComponent from '../../components/barChart/BarChartComponent';
+import HorizontalBarChartComponent from '../../components/barChart/HorizontalBarChartComponent';
+//import LineChartComponent from '../../components/barChart/LineChartComponent';
+import BarChartTopServices from '../../components/barChart/BarChartTopServices';
 import NavbarBarbeiros from "../../components/navbarBarbeiro/NavbarBarbeiro";
 
 const Dashboard = () => {
@@ -38,7 +41,7 @@ const Dashboard = () => {
 
       const responses = await Promise.all(endpoints.map(endpoint => axios.get(endpoint, options)));
 
-      setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 7), value: service.cortes })));
+      setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 15), value: service.cortes })));
       setData2(responses[1].data.map(service => ({ name: service.nome.slice(0, 7), value: service.lucro })));
       setData3(responses[2].data.map(service => ({ name: service.nome.slice(0, 7), value: service.qtdMes })));
       setLucro(responses[3].data);
@@ -79,9 +82,9 @@ const Dashboard = () => {
               </div>
           </div>
           <div className={styles["charts"]}>
-            <BarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" isFirstChart={true} />
+            <HorizontalBarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" isFirstChart={true} />
             <BarChartComponent title="Barbeiro com mais lucros" data={data2} color="#82ca9d" />
-            <BarChartComponent title="Top Serviços" data={data3} color="#ffc658" />
+            <BarChartTopServices title="Top Serviços" data={data3} color="#ffc658" />
           </div>
         </div>
       </div>

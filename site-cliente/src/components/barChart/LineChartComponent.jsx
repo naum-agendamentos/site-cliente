@@ -1,14 +1,14 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import styles from './BarChartComponent.module.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import styles from './LineChartComponent.module.css';
 
-const BarChartComponent = ({ data, title, color }) => {
+const LineChartComponent = ({ data, title, color }) => {
   return (
     <div className={styles["chart-container"]}>
       <h2 className={styles["chart-title"]}>{title}</h2>
-      <ResponsiveContainer className={styles["chart-responsive-container"]} width="100%" height={330}>
+      <ResponsiveContainer className={styles["chart-responsive-container"]} width="100%" height={300}>
         {data.length > 0 ? (
-          <BarChart
+          <LineChart
             data={data}
             margin={{
               top: 20,
@@ -22,8 +22,8 @@ const BarChartComponent = ({ data, title, color }) => {
             <YAxis className={styles["chart-y-axis"]} />
             <Tooltip />
             <Legend className={styles["chart-legend"]} />
-            <Bar className={styles["chart-bar"]} dataKey="value" fill={color || '#8884d8'} />
-          </BarChart>
+            <Line className={styles["chart-line"]} type="monotone" dataKey="value" stroke={color || '#8884d8'} />
+          </LineChart>
         ) : (
           <p className={styles["chart-no-data"]}>Não há dados para utilizar no Chart.</p>
         )}
@@ -32,4 +32,4 @@ const BarChartComponent = ({ data, title, color }) => {
   );
 };
 
-export default BarChartComponent;
+export default LineChartComponent;

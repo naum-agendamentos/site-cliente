@@ -93,9 +93,9 @@ function EditarServico() {
                     console.log(response.data);
                     navigate("/lista-servico")
                 })
-                .catch(function (error) {
-                    console.error(error);
-                    toast.error("Ocorreu um erro ao salvar os dados. Por favor, tente novamente.");
+                .catch((error) => {
+                    const mensagem = error.response ? error.response.data : error.message;
+                    toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
                 });
 
         }

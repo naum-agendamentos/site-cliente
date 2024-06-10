@@ -4,7 +4,7 @@ import styles from './BarChartComponent.module.css';
 
 const BarChartComponent = ({ data, title, color }) => {
   return (
-    <div className={styles["chart-container"]}>
+    <div className={styles["chart-container-top-servicos"]}>
       <h2 className={styles["chart-title"]}>{title}</h2>
       <ResponsiveContainer className={styles["chart-responsive-container"]} width="100%" height={330}>
         {data.length > 0 ? (

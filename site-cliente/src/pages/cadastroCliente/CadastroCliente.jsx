@@ -113,19 +113,27 @@ function CadastroCliente() {
                 senha,
                 telefone,
             };
-            api.post(`clientes`, {
+            api.post('clientes', {
                 email,
                 nome,
                 senha,
                 telefone,
             }).then(() => {
                 toast.success("Novo Cliente criado com sucesso!");
-                sessionStorage.setItem("editado",
-                    JSON.stringify(objetoCadastrado));
-                navigate("/login")
-            }).catch(() => {
-                toast.error("Ocorreu um erro ao salvar os dados, por favor, tente novamente.");
-            })
+                sessionStorage.setItem("editado", JSON.stringify(objetoCadastrado));
+                navigate("/login");
+            }).catch((error) => {
+                const status = error.response ? error.response.status : 'sem status';
+                const mensagem = error.response ? error.response.data : error.message;
+            
+                if (status === 409) {
+                    toast.error("Já existe um usuário com esse endereço de Email");
+                } else {
+                    toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
+                }
+                
+            });
+            
         }
     };
 

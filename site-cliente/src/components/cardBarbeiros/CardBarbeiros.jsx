@@ -35,6 +35,7 @@ const CardBarbeiros = ({ id, foto, nome, email, telefone, onDelete }) => {
                 axios.request(options).then(function (response) {
                     console.log(response.data);
                     toast.success("Barbeiro excluido!");
+                    sessionStorage.setItem("AtivarToast", "ativar");
                     onDelete(id); 
                 }).catch(function (error) {
                     console.error(error);
