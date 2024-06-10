@@ -1,14 +1,15 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import styles from './BarChartComponent.module.css';
+import styles from './HorizontalBarChartComponent.module.css';
 
-const BarChartComponent = ({ data, title, color }) => {
+const HorizontalBarChartComponent = ({ data, title, color }) => {
   return (
     <div className={styles["chart-container"]}>
       <h2 className={styles["chart-title"]}>{title}</h2>
       <ResponsiveContainer className={styles["chart-responsive-container"]} width="100%" height={330}>
         {data.length > 0 ? (
           <BarChart
+            layout="vertical"
             data={data}
             margin={{
               top: 20,
@@ -18,8 +19,8 @@ const BarChartComponent = ({ data, title, color }) => {
             }}
           >
             <CartesianGrid className={styles["chart-cartesian-grid"]} strokeDasharray="3 3" />
-            <XAxis className={styles["chart-x-axis"]} dataKey="name" tickLine={false} axisLine={false} />
-            <YAxis className={styles["chart-y-axis"]} />
+            <XAxis className={styles["chart-x-axis"]} type="number" tickLine={false} axisLine={false} />
+            <YAxis className={styles["chart-y-axis"]} type="category" dataKey="name" tickLine={false} axisLine={false} />
             <Tooltip />
             <Legend className={styles["chart-legend"]} />
             <Bar className={styles["chart-bar"]} dataKey="value" fill={color || '#8884d8'} />
@@ -32,4 +33,4 @@ const BarChartComponent = ({ data, title, color }) => {
   );
 };
 
-export default BarChartComponent;
+export default HorizontalBarChartComponent;
