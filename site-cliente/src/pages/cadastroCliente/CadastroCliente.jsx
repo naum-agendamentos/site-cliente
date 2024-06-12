@@ -217,7 +217,7 @@ function CadastroCliente() {
                                     onChange={(e) => handleInputChange(e, setConfirmarSenha)}
                                 />
                             </div>
-                            <h5 className={styles["h5-txt"]}>já tem uma conta? <a className={styles["h4-txt"]} href="../login">clique aqui</a></h5>
+                            <h5 className={styles["h5-txt"]}>Já tem uma conta? <a className={styles["h4-txt"]} href="../login">clique aqui</a></h5>
 
                             <div className="container-btn">
                                 <button className={styles["button-alterar"]} type="button"

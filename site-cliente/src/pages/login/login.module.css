@@ -131,3 +131,18 @@ body{
     right: 0;
     top: 0;
 }
+.h5-txt{
+    margin-left: 300px;
+margin-bottom:24px;
+    font-size: 16px;
+    color: #000000;
+    margin-top: 2vh;
+    font-family: roboto;
+}
+.h4-txt{
+    margin-bottom: 24px;
+    font-family: "Roboto";
+    font-size: 16px;
+    color: #000dff;
+    margin-top: 2vh;
+}
