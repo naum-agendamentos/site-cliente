@@ -24,10 +24,14 @@ const NavBar = () => {
         navigate(`/login`);
         sessionStorage.clear();
     };
+    const home = () => {
+        navigate(`/`);
+        sessionStorage.clear();
+    }
 
     return (
         <div className={styles["container-navbar"]} id='nav'>
-            <img src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
+            <img onClick={home} src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
             <ul className={styles["navbar"]}>
                 <li onClick={servicos} className={styles["option"]}>Serviços</li>
                 <li onClick={meusAgendamento} className={styles["option"]}>Meus Agendamentos</li>
