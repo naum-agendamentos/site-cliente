@@ -48,11 +48,14 @@ const MeusDados = () => {
         <>
             <div className="borda-gradiente-left">
                 <div className="borda-gradiente-right">
+         
                     <div className={style["container"]}>
-                        <NavBar />
-                        <div className={style["container-title"]}><h1 className={style["title"]}>MEUS DADOS</h1></div>
+                    <NavBar />
+                     
                         <div className={style["container-boxdata"]}>
                             <div className={style["box-data"]}>
+                            <h1 className={style["title"]}>MEUS DADOS</h1>
+
                                 <div className={style["container-conteudo-box-data"]}>
                                     <p className={style["title-box-data"]}>EMAIL</p>
                                 </div>
