@@ -142,6 +142,7 @@ function CadastroServiço() {
                                 <option value="90">90 Minutos</option>
                             </select>
                         </div>{(e) => handleInputChange(e, setTempoDuracao)}
+
                         <div className={styles['container-input']}>
                             <div className={styles["info-up-inputs"]}>
                                 <p>PREÇO</p>
