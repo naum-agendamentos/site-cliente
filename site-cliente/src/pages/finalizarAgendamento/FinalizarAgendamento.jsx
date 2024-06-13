@@ -320,7 +320,7 @@ const MeusAgendamentos = () => {
     //DATE***********************************************************
 
     const buttonDay = (indexDay, dataCompleta) => {
-
+        setSomaHour(false);
         voltarSlide();
         setButtonsDisabled(true);
         setDaySelected(dataCompleta);
@@ -541,11 +541,13 @@ const MeusAgendamentos = () => {
     const [currentSlideDays, setCurrentSlideDays] = useState(0);
 
     function voltarSlide() {
+        console.log("VOLTARR SLIDEER : "+currentSlideHours);
         if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
-            const previousSlide = currentSlideHours - currentSlideHours;
-            carouselRefHours.current.goToSlide(previousSlide);
-            setCurrentSlideHours(previousSlide);
+            //const previousSlide = currentSlideHours - currentSlideHours;
+            carouselRefHours.current.goToSlide(0);
+            setCurrentSlideHours(0);
         }
+
 
     }
 
@@ -628,7 +630,7 @@ const MeusAgendamentos = () => {
 
     const goToPrevious7SlidesHours = () => {
         console.log("VOLTEEEI 1 : "+currentSlideHours);
-        if (carouselRefHours.current && currentSlideHours >= 6) { //verifica se já está no primeiro slide
+        if (carouselRefHours.current && currentSlideHours >= 6 && somaHour != true) { //verifica se já está no primeiro slide
             console.log("VOLTEEEI 2");
             const previousSlide = currentSlideHours - 6;
             carouselRefHours.current.goToSlide(previousSlide);
@@ -723,13 +725,13 @@ const MeusAgendamentos = () => {
         toast.error("Não é possível selecionar um horário do passado!");
     }
 
-    function avancarHourDesabilitada(diferencaHora) {
-        if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
-            const nextSlide = currentSlideHours + diferencaHora;
-            carouselRefHours.current.goToSlide(nextSlide);
-            setCurrentSlideHours(0);
-        }
-    }
+    // function avancarHourDesabilitada(diferencaHora) {
+    //     if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
+    //         const nextSlide = currentSlideHours + diferencaHora;
+    //         carouselRefHours.current.goToSlide(nextSlide);
+    //         setCurrentSlideHours(0);
+    //     }
+    // }
 
     
     const [somaHour, setSomaHour] = useState(false);
@@ -739,7 +741,7 @@ const MeusAgendamentos = () => {
             for (var i = 0; i < oppeningHour.length; i++) {
                 if (oppeningHour[i] == hora) {
                     setSomaHour(true);
-                    avancarHourDesabilitada(i);
+                    horaAgendamentoSlide(i);
                     console.log("CURRENTEEEEE : "+currentSlideHours);
                     break;
                 }
@@ -858,9 +860,9 @@ const MeusAgendamentos = () => {
                                         renderButtonGroupOutside={true}
                                         className={style["container-box-days"]}
                                         afterChange={(previousSlide, { currentSlide }) => {
-                                            if(somaHour){
+                                  
                                                 setCurrentSlideHours(currentSlide);
-                                            }
+                           
                                         }}
                                     >
 
