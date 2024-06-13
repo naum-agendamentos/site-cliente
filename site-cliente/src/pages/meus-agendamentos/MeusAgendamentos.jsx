@@ -122,7 +122,7 @@ const MeusAgendamentos = () => {
         if(dataAgendamento.getDate() == dataAtual.getDate() && dataAgendamento.getMonth() == dataAtual.getMonth()){
             var diferencaMilissegundos = dataAgendamento - dataAtual;
         
-
+            
             var diferencaHoras = diferencaMilissegundos / (1000 * 60 * 60); 
         
             console.log("Diferença de horas:", diferencaHoras);

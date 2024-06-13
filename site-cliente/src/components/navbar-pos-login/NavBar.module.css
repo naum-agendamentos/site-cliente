@@ -29,6 +29,10 @@ html {
     justify-content: space-evenly;
     font-size: 16px;
 }
+.option-selected{
+    color: red;
+}
+
 .option:hover{
     cursor: pointer;
     display: inline-block;

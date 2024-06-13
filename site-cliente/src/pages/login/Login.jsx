@@ -4,6 +4,7 @@ import style from "./login.module.css"
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navbar/NavBar";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 function Login() {
     const navigate = useNavigate();
@@ -55,8 +56,29 @@ function Login() {
             }
             else {
                 sessionStorage.setItem("token", response.data.token);
+                const options = {
+                    method: 'GET',
+                    url: `http://localhost:8080/clientes/usuario`,
+                    params: { idUsuario: userId },
+                    headers: {
+                        'User-Agent': 'insomnia/8.6.1',
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+            
+                axios.request(options)
+                    .then(function (response) {
+                        const { data } = response;
+                        const { id } = data;
+                        sessionStorage.setItem("idCliente", id);
+
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            
                 toast.success("Login realizado com sucesso!")
-                navigate(`/meus-dados/${sessionStorage.getItem("userId")}`);
+                navigate(`/agendanento-horario/null`);
             }
 
 
