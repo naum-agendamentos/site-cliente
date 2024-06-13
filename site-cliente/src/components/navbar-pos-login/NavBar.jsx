@@ -31,10 +31,14 @@ const NavBar = () => {
         navigate(`/login`);
         sessionStorage.clear();
     };
+    const home = () => {
+        navigate(`/`);
+        sessionStorage.clear();
+    }
 
     return (
         <div className={styles["container-navbar"]} id='nav'>
-            <img src={logoTmNav} className={styles["logo"]} alt="logo-tm" />
+            <img onClick={home} src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
             <ul className={styles["navbar"]}>
                 <li onClick={servicos} className={localStorage.getItem("pagAtual") === "servicos" ? styles["option-selected"] : styles["option"]}>Serviços</li>
                 <li onClick={meusAgendamento} className={localStorage.getItem("pagAtual") === "meusAgendamentos" ? styles["option-selected"] : styles["option"]}>Meus Agendamentos</li>
