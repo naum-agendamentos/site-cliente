@@ -167,7 +167,6 @@ function EditarServico() {
                             </select>
                         </div>{(e) => handleInputChange(e, setTempoDuracao)}
 
-
                         <div className={styles['container-input']}>
                             <div className={styles["info-up-inputs"]}>
                                 <p>PREÇO</p>
