@@ -1,35 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import logoTmNav from '../../utils/assets/logo/LogoVetorizada.png';
 import { useNavigate } from "react-router-dom";
+
 const NavBar = () => {
+    const navigate = useNavigate();
+    const [rolagem, setRolagem] = useState(false);
 
-
-    const navigate = useNavigate(); // Inicializa o hook de navegação
-
-    const home = () => { // Função chamada ao clicar em cancelar
-        navigate("/"); // Redireciona para a página de músicas
+    const home = () => {
+        navigate("/");
     };
-    const login = () => { // Função chamada ao clicar em cancelar
-        navigate("/login"); // Redireciona para a página de músicas
+    const login = () => {
+        navigate("/login");
     };
-    const cadastroCliente = () => { // Função chamada ao clicar em cancelar
-        navigate("/cadastro-cliente"); // Redireciona para a página de músicas
+    const cadastroCliente = () => {
+        navigate("/cadastro-cliente");
     };
-
-    const voltarHome = () => { 
+    const voltarHome = () => {
         navigate("/");
     };
 
+    const handleScroll = () => {
+        if (window.scrollY > 0) {
+            setRolagem(true);
+        } else {
+            setRolagem(false);
+        }
+    };
 
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return (
-        <nav className={styles["Nav"]} id='nav'>
-
+        <nav className={rolagem ? styles["nav-movment"] : styles["nav"]} id='nav'>
             <div>
                 <img onClick={voltarHome} src={logoTmNav} className={styles["imagem-logo"]} alt="logo-tm"/>
             </div>
-
             <ul className={styles["navbar-options"]}>
                 <li><a onClick={home} href="#SobreNos">Sobre</a></li>
                 <li><a onClick={home} href="#Servicos">Serviços</a></li>
@@ -44,6 +54,6 @@ const NavBar = () => {
             </ul>
         </nav>
     );
-
 };
+
 export default NavBar;

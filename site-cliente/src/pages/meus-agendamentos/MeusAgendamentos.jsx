@@ -149,8 +149,8 @@ const MeusAgendamentos = () => {
         <>
             <div className="borda-gradiente-left">
                 <div className="borda-gradiente-right">
+                <NavBar />
                     <div className={style["container"]}>
-                        <NavBar />
                         <div className={style["container-title"]}><h1 className={style["title"]}>MEUS AGENDAMENTOS</h1></div>
                         <div className={style["container-conteudo"]}>
                             <div className={style["container-scroll"]}>

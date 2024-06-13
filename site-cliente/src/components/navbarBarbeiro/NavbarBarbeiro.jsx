@@ -7,18 +7,22 @@ const NavbarBarbeiros = () => {
     const navigate = useNavigate();
 
     const barbeiro = () => {
+        localStorage.setItem("pagAtual","barbeiro");
         navigate(`/barbeiros`);
     };
 
     const verBarbeiroAgend = () => {
+        localStorage.setItem("pagAtual","verBarbAgend");
         navigate(`/ver-barbeiros`);
     };
 
     const dashboard = () => {
+        localStorage.setItem("pagAtual","dashboard");
         navigate(`/dashboard`);
     };
     
     const servicos = () => {
+        localStorage.setItem("pagAtual","servicos");
         navigate(`/lista-servico`);
     };
 
@@ -35,10 +39,10 @@ const home = () => {
         <div className={styles["container-navbar"]} id='nav'>
             <img onClick={home} src={logoTmNav} className={styles["logo"]} alt="logo-tm"/>
             <ul className={styles["navbar"]}>
-                <li onClick={barbeiro} className={styles["option"]}>Barbeiros</li>
-                <li onClick={verBarbeiroAgend} className={styles["option"]}>Agendamentos</li>
-                <li onClick={dashboard} className={styles["option"]}>Dashboard</li>
-                <li onClick={servicos} className={styles["option"]}>Serviços</li>
+                <li onClick={barbeiro}  className={localStorage.getItem("pagAtual") === "barbeiro" ? styles["option-selected"] : styles["option"]}>Barbeiros</li>
+                <li onClick={verBarbeiroAgend} className={localStorage.getItem("pagAtual") === "verBarbAgend" ? styles["option-selected"] : styles["option"]}>Agendamentos</li>
+                <li onClick={dashboard} className={localStorage.getItem("pagAtual") === "dashboard" ? styles["option-selected"] : styles["option"]}>Dashboard</li>
+                <li onClick={servicos} className={localStorage.getItem("pagAtual") === "servicos" ? styles["option-selected"] : styles["option"]}>Serviços</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>
 

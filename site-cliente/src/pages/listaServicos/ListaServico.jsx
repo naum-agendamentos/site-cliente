@@ -79,8 +79,8 @@ const ListaServico = () => {
         <>
             <div className="borda-gradiente-left">
                 <div className="borda-gradiente-right">
+                <NavBar />
                     <div className={style["container"]}>
-                        <NavBar />
                         <div className={style["container-title"]}>
                             <h1 className={style["title"]}>SERVIÇOS CADASTRADOS</h1>
                         </div>
