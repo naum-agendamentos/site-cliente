@@ -23,7 +23,7 @@ body{
     color: #303030;
 }
 .subcontainer-barber{
-    width: 40%;
+    width: 60%;
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -32,10 +32,30 @@ body{
     align-items: center;
     justify-content: center;
 }
+.carousel-barber{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.carousel-barber li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-asset-barber-Name{
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .asset-barber{
     width: 112px;
     height: 112px;
     margin: 1vh;
+    background-color: #001BAB;
     border: 1px solid #303030;
 }
 .asset-barber:hover{
@@ -84,6 +104,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.btn-invisible{
+    display: none;
 }
 .btn-arrow{
     width: 50px;
@@ -260,6 +284,9 @@ body{
     pointer-events: none;
     opacity: 0.6;
 }
+.hourPast{
+    display: none;
+}
 .daysNotSelected{
     width: 74px;
     height: 58px;
@@ -275,6 +302,8 @@ body{
     color: #001BAB;
     opacity: 0.6;
 }
+
+
 .daysNotSelected:hover{
     transition: 0.5s;
     transform: scale(1.1);
