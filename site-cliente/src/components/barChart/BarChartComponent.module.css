@@ -16,6 +16,14 @@
     border-radius: 15px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.541);
 }
+.chart-title{
+    font-family: 'Oswald';
+    font-size: 24px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+    line-height: 59px;
+    text-align: center;
+}
 
 
 .chart-container h2 {

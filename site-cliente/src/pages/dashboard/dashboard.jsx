@@ -82,6 +82,7 @@ const Dashboard = () => {
               </div>
           </div>
           <div className={styles["charts"]}>
+          
             <HorizontalBarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" isFirstChart={true} />
             <BarChartComponent title="Barbeiro com mais lucros" data={data2} color="#82ca9d" />
             <BarChartTopServices title="Top Serviços" data={data3} color="#ffc658" />
