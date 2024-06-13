@@ -103,7 +103,7 @@ const MeusAgendamentos = () => {
 
                 } else {
                     setServicoJson(jsonConvert);
-                    console.log("SERVICO");
+                    
                 }
             }
         }
@@ -540,7 +540,6 @@ const MeusAgendamentos = () => {
     const [currentSlideDays, setCurrentSlideDays] = useState(0);
 
     function voltarSlide() {
-        console.log("VOLTARR SLIDEER : " + currentSlideHours);
         if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
             //const previousSlide = currentSlideHours - currentSlideHours;
             carouselRefHours.current.goToSlide(0);
@@ -629,9 +628,8 @@ const MeusAgendamentos = () => {
     }
 
     const goToPrevious7SlidesHours = () => {
-        console.log("VOLTEEEI 1 : " + currentSlideHours);
         if (carouselRefHours.current && currentSlideHours >= 6 && somaHour != true) { //verifica se já está no primeiro slide
-            console.log("VOLTEEEI 2");
+
             const previousSlide = currentSlideHours - 6;
             carouselRefHours.current.goToSlide(previousSlide);
             setCurrentSlideHours(previousSlide);
@@ -656,13 +654,8 @@ const MeusAgendamentos = () => {
             idServicos.push(service.id);
         }
 
-        console.log("Sericos " + idServicos)
 
         if (agendamentoSelectedsJson.length <= 1) {
-            console.log("Barbeiro Id " + barberSelected);
-            console.log("Cliente Id " + sessionStorage.getItem("idCliente"));
-            console.log("Servicos Ids " + idServicos.toString());
-            console.log("inicio " + dataFormatada);
 
             const options = {
                 method: 'POST',
@@ -734,7 +727,6 @@ const MeusAgendamentos = () => {
                     if (oppeningHour[i] > HORAATUAL) {
                         setSomaHour(true);
                         horaAgendamentoSlide(i);
-                        console.log("CURRENTEEEEE : " + currentSlideHours);
                         break;
                     }
                 }
