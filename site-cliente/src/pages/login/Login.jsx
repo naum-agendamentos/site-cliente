@@ -115,7 +115,7 @@ function Login() {
                                         onChange={(e) => handleInputChange(e, setSenha)}
                                     />
                                 </div>
-                                <h5 className={style["h5-txt"]}>Não tem uma conta? <a className={style["h4-txt"]} href="../cadastro-cliente">clique aqui</a></h5>
+                                <h5 className={style["h5-txt"]}>Não possui conta? <a className={style["h4-txt"]} href="../cadastro-cliente">clique aqui</a></h5>
                                 <div className={style["container-btn"]}>
                                     <button className={style["button-alterar"]} type="button"
                                         onClick={handleLogin}>ENTRAR</button>
