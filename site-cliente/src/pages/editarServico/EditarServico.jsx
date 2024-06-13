@@ -149,20 +149,25 @@ function EditarServico() {
                                 onChange={(e) => handleInputChange(e, setNome)}
                             />
                         </div>
+
                         <div className={styles['container-input']}>
                             <div className={styles["info-up-inputs"]}>
                                 <p>TEMPO DE DURAÇÃO</p>
                                 {erroTempo && <span>{erroTempo}</span>}
                             </div>
-                            <input
+                            <select
                                 className={styles[inputValidTempo]}
-                                type="text"
-                                placeholder="Ex: 40 Minutos"
                                 value={tempoDuracao}
-                                onBlur={handleTempoBlur}
-                                onChange={(e) => handleInputChange(e, setTempoDuracao)}
-                            />
-                        </div>
+                                onChange={(e) => setTempoDuracao(e.target.value)}
+                            >
+                                <option value="">Selecione</option>
+                                <option value="30">30 Minutos</option>
+                                <option value="60">60 Minutos</option>
+                                <option value="90">90 Minutos</option>
+                            </select>
+                        </div>{(e) => handleInputChange(e, setTempoDuracao)}
+
+
                         <div className={styles['container-input']}>
                             <div className={styles["info-up-inputs"]}>
                                 <p>PREÇO</p>

@@ -30,6 +30,7 @@ body{
     flex-direction: column;
 }
 .container-input{
+    padding: 5px;
     width: 532px;
     height: fit-content;
     display: flex;

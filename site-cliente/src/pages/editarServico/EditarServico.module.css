@@ -28,8 +28,10 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 }
 .container-input{
+    padding: 5px;
     width: 532px;
     height: fit-content;
     display: flex;
