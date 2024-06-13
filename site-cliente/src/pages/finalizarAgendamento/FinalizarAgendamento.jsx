@@ -19,7 +19,6 @@ const MeusAgendamentos = () => {
     const HOJE = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, "0") + '-' + new Date().getDate().toString().padStart(2, "0");
     const HORAATUAL = parseFloat(new Date().getHours() + "." + new Date().getMinutes());
 
-
     // var HORAATUAL = parseFloat(Date().getHours().toFixed(2));
 
     //Listar Barbeiro chamada
@@ -125,11 +124,11 @@ const MeusAgendamentos = () => {
                 var numBarbers = response.data.length;
 
                 for (const i = 0; i < numBarbers; i++) {
-                    console.log("Dentro do for "+i);
-                    if(response.data[i].id < idBarberSelected){
+                    console.log("Dentro do for " + i);
+                    if (response.data[i].id < idBarberSelected) {
                         const nextSlide = currentSlideBarber + 1;
                         carouselBarberRef.current.goToSlide(nextSlide);
-                        setCurrentSlideBarber(nextSlide); 
+                        setCurrentSlideBarber(nextSlide);
                     }
                 }
             })
@@ -416,8 +415,8 @@ const MeusAgendamentos = () => {
 
 
     //HOURS***********************************************************
-    //const oppeningHour = [8, 8.30, 9, 9.30, 10, 10.30, 11, 11.30, 12, 12.30, 13, 13.30, 14, 14.30, 15, 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30]; //horário funcionamento 
-    const oppeningHour = [ 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30,20.0,20.30,21.0,22.0,22.30,23.0,23.30,24.0,24.30,25.0];
+    const oppeningHour = [8, 8.30, 9, 9.30, 10, 10.30, 11, 11.30, 12, 12.30, 13, 13.30, 14, 14.30, 15, 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30]; //horário funcionamento 
+
     const [hourSelected, setHourSelected] = useState(null);
     const buttonHour = (value) => {
         var horasSelecionadas = [];
@@ -541,7 +540,7 @@ const MeusAgendamentos = () => {
     const [currentSlideDays, setCurrentSlideDays] = useState(0);
 
     function voltarSlide() {
-        console.log("VOLTARR SLIDEER : "+currentSlideHours);
+        console.log("VOLTARR SLIDEER : " + currentSlideHours);
         if (carouselRefHours.current && currentSlideHours >= 3) { //verifica se já está no primeiro slide
             //const previousSlide = currentSlideHours - currentSlideHours;
             carouselRefHours.current.goToSlide(0);
@@ -614,6 +613,7 @@ const MeusAgendamentos = () => {
 
     const goToNext7SlidesHours = () => {
         if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
+            setSomaHour(false);
             const nextSlide = currentSlideHours + 6;
             carouselRefHours.current.goToSlide(nextSlide);
             setCurrentSlideHours(nextSlide);
@@ -629,7 +629,7 @@ const MeusAgendamentos = () => {
     }
 
     const goToPrevious7SlidesHours = () => {
-        console.log("VOLTEEEI 1 : "+currentSlideHours);
+        console.log("VOLTEEEI 1 : " + currentSlideHours);
         if (carouselRefHours.current && currentSlideHours >= 6 && somaHour != true) { //verifica se já está no primeiro slide
             console.log("VOLTEEEI 2");
             const previousSlide = currentSlideHours - 6;
@@ -659,10 +659,10 @@ const MeusAgendamentos = () => {
         console.log("Sericos " + idServicos)
 
         if (agendamentoSelectedsJson.length <= 1) {
-            console.log("Barbeiro Id "+barberSelected);
-            console.log("Cliente Id "+sessionStorage.getItem("idCliente"));
+            console.log("Barbeiro Id " + barberSelected);
+            console.log("Cliente Id " + sessionStorage.getItem("idCliente"));
             console.log("Servicos Ids " + idServicos.toString());
-            console.log("inicio "+ dataFormatada);
+            console.log("inicio " + dataFormatada);
 
             const options = {
                 method: 'POST',
@@ -725,31 +725,29 @@ const MeusAgendamentos = () => {
         toast.error("Não é possível selecionar um horário do passado!");
     }
 
-    // function avancarHourDesabilitada(diferencaHora) {
-    //     if (carouselRefHours.current && currentSlideHours < 14) { //verifica se já está no último slide
-    //         const nextSlide = currentSlideHours + diferencaHora;
-    //         carouselRefHours.current.goToSlide(nextSlide);
-    //         setCurrentSlideHours(0);
-    //     }
-    // }
 
-    
     const [somaHour, setSomaHour] = useState(false);
-    function somarSlideHour(hora) {
-        console.log("somaHour "+somaHour)
-        if(!somaHour){
-            for (var i = 0; i < oppeningHour.length; i++) {
-                if (oppeningHour[i] == hora) {
-                    setSomaHour(true);
-                    horaAgendamentoSlide(i);
-                    console.log("CURRENTEEEEE : "+currentSlideHours);
-                    break;
+    useEffect(() => {
+        if (!somaHour) {
+            if (daySelected === HOJE) {
+                for (var i = 0; i < oppeningHour.length; i++) {
+                    if (oppeningHour[i] > HORAATUAL) {
+                        setSomaHour(true);
+                        horaAgendamentoSlide(i);
+                        console.log("CURRENTEEEEE : " + currentSlideHours);
+                        break;
+                    }
                 }
+
             }
 
         }
-        
-    }
+    }, [daySelected])
+
+
+
+
+
     const dias = gerarProximosDias(60);
     return (
         <>
@@ -860,9 +858,9 @@ const MeusAgendamentos = () => {
                                         renderButtonGroupOutside={true}
                                         className={style["container-box-days"]}
                                         afterChange={(previousSlide, { currentSlide }) => {
-                                  
-                                                setCurrentSlideHours(currentSlide);
-                           
+
+                                            setCurrentSlideHours(currentSlide);
+
                                         }}
                                     >
 
@@ -870,12 +868,13 @@ const MeusAgendamentos = () => {
 
                                             oppeningHour.map((hour, index) => ( // Remova o segundo parâmetro "oppeningHour"
                                                 <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
-                                                    
+
                                                     <button disabled={verificarHoraDisabled(hour)} id={"idBtnHour" + index} className={`
-                                                         ${HOJE === daySelected && HORAATUAL < hour ? somarSlideHour(hour) :
-                                                            verificarHoraDisabled(hour) ? style.daysNotSelected :
-                                                                verificarHoraHabilited(hour) ? style.daySelected :
-                                                                    style.boxDays
+                                                         ${
+                                                        HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
+                                                        verificarHoraDisabled(hour) ? style.daysNotSelected :
+                                                            verificarHoraHabilited(hour) ? style.daySelected :
+                                                                style.boxDays
 
 
                                                         }
@@ -901,7 +900,7 @@ const MeusAgendamentos = () => {
                                 <button className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}>Salvar</button>
                                 <button onClick={cancelar} className={style["btn-cancelar"]}>Cancelar</button>
                                 <button onClick={editarServico} className={`${agendamentoSelectedsJson.length <= 1 ? style["btnAlterarServicosDisabled"] :
-                                        style["btnEditar"]
+                                    style["btnEditar"]
 
                                     }`}>Editar Serviço</button>
                             </div>
