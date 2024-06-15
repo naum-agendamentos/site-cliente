@@ -116,7 +116,7 @@ body{
 
 .container-right{
     width: 312px;
-    height: 90%;
+    height: 87%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -124,7 +124,7 @@ body{
 }
 .container-funcionamento{
     width: 100%;
-    height: 188px;
+    height: 210px;
     display: flex;
     flex-direction: column;
     align-items: center;

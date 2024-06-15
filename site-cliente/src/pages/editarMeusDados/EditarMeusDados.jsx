@@ -118,7 +118,7 @@ const EditarMeusDados = () => {
         if (validateFields() && nome && email && senha && confirmarSenha && telefone) {
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/clientes/${id}`,
+                url: `https://api-rest-naum.azurewebsites.net/clientes/${id}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
@@ -154,7 +154,7 @@ const EditarMeusDados = () => {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/clientes/usuario`,
+            url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
             params: { idUsuario: sessionStorage.getItem("userId") },
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
@@ -169,7 +169,7 @@ const EditarMeusDados = () => {
                     try {
                         const response = await axios.request({
                             method: 'GET',
-                            url: `http://localhost:8080/clientes/usuario`,
+                            url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
                             params: { idUsuario: sessionStorage.getItem("userId") },
                             headers: options.headers
                         });

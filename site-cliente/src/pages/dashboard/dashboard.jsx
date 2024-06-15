@@ -23,13 +23,13 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       const endpoints = [
-        'http://localhost:8080/dashboards/cortes-por-barbeiro',
-        'http://localhost:8080/dashboards/lucro-por-barbeiro',
-        'http://localhost:8080/dashboards/top-servicos',
-        'http://localhost:8080/dashboards/lucro',
-        'http://localhost:8080/dashboards/total-agendamento-hoje',
-        'http://localhost:8080/dashboards/porcentagem-agendamento-hoje-ontem',
-        'http://localhost:8080/dashboards/media-avaliacao/1'
+        'https://api-rest-naum.azurewebsites.net/dashboards/cortes-por-barbeiro',
+        'https://api-rest-naum.azurewebsites.net/dashboards/lucro-por-barbeiro',
+        'https://api-rest-naum.azurewebsites.net/dashboards/top-servicos',
+        'https://api-rest-naum.azurewebsites.net/dashboards/lucro',
+        'https://api-rest-naum.azurewebsites.net/dashboards/total-agendamento-hoje',
+        'https://api-rest-naum.azurewebsites.net/dashboards/porcentagem-agendamento-hoje-ontem',
+        'https://api-rest-naum.azurewebsites.net/dashboards/media-avaliacao/1'
       ];
 
       const options = {
@@ -76,7 +76,7 @@ const Dashboard = () => {
               </div>
               <div className={styles["bloco-kpi"]}>
                   <p>Média de avaliação<br/>
-                  <span>{mediaAva.toFixed(2)}</span>
+                  <span>{ mediaAva ? mediaAva.toFixed(2) : '0' }</span>
                   <span className={styles["estrela"]}> &#9733;</span>
                  </p>
               </div>

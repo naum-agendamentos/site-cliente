@@ -42,7 +42,7 @@ const Barbeiros = () => {
     const recuperarValorDoCard = () => {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -82,7 +82,7 @@ const Barbeiros = () => {
         if (verificarVazio) {
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/barbeiros/reativar/${verificarVazio}`,
+                url: `https://api-rest-naum.azurewebsites.net/barbeiros/reativar/${verificarVazio}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 }

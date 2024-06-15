@@ -11,7 +11,7 @@ function AvaliacaoBarbearia() {
     const handleSave = () => {
         const options = {
             method: 'POST',
-            url: `http://localhost:8080/avaliacoes/1`,
+            url: `https://api-rest-naum.azurewebsites.net/avaliacoes/1`,
             params: { idCliente: sessionStorage.getItem("idCliente") },
             data: {
                 qtdEstrela: rating

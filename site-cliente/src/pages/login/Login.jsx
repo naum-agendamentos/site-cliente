@@ -50,6 +50,7 @@ function Login() {
             sessionStorage.setItem('userId', userId)
 
             if (tipo === "BARBEIRO") {
+                localStorage.setItem("pagAtual","barbeiro");
                 sessionStorage.setItem("token", response.data.token);
                 toast.success("Login realizado com sucesso!")
                 navigate("/barbeiros");
@@ -58,7 +59,7 @@ function Login() {
                 sessionStorage.setItem("token", response.data.token);
                 const options = {
                     method: 'GET',
-                    url: `http://localhost:8080/clientes/usuario`,
+                    url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
                     params: { idUsuario: userId },
                     headers: {
                         'User-Agent': 'insomnia/8.6.1',
@@ -76,8 +77,8 @@ function Login() {
                     .catch(function (error) {
                         console.error(error);
                     });
-            
-                toast.success("Login realizado com sucesso!")
+                localStorage.setItem("pagAtual","servicos");
+                toast.success("Login realizado com sucesso!");
                 navigate(`/agendanento-horario/null`);
             }
 
