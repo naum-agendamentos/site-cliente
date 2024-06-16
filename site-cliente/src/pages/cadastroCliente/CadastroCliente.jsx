@@ -4,6 +4,7 @@ import styles from './CadastroCliente.module.css';
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import NavBar from '../../components/navbar/NavBar';
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function CadastroCliente() {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ function CadastroCliente() {
 
     const [erroConfSenha, seterroConfSenha] = useState("");
     const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
+
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
     const handleInputChange = (event, setStateFunction) => {
         const value = event.target.value;
@@ -107,6 +110,7 @@ function CadastroCliente() {
         if (erroEmail || erroNome || erroTelefone || erroSenha || erroConfSenha || todosCamposVazios) {
             toast.error("Preencha todos os campos corretamente.");
         } else {
+            setBotaoSalvar(true);
             const objetoCadastrado = {
                 email,
                 nome,
@@ -123,6 +127,7 @@ function CadastroCliente() {
                 sessionStorage.setItem("editado", JSON.stringify(objetoCadastrado));
                 navigate("/login");
             }).catch((error) => {
+                setBotaoSalvar(false);
                 const status = error.response ? error.response.status : 'sem status';
                 const mensagem = error.response ? error.response.data : error.message;
             
@@ -220,9 +225,7 @@ function CadastroCliente() {
                             <h5 className={styles["h5-txt"]}>Já tem uma conta? <a className={styles["h4-txt"]} href="../login">clique aqui</a></h5>
 
                             <div className="container-btn">
-                                <button className={styles["button-alterar"]} type="button"
-                                    onClick={handleSave}>CADASTRAR</button>
-                                <div id="pg_login"></div>
+                            <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CADASTRAR"}</button>
                             </div>
 
                         </div>

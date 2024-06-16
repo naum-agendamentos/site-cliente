@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function EditarBarbeiro() {
     const navigate = useNavigate();
@@ -42,6 +43,8 @@ function EditarBarbeiro() {
 
     const [erroFoto, seterroFoto] = useState("");
     const [inputValidFoto, setInputValidFoto] = useState("input-form");
+
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
 
     const handleNomeBlur = (event) => {
@@ -149,6 +152,7 @@ function EditarBarbeiro() {
     const handleSave = async () => {
 
         if (validateFields() && nome && email && senha && confirmarSenha && telefone && descricao && foto) {
+            setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
                 url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
@@ -171,6 +175,7 @@ function EditarBarbeiro() {
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
                 navigate("/barbeiros")
             }).catch((error) => {
+                setBotaoSalvar(false);
                 const status = error.response ? error.response.status : 'sem status';
                 const mensagem = error.response ? error.response.data : error.message;
             
@@ -336,10 +341,7 @@ function EditarBarbeiro() {
                                         onChange={(e) => handleInputChange(e, setFoto)} />
                                 </div>
                                 <div className={styles["container-btn"]}>
-                                    <button className={styles["button-alterar"]} type="button"
-                                        onClick={handleSave}>
-                                        SALVAR
-                                    </button>
+                                <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "SALVAR"}</button>
                                     <button className={styles["button-cancelar"]} type="button"
                                         onClick={handleCancel}>
                                         CANCELAR

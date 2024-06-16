@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 //import ImgBarra from '../../utils/assets/barra-lateral.svg'
 import NavBar from '../../components/navbar-pos-login/NavBar';
 import axios from "axios";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function EditarServico() {
     const navigate = useNavigate();
@@ -27,6 +28,8 @@ function EditarServico() {
     const [erroTempo, setErroTempo] = useState("");
     const [inputValidTempo, setInputValidTempo] = useState("input-form");
 
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
+
     const handleNomeBlur = (event) => {
         const value = event.target.value;
 
@@ -41,6 +44,8 @@ function EditarServico() {
 
     const handlePrecoBlur = (event) => {
         const value = event.target.value;
+        const valorComPontos = value.replace(/,/g, '.');
+        setPreco(valorComPontos);
 
         if (value === "" || value <= 0) {
             setErroPreco("Preço tem que ser maior que 0");
@@ -72,6 +77,7 @@ function EditarServico() {
         if (erroNome || erroPreco || erroTempo || todosCamposVazios) {
             toast.error("Preencha todos os campos corretamente.");
         } else {
+            setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
                 url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
@@ -94,6 +100,7 @@ function EditarServico() {
                     navigate("/lista-servico")
                 })
                 .catch((error) => {
+                    setBotaoSalvar(false);
                     const mensagem = error.response ? error.response.data : error.message;
                     toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
                 });
@@ -184,9 +191,8 @@ function EditarServico() {
                         </div>
 
                         <div className={styles['container-btn']}>
-                            <button className={styles['button-alterar']} type="button" onClick={handleSave}>
-                                SALVAR
-                            </button>
+
+                        <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "SALVAR"}</button>
                             <button className={styles["button-cancelar"]} type="button"
                                 onClick={handleCancel}>
                                 CANCELAR

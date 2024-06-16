@@ -6,6 +6,7 @@ import styles from './CadastroServico.module.css';
 //import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function CadastroServiço() {
     const navigate = useNavigate();
@@ -26,6 +27,8 @@ function CadastroServiço() {
     const [erroTempo, setErroTempo] = useState("");
     const [inputValidTempo, setInputValidTempo] = useState("input-form");
 
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
+
     const handleNomeBlur = (event) => {
         const value = event.target.value;
 
@@ -40,9 +43,11 @@ function CadastroServiço() {
 
     const handlePrecoBlur = (event) => {
         const value = event.target.value;
+        const valorComPontos = value.replace(/,/g, '.');
+        setPreco(valorComPontos);
 
         if (value === "" || value <= 0) {
-            setErroPreco("Preço tem que ser maior que 0");
+            setErroPreco("Preço deve ser maior que 0");
             setInputValidPreco("input-error");
         } else {
             setErroPreco("");
@@ -54,7 +59,7 @@ function CadastroServiço() {
         const value = event.target.value;
 
         if (value === "" || value <= 0) {
-            setErroTempo("Tempo tem que ser maior que 0");
+            setErroTempo("Selecione o tempo de duração");
             setInputValidTempo("input-error");
         } else {
             setErroTempo("");
@@ -73,6 +78,7 @@ function CadastroServiço() {
         if (erroNome || erroPreco || erroTempo || todosCamposVazios) {
             toast.error("Preencha todos os campos corretamente.");
         } else {
+            setBotaoSalvar(true);
             const options = {
                 method: 'POST',
                 url: 'https://api-rest-naum.azurewebsites.net/servicos',
@@ -94,6 +100,7 @@ function CadastroServiço() {
                 navigate("/lista-servico")
                 console.log(response.data);
             }).catch((error) => {
+                setBotaoSalvar(false);
                 const mensagem = error.response ? error.response.data : error.message;
                 toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
             });
@@ -160,9 +167,7 @@ function CadastroServiço() {
                         </div>
 
                         <div className={styles['container-btn']}>
-                            <button className={styles['button-alterar']} type="button" onClick={handleSave}>
-                                CADASTRAR
-                            </button>
+                        <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CADASTRAR"}</button>
                         </div>
                     </div>
                 </div>

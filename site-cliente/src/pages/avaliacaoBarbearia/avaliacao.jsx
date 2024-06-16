@@ -4,11 +4,17 @@ import Navbar from '../../components/navbar-pos-login/NavBar';
 import CardBarbearia from '../../components/cardBarbearia/CardBarbearia';
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function AvaliacaoBarbearia() {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
+    
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
+
+
     const handleSave = () => {
+        setBotaoSalvar(true);
         const options = {
             method: 'POST',
             url: `https://api-rest-naum.azurewebsites.net/avaliacoes/1`,
@@ -22,9 +28,11 @@ function AvaliacaoBarbearia() {
             }
         };
         axios.request(options).then(function (response) {
-            toast.success("Barbearia avaliada! Obrigado");
+            setBotaoSalvar(false);
+            toast.success("Avaliação realizada com sucesso! Obrigado(a)");
             console.log(response.data);
         }).catch(function (error) {
+            setBotaoSalvar(false);
             console.error(error);
             toast.error(error);
         });
@@ -61,8 +69,7 @@ function AvaliacaoBarbearia() {
                                 </div>
                                 <p className={styles["p-avaliacao"]}>Sua avaliação: {rating} estrelas</p>
                                 <div className={styles["container-btn"]}>
-                                    <button className={styles["button-cadastrar"]} type="button"
-                                        onClick={handleSave}>CADASTRAR AVALIAÇÃO</button>
+                                <button className={styles["button-cadastrar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CADASTRAR AVALIAÇÃO"}</button>
                                 </div>
                             </div>
                         </div>
