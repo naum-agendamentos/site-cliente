@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a260c4d7-eb1b-4331-9f0a-e9d75e8cd5e2/resourceGroups/grupo-naum/providers/Microsoft.Web/sites/site-cliente-barbearia-tm",
+    "appService.deploySubpath": "build"
+}
