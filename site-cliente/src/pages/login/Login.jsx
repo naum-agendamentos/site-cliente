@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navbar/NavBar";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 function Login() {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ function Login() {
     const [inputValidEmail, setInputValidEmail] = useState("input-form");
 
     const [inputValidSenha, setInputValidSenha] = useState("input-form");
+
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
     
 
     const handleInputChange = (event, setStateFunction) => {
@@ -34,6 +37,7 @@ function Login() {
                 setInputValidSenha("input-form");
             }
         } else {
+            setBotaoSalvar(true);
             setInputValidEmail("input-form");
             setInputValidSenha("input-form");
 
@@ -84,6 +88,7 @@ function Login() {
 
 
         }).catch(() => {
+            setBotaoSalvar(false);
             toast.error("Email ou senha inválidos");
         })
     }
@@ -118,8 +123,7 @@ function Login() {
                                 </div>
                                 <h5 className={style["h5-txt"]}>Não possui conta? <a className={style["h4-txt"]} href="../cadastro-cliente">clique aqui</a></h5>
                                 <div className={style["container-btn"]}>
-                                    <button className={style["button-alterar"]} type="button"
-                                        onClick={handleLogin}>ENTRAR</button>
+                                <button className={style["button-alterar"]} onClick={handleLogin}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "ENTRAR"}</button>
                                 </div>
                             </div>
                         </div>

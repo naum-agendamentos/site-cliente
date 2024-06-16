@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+
+
 function CadastroBarbeiro() {
     const navigate = useNavigate();
     const [nome, setNome] = useState("");
@@ -35,6 +38,8 @@ function CadastroBarbeiro() {
 
     const [erroFoto, seterroFoto] = useState("");
     const [inputValidFoto, setInputValidFoto] = useState("input-form");
+
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
 
     const handleNomeBlur = (event) => {
@@ -128,7 +133,7 @@ function CadastroBarbeiro() {
 
     const handleSave = () => {
 
-       
+
         handleNomeBlur({ target: { value: nome } });
         handleEmailBlur({ target: { value: email } });
         handleSenhaBlur({ target: { value: senha } });
@@ -142,43 +147,45 @@ function CadastroBarbeiro() {
         if (erroNome || erroEmail || erroSenha || erroConfSenha || erroTelefone || erroDescricao || erroFoto || todosCamposVazios) {
             toast.error("Preencha todos os campos corretamente.");
         } else {
-        const options = {
-            method: 'POST',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
-            data: {
-                nome: nome,
-                email: email,
-                senha: senha,
-                telefone: telefone,
-                descricao: descricao,
-                foto: foto
-            },
-            headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
-            }
-        };
+            setBotaoSalvar(true);
+            const options = {
+                method: 'POST',
+                url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
+                data: {
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    telefone: telefone,
+                    descricao: descricao,
+                    foto: foto
+                },
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
 
-        console.log(options);
+            console.log(options);
 
-        axios.request(options).then(function (response) {
-            console.log(response.data);
-            toast.success("Novo Barbeiro criado com sucesso!");
-            sessionStorage.setItem("editado",
-                JSON.stringify(response.data));
-            navigate("/barbeiros")
+            axios.request(options).then(function (response) {
+                console.log(response.data);
+                toast.success("Novo Barbeiro criado com sucesso!");
+                sessionStorage.setItem("editado",
+                    JSON.stringify(response.data));
+                navigate("/barbeiros")
 
-        }).catch((error) => {
+            }).catch((error) => {
+                setBotaoSalvar(false);
                 const status = error.response ? error.response.status : 'sem status';
                 const mensagem = error.response ? error.response.data : error.message;
-            
+
                 if (status === 409) {
                     toast.error("Já existe um usuário com esse endereço de Email");
                 } else {
                     toast.error(`Ocorreu um erro ${mensagem}, por favor, tente novamente.`);
                 }
-                
+
             });
-    }
+        }
 
     };
     const handleInputChange = (event, setStateFunction) => {
@@ -201,10 +208,10 @@ function CadastroBarbeiro() {
                         <div className={styles["container-form"]}>
                             <div className={styles["container-input"]}>
                                 <div className={styles["container-input"]}>
-                                <div className={styles["info-up-inputs"]}>
-                                    <p>NOME</p>
-                                    {erroNome && <span>{erroNome}</span>}
-                                </div>
+                                    <div className={styles["info-up-inputs"]}>
+                                        <p>NOME</p>
+                                        {erroNome && <span>{erroNome}</span>}
+                                    </div>
                                     <input
                                         className={styles[inputValidNome]}
                                         type="text"
@@ -230,7 +237,7 @@ function CadastroBarbeiro() {
 
 
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
+                                <div className={styles["info-up-inputs"]}>
                                     <p>SENHA</p>
                                     {erroSenha && <span>{erroSenha}</span>}
                                 </div>
@@ -245,7 +252,7 @@ function CadastroBarbeiro() {
                             </div>
 
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
+                                <div className={styles["info-up-inputs"]}>
                                     <p>CONFIRMAR SENHA</p>
                                     {erroConfSenha && <span>{erroConfSenha}</span>}
                                 </div>
@@ -259,7 +266,7 @@ function CadastroBarbeiro() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
+                                <div className={styles["info-up-inputs"]}>
                                     <p>TELEFONE</p>
                                     {erroTelefone && <span>{erroTelefone}</span>}
                                 </div>
@@ -274,7 +281,7 @@ function CadastroBarbeiro() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
+                                <div className={styles["info-up-inputs"]}>
                                     <p>DESCRIÇÃO</p>
                                     {erroDescricao && <span>{erroDescricao}</span>}
                                 </div>
@@ -287,7 +294,7 @@ function CadastroBarbeiro() {
                                 />
                             </div>
                             <div className={styles["container-input"]}>
-                            <div className={styles["info-up-inputs"]}>
+                                <div className={styles["info-up-inputs"]}>
                                     <p>FOTO</p>
                                     {erroFoto && <span>{erroFoto}</span>}
                                 </div>
@@ -299,8 +306,7 @@ function CadastroBarbeiro() {
                                     onChange={(e) => handleInputChange(e, setFoto)} />
                             </div>
                             <div className={styles["container-btn"]}>
-                                <button className={styles["button-alterar"]} type="button"
-                                    onClick={handleSave}>CADASTRAR</button>
+                            <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CADASTRAR"}</button>
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ import NavBar from '../../components/navbar-pos-login/NavBar';
 //import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 const EditarMeusDados = () => {
     const navigate = useNavigate();
@@ -32,6 +33,8 @@ const EditarMeusDados = () => {
 
     const [erroConfSenha, seterroConfSenha] = useState("");
     const [inputValidConfSenha, setInputValidConfSenha] = useState("input-form");
+    
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
     const handleInputChange = (event, setStateFunction) => {
         const value = event.target.value;
@@ -116,6 +119,7 @@ const EditarMeusDados = () => {
     const handleSave = async () => {
 
         if (validateFields() && nome && email && senha && confirmarSenha && telefone) {
+            setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
                 url: `https://api-rest-naum.azurewebsites.net/clientes/${id}`,
@@ -136,6 +140,7 @@ const EditarMeusDados = () => {
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
                 navigate(`/login`)
             }).catch((error) => {
+                setBotaoSalvar(false);
                 const status = error.response ? error.response.status : 'sem status';
                 const mensagem = error.response ? error.response.data : error.message;
             
@@ -275,10 +280,7 @@ const EditarMeusDados = () => {
                                 />
                             </div>
                             <div className={style["container-btn"]}>
-                                <button className={style["button-alterar"]} type="button"
-                                    onClick={handleSave}>
-                                    EDITAR
-                                </button>
+                            <button className={style["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "EDITAR"}</button>
                                 <button className={style["button-cancelar"]} type="button"
                                     onClick={handleCancel}>
                                     CANCELAR

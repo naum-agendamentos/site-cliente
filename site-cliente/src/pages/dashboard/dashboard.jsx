@@ -60,29 +60,29 @@ const Dashboard = () => {
         <NavbarBarbeiros />
         <div className={styles["dashboard"]}>
           <div className={styles["container-kpis"]}>
-              <div className={styles["bloco-kpi"]}>
-                  <p>Lucro total da Barbearia<br/>
-                  <span>R${lucro.toFixed(2)}</span>
-                 </p>
-              </div>
-              <div className={styles["bloco-kpi"]}>
-                  <p>Total Agendamentos no Dia<br/>
-                  <span> {TotAgenHoje} </span>
-                  <span className={compAgend < 0 ? styles["vermelho"] : compAgend > 0 ? styles["verde"] : styles["neutro"]}>
-                    {compAgend < 0 ? '-' : compAgend > 0 ? '+' : ''}{Math.abs(compAgend.toFixed(2))}% Que ontem
-                  </span>
+            <div className={styles["bloco-kpi"]}>
+              <p>Lucro total da Barbearia<br />
+                <span>R${lucro.toFixed(2)}</span>
+              </p>
+            </div>
+            <div className={styles["bloco-kpi"]}>
+              <p>Total Agendamentos no Dia<br />
+                <span> {TotAgenHoje} </span>
+                <span className={compAgend < 0 ? styles["vermelho"] : compAgend > 0 ? styles["verde"] : styles["neutro"]}>
+                  {compAgend < 0 ? '-' : compAgend > 0 ? '+' : ''}{Math.abs(compAgend.toFixed(2))}% Que ontem
+                </span>
 
-                 </p>
-              </div>
-              <div className={styles["bloco-kpi"]}>
-                  <p>Média de avaliação<br/>
-                  <span>{ mediaAva ? mediaAva.toFixed(2) : '0' }</span>
-                  <span className={styles["estrela"]}> &#9733;</span>
-                 </p>
-              </div>
+              </p>
+            </div>
+            <div className={styles["bloco-kpi"]}>
+              <p>Média de avaliação<br />
+                <span>{mediaAva ? mediaAva.toFixed(2) : '0'}</span>
+                <span className={styles["estrela"]}> &#9733;</span>
+              </p>
+            </div>
           </div>
           <div className={styles["charts"]}>
-          
+
             <HorizontalBarChartComponent className={styles["chart"]} title="Barbeiro com mais cortes" data={data1} color="#8884d8" isFirstChart={true} />
             <BarChartComponent title="Barbeiro com mais lucros" data={data2} color="#82ca9d" />
             <BarChartTopServices title="Top Serviços" data={data3} color="#ffc658" />

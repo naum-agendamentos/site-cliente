@@ -53,3 +53,9 @@
     background-color: rgba(0, 0, 0, 0);
     border: none;
 }
+
+.gif-loading {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
