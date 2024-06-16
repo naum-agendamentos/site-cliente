@@ -151,7 +151,7 @@ function EditarBarbeiro() {
         if (validateFields() && nome && email && senha && confirmarSenha && telefone && descricao && foto) {
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/barbeiros/${id}`,
+                url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
@@ -194,7 +194,7 @@ function EditarBarbeiro() {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/barbeiros/${id}`,
+            url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -208,7 +208,7 @@ function EditarBarbeiro() {
                     try {
                         const response = await axios.request({
                             method: 'GET',
-                            url: `http://localhost:8080/barbeiros/${id}`,
+                            url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
                             headers: options.headers
                         });
                         const { data } = response;

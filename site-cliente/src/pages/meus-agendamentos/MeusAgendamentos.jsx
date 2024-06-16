@@ -63,7 +63,7 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosClientes() {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/agendamentos/cliente/${sessionStorage.getItem("idCliente")}`,
+            url: `https://api-rest-naum.azurewebsites.net/agendamentos/cliente/${sessionStorage.getItem("idCliente")}`,
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -93,7 +93,7 @@ const MeusAgendamentos = () => {
     function excluir(idAgendamento) {
         const options = {
             method: 'DELETE',
-            url: `http://localhost:8080/agendamentos/${idAgendamento}`,
+            url: `https://api-rest-naum.azurewebsites.net/agendamentos/${idAgendamento}`,
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`

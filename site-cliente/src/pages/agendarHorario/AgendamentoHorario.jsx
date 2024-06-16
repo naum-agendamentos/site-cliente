@@ -49,7 +49,7 @@ const MeusAgendamentos = () => {
     function recuperarServicos() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/servicos?idBarbearia=1',
+            url: 'https://api-rest-naum.azurewebsites.net/servicos?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -210,6 +210,10 @@ const MeusAgendamentos = () => {
                                         </div>
                                         <div className={style["container-dayhour"]}>
                                             <p className={style["dayhour"]}>Sábado</p>
+                                            <p className={style["dayhour"]}>8h as 20h</p>
+                                        </div>
+                                        <div className={style["container-dayhour"]}>
+                                            <p className={style["dayhour"]}>Domingo</p>
                                             <p className={style["dayhour"]}>8h as 20h</p>
                                         </div>
 

@@ -36,6 +36,7 @@ html {
 }
 .option-selected{
     color: red;
+    cursor: pointer;
 }
 
 .option:hover{

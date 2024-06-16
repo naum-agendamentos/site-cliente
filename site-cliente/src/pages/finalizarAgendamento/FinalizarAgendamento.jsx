@@ -5,6 +5,7 @@ import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import Barber from '../../utils/assets/barbeiroAgendamento.png';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 import { format, addDays } from 'date-fns';
 import { da, ptBR, tr } from 'date-fns/locale';
@@ -29,7 +30,7 @@ const MeusAgendamentos = () => {
     const [servicosSelectedsJson, setServicoJson] = useState([{}]);
     let agendamentoProibidoCalled = false;
 
-
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
 
     useEffect(() => {
@@ -112,7 +113,7 @@ const MeusAgendamentos = () => {
     function avancarSlideBarber(idBarberSelected) {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros/listar?idBarbearia=1',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/listar?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -142,7 +143,7 @@ const MeusAgendamentos = () => {
         if (!agendamentoProibidoCalled) {
             const options = {
                 method: 'GET',
-                url: `http://localhost:8080/agendamentos/barbeiro/${barbeiro}`,
+                url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${barbeiro}`,
                 headers: {
                     'User-Agent': 'insomnia/8.6.1',
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -227,7 +228,7 @@ const MeusAgendamentos = () => {
     function recuperarValorBarbeiro() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros/listar?idBarbearia=1',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/listar?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -282,7 +283,7 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosExistentes(idBarber) {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/agendamentos/barbeiro/${idBarber}`,
+            url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${idBarber}`,
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -637,6 +638,7 @@ const MeusAgendamentos = () => {
     };
 
     function salvar() {
+        setBotaoSalvar(true);
         var hora = hourSelected.replace(".", ":");
         var data = new Date(daySelected + " " + hora + ":00");
 
@@ -659,7 +661,7 @@ const MeusAgendamentos = () => {
 
             const options = {
                 method: 'POST',
-                url: `http://localhost:8080/agendamentos`,
+                url: `https://api-rest-naum.azurewebsites.net/agendamentos`,
                 params: {
                     barbeiroId: barberSelected,
                     clienteId: sessionStorage.getItem("idCliente"),
@@ -674,11 +676,16 @@ const MeusAgendamentos = () => {
 
             axios.request(options)
                 .then(function (response) {
-                    toast.success("Agendado com Sucesso!");
-                    navigate(`/meus-agendamentos`);
+                  
+                    setTimeout(() => {
+                        localStorage.setItem("pagAtual","meusAgendamentos");
+                        navigate(`/meus-agendamentos`);
+                        toast.success("Agendado com Sucesso!");
+                    }, 2000);
                     console.log("Agendamento criado com sucesso:", response.data);
                 })
                 .catch(function (error) {
+                    setBotaoSalvar(false);
                     toast.error("Erro ao agendar, contate o administrador!");
                     console.error("Erro ao criar agendamento:", error);
                 });
@@ -687,7 +694,7 @@ const MeusAgendamentos = () => {
             console.log("AGENDAMENTO SELECIONADO " + agendamentoSelectedsJson.id);
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/agendamentos/${agendamentoSelectedsJson.id}`,
+                url: `https://api-rest-naum.azurewebsites.net/agendamentos/${agendamentoSelectedsJson.id}`,
                 params: {
                     barbeiroId: barberSelected,
                     clienteId: sessionStorage.getItem("idCliente"),
@@ -702,11 +709,16 @@ const MeusAgendamentos = () => {
 
             axios.request(options)
                 .then(function (response) {
-                    toast.success("Agendamento Atualizado com sucesso!");
-                    navigate(`/meus-agendamentos`);
+                    
+                    setTimeout(() => {
+                        localStorage.setItem("pagAtual","meusAgendamentos");
+                        navigate(`/meus-agendamentos`);
+                        toast.success("Agendamento Atualizado com sucesso!");
+                    }, 2000);
                     console.log("Agendamento atualizado com sucesso:", response.data);
                 })
                 .catch(function (error) {
+                    setBotaoSalvar(false);
                     toast.error("Erro ao agendar, contate o administrador!");
                     console.error("Erro ao atualizar agendamento:", error);
                 });
@@ -889,7 +901,7 @@ const MeusAgendamentos = () => {
                             ${agendamentoSelectedsJson.length <= 1 ? style["subcontainer-btns"] :
                                     style["subcontainer-btns-alterar"]
                                 }`}>
-                                <button className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}>Salvar</button>
+                                 <button className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "Salvar"}</button>
                                 <button onClick={cancelar} className={style["btn-cancelar"]}>Cancelar</button>
                                 <button onClick={editarServico} className={`${agendamentoSelectedsJson.length <= 1 ? style["btnAlterarServicosDisabled"] :
                                     style["btnEditar"]

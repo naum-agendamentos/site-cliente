@@ -74,7 +74,7 @@ function EditarServico() {
         } else {
             const options = {
                 method: 'PUT',
-                url: `http://localhost:8080/servicos/${id}`,
+                url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     nomeServico: nome,
@@ -106,7 +106,7 @@ function EditarServico() {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `http://localhost:8080/servicos/${id}`,
+            url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
             params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
             headers: {
                 'User-Agent': 'insomnia/9.2.0',

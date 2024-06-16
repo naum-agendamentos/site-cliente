@@ -144,7 +144,7 @@ function CadastroBarbeiro() {
         } else {
         const options = {
             method: 'POST',
-            url: 'http://localhost:8080/barbeiros',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
             data: {
                 nome: nome,
                 email: email,

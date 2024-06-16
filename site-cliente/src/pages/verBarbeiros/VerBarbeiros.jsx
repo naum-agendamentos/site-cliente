@@ -13,7 +13,7 @@ const VerBarbeiros = () => {
     function recuperarValorDoCard() {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/barbeiros',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -31,63 +31,6 @@ const VerBarbeiros = () => {
     }
 
     // const navigate = useNavigate(); // Inicializa o hook de navegação
-
-    /*
-    EXEMPLO DE POST 
-        const novaMusica = {
-        nomeMusica: "Nova Música",
-        artista: "Novo Artista",
-        genero: "Novo Gênero",
-        ano: "2024-01-01T00:00:00.000Z",
-        imagem: "https://exemplo.com/nova-imagem.jpg"
-    };
-
-    api.post('/caminhoParaMusica', novaMusica)
-        .then((response) => {
-            console.log('Música adicionada com sucesso', response.data);
-            // Atualizar a UI aqui, se necessário
-        })
-        .catch((erro) => {
-            console.error('Erro ao adicionar música', erro);
-        });
-
-    EXEMPLO DE PUT
-    function atualizarMusica() {
-    const musicaAtualizada = {
-        nomeMusica: "Música Atualizada",
-        artista: "Artista Atualizado",
-        genero: "Gênero Atualizado",
-        ano: "2024-01-02T00:00:00.000Z",
-        imagem: "https://exemplo.com/imagem-atualizada.jpg"
-    };
-
-    const musicaId = "1"; // ID da música a ser atualizada
-
-    api.put(`/caminhoParaMusica/${musicaId}`, musicaAtualizada)
-        .then((response) => {
-            console.log('Música atualizada com sucesso', response.data);
-            // Atualizar a UI aqui, se necessário
-        })
-        .catch((erro) => {
-            console.error('Erro ao atualizar música', erro);
-        });
-    }
-
-    EXEMPLO DE DELETE
-    function deletarMusica() {
-    const musicaId = "1"; // ID da música a ser deletada
-
-    api.delete(`/caminhoParaMusica/${musicaId}`)
-        .then((response) => {
-            console.log('Música deletada com sucesso', response.data);
-            // Atualizar a UI aqui, se necessário
-        })
-        .catch((erro) => {
-            console.error('Erro ao deletar música', erro);
-        });
-    }
-
-    */
 
     // useEffect para chamar a função recuperarValorDoCard() quando o componente é montado
     useEffect(() => {

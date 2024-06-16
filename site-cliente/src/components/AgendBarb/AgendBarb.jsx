@@ -43,7 +43,7 @@ const AgendBarb = () => {
 
         const options = {
           method: 'GET',
-          url: `http://localhost:8080/agendamentos/barbeiro/${id}`,
+          url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${id}`,
           headers: {
             'User-Agent': 'insomnia/8.6.1',
             Authorization: `Bearer ${sessionStorage.getItem("token")}`

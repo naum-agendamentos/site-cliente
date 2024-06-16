@@ -26,7 +26,7 @@ const CardBarbeiros = ({ id, foto, nome, email, telefone, onDelete }) => {
             if (result.isConfirmed) {
                 const options = {
                     method: 'PUT',
-                    url: `http://localhost:8080/barbeiros/desativar/${id}`,
+                    url: `https://api-rest-naum.azurewebsites.net/barbeiros/desativar/${id}`,
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem("token")}`
                     }

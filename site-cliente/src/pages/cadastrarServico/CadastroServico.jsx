@@ -75,7 +75,7 @@ function CadastroServiço() {
         } else {
             const options = {
                 method: 'POST',
-                url: 'http://localhost:8080/servicos',
+                url: 'https://api-rest-naum.azurewebsites.net/servicos',
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     preco: preco,

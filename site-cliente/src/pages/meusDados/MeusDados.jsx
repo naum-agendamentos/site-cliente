@@ -15,7 +15,7 @@ const MeusDados = () => {
 
     const options = {
         method: 'GET',
-        url: `http://localhost:8080/clientes/usuario`,
+        url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
         params: { idUsuario: sessionStorage.getItem("userId") },
         headers: {
             'User-Agent': 'insomnia/8.6.1',
