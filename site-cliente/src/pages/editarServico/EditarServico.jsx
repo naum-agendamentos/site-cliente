@@ -4,7 +4,7 @@ import styles from './EditarServico.module.css';
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 //import ImgBarra from '../../utils/assets/barra-lateral.svg'
-import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
+import NavBar from '../../components/navbar-pos-login/NavBar';
 import axios from "axios";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
@@ -44,8 +44,6 @@ function EditarServico() {
 
     const handlePrecoBlur = (event) => {
         const value = event.target.value;
-        const valorComPontos = value.replace(/,/g, '.');
-        setPreco(valorComPontos);
 
         if (value === "" || value <= 0) {
             setErroPreco("Preço tem que ser maior que 0");
