@@ -6,7 +6,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 72%;
+    gap: 70%;
 }
 
 .section-title {
@@ -83,6 +83,42 @@
 
 .botao:nth-child(2):hover {
     background-color: #756744;
+}
+
+.botoes-up-right {
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+
+}
+
+.button-alterar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: rgba(253, 253, 253, 1);
+    background-color: #3E83C8;
+    border: none;
+    width: 52px;
+    height: 51px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.button-alterar:hover {
+    box-shadow: 5px 4px 15px 0px rgba(24, 24, 24, 0.57);
+    transition: 0.7s;
+}
+
+.gif-loading {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
 }
 
 

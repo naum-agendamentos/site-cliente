@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PilhaObj } from '../../utils/pilha';
 import { toast } from "react-toastify";
+import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
 
 const Barbeiros = () => {
     const [cardsData, setCardsData] = useState([]);
     const pilha = new PilhaObj(10);
     const navigate = useNavigate();
+
+    const [botaoSalvar, setBotaoSalvar] = useState(false);
 
     useEffect(() => {
         recuperarValorDoCard();
@@ -22,7 +25,7 @@ const Barbeiros = () => {
         }
 
         sessionStorage.setItem("AtivarToast", "desativar");
-        
+
         const serializedPilha = sessionStorage.getItem("pilha");
         if (serializedPilha) {
             pilha.deserialize(serializedPilha);
@@ -108,6 +111,36 @@ const Barbeiros = () => {
         ativarPilha(id);
     };
 
+    const gerarCsv = async () => {
+        setBotaoSalvar(true);
+        const options = {
+            method: 'GET',
+            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/gerar-csv-barbeiros',
+            headers: {
+                'User-Agent': 'insomnia/9.2.0',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            },
+            responseType: 'blob' // Importante: indica que a resposta será um blob (binary data)
+        };
+
+        axios.request(options)
+            .then(function (response) {
+                setBotaoSalvar(false);
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'barbeiros.csv');
+                document.body.appendChild(link);
+                link.click();
+                toast.success("CSV gerado com sucesso!");
+            })
+            .catch(function (error) {
+                setBotaoSalvar(false);
+                console.log(error);
+                toast.error("Não foi possível gerar o CSV");
+            });
+    }
+
     return (
         <>
             <div className="borda-gradiente-left">
@@ -117,7 +150,10 @@ const Barbeiros = () => {
                     <section className={styles["barbeiros"]} id="barbeiros">
                         <h1 className={styles["section-title"]}>BARBEIROS:</h1>
                         <div className={styles["add-barb"]}>
-                            <a onClick={CadasBarbeiro} href="#adicionar">+</a>
+                            <div className={styles["botoes-up-right"]}>
+                                <button className={styles["button-alterar"]} onClick={gerarCsv}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CSV"}</button>
+                                <a onClick={CadasBarbeiro} href="#adicionar">+</a>
+                            </div>
                         </div>
                     </section>
                     <div className={styles["content-barbeiros"]}>
