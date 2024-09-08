@@ -7,6 +7,7 @@ import styles from './CadastroServico.module.css';
 import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from '../../api';
 
 function CadastroServiço() {
     const navigate = useNavigate();
@@ -81,7 +82,7 @@ function CadastroServiço() {
             setBotaoSalvar(true);
             const options = {
                 method: 'POST',
-                url: 'https://api-rest-naum.azurewebsites.net/servicos',
+                url: 'servicos',
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     preco: preco,
@@ -95,7 +96,7 @@ function CadastroServiço() {
 
             };
 
-            axios.request(options).then(function (response) {
+            api.request(options).then(function (response) {
                 toast.success("Novo serviço criado com sucesso!");
                 navigate("/lista-servico")
                 console.log(response.data);

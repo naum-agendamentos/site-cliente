@@ -63,7 +63,7 @@ function Login() {
                 sessionStorage.setItem("token", response.data.token);
                 const options = {
                     method: 'GET',
-                    url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
+                    url: `clientes/usuario`,
                     params: { idUsuario: userId },
                     headers: {
                         'User-Agent': 'insomnia/8.6.1',
@@ -71,7 +71,7 @@ function Login() {
                     }
                 };
             
-                axios.request(options)
+                api.request(options)
                     .then(function (response) {
                         const { data } = response;
                         const { id } = data;

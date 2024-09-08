@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { toast } from "react-toastify";
+import api from "../../api";
 
 const ListaServico = () => {
     const [servicos, setServicos] = useState([]);
@@ -15,7 +16,7 @@ const ListaServico = () => {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/servicos',
+            url: 'servicos',
             params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
             headers: {
                 'User-Agent': 'insomnia/9.2.0',
@@ -23,7 +24,7 @@ const ListaServico = () => {
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 setServicos(response.data);
                 console.log(response.data);
@@ -54,14 +55,14 @@ const ListaServico = () => {
             if (result.isConfirmed) {
                 const options = {
                     method: 'DELETE',
-                    url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
+                    url: `servicos/${id}`,
                     params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                     headers: {
                       Authorization: `Bearer ${sessionStorage.getItem("token")}`
                     }
                   };
                   
-                  axios.request(options).then(function (response) {
+                  api.request(options).then(function (response) {
                     console.log(response.data);
                     toast.success("Serviço EXCLUIDO!");
                   }).catch(function (error) {

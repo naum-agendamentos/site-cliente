@@ -14,6 +14,7 @@ import { da, ptBR, tr } from 'date-fns/locale';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { toast } from "react-toastify";
+import api from "../../api";
 
 
 const MeusAgendamentos = () => {
@@ -113,14 +114,14 @@ const MeusAgendamentos = () => {
     function avancarSlideBarber(idBarberSelected) {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/listar?idBarbearia=1',
+            url: 'barbeiros/listar?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 var numBarbers = response.data.length;
 
@@ -143,14 +144,14 @@ const MeusAgendamentos = () => {
         if (!agendamentoProibidoCalled) {
             const options = {
                 method: 'GET',
-                url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${barbeiro}`,
+                url: `agendamentos/barbeiro/${barbeiro}`,
                 headers: {
                     'User-Agent': 'insomnia/8.6.1',
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 }
             };
 
-            axios.request(options)
+            api.request(options)
                 .then(function (response) {
                     var retornados = response.data;
                     var datasOcupadas = [];
@@ -228,14 +229,14 @@ const MeusAgendamentos = () => {
     function recuperarValorBarbeiro() {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/listar?idBarbearia=1',
+            url: 'barbeiros/listar?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 const { data } = response;
                 if (data.length > 0) {
@@ -283,14 +284,14 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosExistentes(idBarber) {
         const options = {
             method: 'GET',
-            url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${idBarber}`,
+            url: `agendamentos/barbeiro/${idBarber}`,
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 setAgendaementosExistentes(response.data);
             })
@@ -661,7 +662,7 @@ const MeusAgendamentos = () => {
 
             const options = {
                 method: 'POST',
-                url: `https://api-rest-naum.azurewebsites.net/agendamentos`,
+                url: `agendamentos`,
                 params: {
                     barbeiroId: barberSelected,
                     clienteId: sessionStorage.getItem("idCliente"),
@@ -674,7 +675,7 @@ const MeusAgendamentos = () => {
                 }
             };
 
-            axios.request(options)
+            api.request(options)
                 .then(function (response) {
                   
                     setTimeout(() => {
@@ -694,7 +695,7 @@ const MeusAgendamentos = () => {
             console.log("AGENDAMENTO SELECIONADO " + agendamentoSelectedsJson.id);
             const options = {
                 method: 'PUT',
-                url: `https://api-rest-naum.azurewebsites.net/agendamentos/${agendamentoSelectedsJson.id}`,
+                url: `agendamentos/${agendamentoSelectedsJson.id}`,
                 params: {
                     barbeiroId: barberSelected,
                     clienteId: sessionStorage.getItem("idCliente"),
@@ -707,7 +708,7 @@ const MeusAgendamentos = () => {
                 }
             };
 
-            axios.request(options)
+            api.request(options)
                 .then(function (response) {
                     
                     setTimeout(() => {

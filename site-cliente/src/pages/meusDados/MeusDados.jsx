@@ -5,6 +5,7 @@ import NavBar from '../../components/navbar-pos-login/NavBar';
 //import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 
 const MeusDados = () => {
 
@@ -15,7 +16,7 @@ const MeusDados = () => {
 
     const options = {
         method: 'GET',
-        url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
+        url: `clientes/usuario`,
         params: { idUsuario: sessionStorage.getItem("userId") },
         headers: {
             'User-Agent': 'insomnia/8.6.1',
@@ -23,7 +24,7 @@ const MeusDados = () => {
         }
     };
 
-    axios.request(options)
+    api.request(options)
         .then(function (response) {
             const { data } = response;
             const { id, nome, email, telefone } = data;

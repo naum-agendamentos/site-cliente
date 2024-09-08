@@ -4,6 +4,7 @@ import NavBar from '../../components/navbar-pos-login/NavBar';
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import api from "../../api";
 //import ImgBarra from '../../utils/assets/barra-lateral.svg';
 
 const MeusAgendamentos = () => {
@@ -63,14 +64,14 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosClientes() {
         const options = {
             method: 'GET',
-            url: `https://api-rest-naum.azurewebsites.net/agendamentos/cliente/${sessionStorage.getItem("idCliente")}`,
+            url: `agendamentos/cliente/${sessionStorage.getItem("idCliente")}`,
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 // Atualiza o estado cardsData com os dados recebidos da API
                 setMeusAgendamentos(response.data);
@@ -93,14 +94,14 @@ const MeusAgendamentos = () => {
     function excluir(idAgendamento) {
         const options = {
             method: 'DELETE',
-            url: `https://api-rest-naum.azurewebsites.net/agendamentos/${idAgendamento}`,
+            url: `agendamentos/${idAgendamento}`,
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 // Atualiza o estado cardsData com os dados recebidos da API
                 toast.success("Agendamento cancelado com sucesso!");

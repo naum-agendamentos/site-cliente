@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 
 const CardBarbeiros = ({ id, foto, nome, email, telefone, onDelete }) => {
     const navigate = useNavigate();
@@ -26,13 +27,13 @@ const CardBarbeiros = ({ id, foto, nome, email, telefone, onDelete }) => {
             if (result.isConfirmed) {
                 const options = {
                     method: 'PUT',
-                    url: `https://api-rest-naum.azurewebsites.net/barbeiros/desativar/${id}`,
+                    url: `barbeiros/desativar/${id}`,
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem("token")}`
                     }
                 };
 
-                axios.request(options).then(function (response) {
+                api.request(options).then(function (response) {
                     console.log(response.data);
                     toast.success("Barbeiro excluido!");
                     sessionStorage.setItem("AtivarToast", "ativar");

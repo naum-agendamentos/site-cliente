@@ -6,6 +6,7 @@ import NavbarBarbeiros from "../../components/navbarBarbeiro/NavbarBarbeiro"; //
 import CardBarbeiros from "../../components/cardBarbeiros/CardVerBarbeiro"; // Importa o componente CardBarbeiros
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../../api";
 
 const VerBarbeiros = () => {
     const [cardsData, setCardsData] = useState();
@@ -13,14 +14,14 @@ const VerBarbeiros = () => {
     function recuperarValorDoCard() {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
+            url: 'barbeiros',
             headers: {
               'User-Agent': 'insomnia/8.6.1',
               Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
         
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 // Atualiza o estado cardsData com os dados recebidos da API
                 setCardsData(response.data);

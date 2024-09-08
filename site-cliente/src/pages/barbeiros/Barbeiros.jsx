@@ -7,6 +7,7 @@ import axios from "axios";
 import { PilhaObj } from '../../utils/pilha';
 import { toast } from "react-toastify";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from "../../api";
 
 const Barbeiros = () => {
     const [cardsData, setCardsData] = useState([]);
@@ -45,14 +46,14 @@ const Barbeiros = () => {
     const recuperarValorDoCard = () => {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros',
+            url: 'barbeiros',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 const { data } = response;
                 if (data.length > 0) {
@@ -85,13 +86,13 @@ const Barbeiros = () => {
         if (verificarVazio) {
             const options = {
                 method: 'PUT',
-                url: `https://api-rest-naum.azurewebsites.net/barbeiros/reativar/${verificarVazio}`,
+                url: `barbeiros/reativar/${verificarVazio}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 }
             };
 
-            axios.request(options).then(function (response) {
+            api.request(options).then(function (response) {
                 console.log(response.data);
                 toast.success("Barbeiro reativado!");
             }).catch(function (error) {
@@ -115,7 +116,7 @@ const Barbeiros = () => {
         setBotaoSalvar(true);
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/barbeiros/gerar-csv-barbeiros',
+            url: 'barbeiros/gerar-csv-barbeiros',
             headers: {
                 'User-Agent': 'insomnia/9.2.0',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -123,7 +124,7 @@ const Barbeiros = () => {
             responseType: 'blob' // Importante: indica que a resposta será um blob (binary data)
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 setBotaoSalvar(false);
                 const url = window.URL.createObjectURL(new Blob([response.data]));

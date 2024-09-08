@@ -3,10 +3,12 @@ import { toast } from "react-toastify";
 
 import styles from './editarBarbeiro.module.css'
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import axios from "axios";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from "../../api";
+import CloudinaryUploader from "../../components/uploadImg/CloudinaryUploader";
 
 function EditarBarbeiro() {
     const navigate = useNavigate();
@@ -42,7 +44,7 @@ function EditarBarbeiro() {
     const [inputValidDescricao, setInputValidDescricao] = useState("input-form");
 
     const [erroFoto, seterroFoto] = useState("");
-    const [inputValidFoto, setInputValidFoto] = useState("input-form");
+    const [inputValidFoto, setInputValidFoto] = useState("botao-up-img");
 
     const [botaoSalvar, setBotaoSalvar] = useState(false);
 
@@ -127,11 +129,9 @@ function EditarBarbeiro() {
         const regexUrl = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
         if (!value.match(regexUrl)) {
-            seterroFoto("Digite uma URL válida");
-            setInputValidFoto("input-error");
+            seterroFoto("Carregue uma imagem");
         } else {
             seterroFoto("");
-            setInputValidFoto("input-form");
         }
     }
 
@@ -155,7 +155,7 @@ function EditarBarbeiro() {
             setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
-                url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
+                url: `barbeiros/${id}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
@@ -169,7 +169,7 @@ function EditarBarbeiro() {
                 }
             };
 
-            axios.request(options).then(function (response) {
+            api.request(options).then(function (response) {
                 console.log(response.data);
                 toast.success('Dados editados com sucesso!');
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
@@ -199,21 +199,21 @@ function EditarBarbeiro() {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
+            url: `barbeiros/${id}`,
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(async function (response) {
 
                 const fetchData = async () => {
                     try {
-                        const response = await axios.request({
+                        const response = await api.request({
                             method: 'GET',
-                            url: `https://api-rest-naum.azurewebsites.net/barbeiros/${id}`,
+                            url: `barbeiros/${id}`,
                             headers: options.headers
                         });
                         const { data } = response;
@@ -234,6 +234,23 @@ function EditarBarbeiro() {
                 console.error(error);
             });
     }, [id]);
+
+    const fileInputRef = useRef(null);
+    const [nomeImg, setNomeImg] = useState("Carregar nova Imagem");
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleButtonClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log('Imagem selecionada:', file.name);
+            setNomeImg(file.name);
+            setSelectedFile(file);
+        }
+    };
 
     return (
         <>
@@ -333,12 +350,56 @@ function EditarBarbeiro() {
                                         <p>FOTO</p>
                                         {erroFoto && <span>{erroFoto}</span>}
                                     </div>
-                                    <input className={styles[inputValidFoto]}
-                                        type="text"
-                                        value={foto}
-                                        placeholder="URL da Imagem"
-                                        onBlur={handleFotoBlur}
-                                        onChange={(e) => handleInputChange(e, setFoto)} />
+                                    <button
+                                    className={styles[inputValidFoto]}
+                                    type="button"
+                                    onClick={handleButtonClick}
+                                >
+                                    <svg
+                                        aria-hidden="true"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeWidth="2"
+                                            stroke="#ffffff"
+                                            d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                                            strokeLinejoin="round"
+                                            strokeLinecap="round"
+                                        />
+                                        <path
+                                            strokeLinejoin="round"
+                                            strokeLinecap="round"
+                                            strokeWidth="2"
+                                            stroke="#ffffff"
+                                            d="M17 15V18M17 21V18M17 18H14M17 18H20"
+                                        />
+                                    </svg>
+                                    {nomeImg}
+                                </button>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                />
+
+                                <div className={styles["part-url"]}>
+                                {selectedFile && (
+                                    <CloudinaryUploader
+                                        file={selectedFile}
+                                        onUploadComplete={(url) => {
+                                            setFoto(url);
+                                           
+                                        }}
+                                    />
+                                )}
+                                </div>
+                                
                                 </div>
                                 <div className={styles["container-btn"]}>
                                 <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "SALVAR"}</button>

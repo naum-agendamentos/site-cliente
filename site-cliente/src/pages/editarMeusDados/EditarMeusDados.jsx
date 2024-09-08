@@ -8,6 +8,7 @@ import NavBar from '../../components/navbar-pos-login/NavBar';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from '../../api';
 
 const EditarMeusDados = () => {
     const navigate = useNavigate();
@@ -122,7 +123,7 @@ const EditarMeusDados = () => {
             setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
-                url: `https://api-rest-naum.azurewebsites.net/clientes/${id}`,
+                url: `clientes/${id}`,
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
                 },
@@ -134,7 +135,7 @@ const EditarMeusDados = () => {
                 }
             };
 
-            axios.request(options).then(function (response) {
+            api.request(options).then(function (response) {
                 console.log(response.data);
                 toast.success('Dados editados com sucesso! Realize o login novamente');
                 sessionStorage.setItem("editado", JSON.stringify(response.data));
@@ -159,7 +160,7 @@ const EditarMeusDados = () => {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
+            url: `clientes/usuario`,
             params: { idUsuario: sessionStorage.getItem("userId") },
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
@@ -167,14 +168,14 @@ const EditarMeusDados = () => {
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(async function () {
 
                 const fetchData = async () => {
                     try {
-                        const response = await axios.request({
+                        const response = await api.request({
                             method: 'GET',
-                            url: `https://api-rest-naum.azurewebsites.net/clientes/usuario`,
+                            url: `clientes/usuario`,
                             params: { idUsuario: sessionStorage.getItem("userId") },
                             headers: options.headers
                         });

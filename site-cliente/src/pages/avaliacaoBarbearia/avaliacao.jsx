@@ -5,6 +5,7 @@ import CardBarbearia from '../../components/cardBarbearia/CardBarbearia';
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from '../../api';
 
 function AvaliacaoBarbearia() {
     const [rating, setRating] = useState(0);
@@ -17,7 +18,7 @@ function AvaliacaoBarbearia() {
         setBotaoSalvar(true);
         const options = {
             method: 'POST',
-            url: `https://api-rest-naum.azurewebsites.net/avaliacoes/1`,
+            url: `avaliacoes/1`,
             params: { idCliente: sessionStorage.getItem("idCliente") },
             data: {
                 qtdEstrela: rating
@@ -27,7 +28,7 @@ function AvaliacaoBarbearia() {
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
-        axios.request(options).then(function (response) {
+        api.request(options).then(function (response) {
             setBotaoSalvar(false);
             toast.success("Avaliação realizada com sucesso! Obrigado(a)");
             console.log(response.data);

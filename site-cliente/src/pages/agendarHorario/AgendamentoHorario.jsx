@@ -5,6 +5,7 @@ import Mapa from '../../utils/assets/MapsLocalizacao.png';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../../api";
 
 const MeusAgendamentos = () => {
     const [servicos, setServicos] = useState();
@@ -49,13 +50,13 @@ const MeusAgendamentos = () => {
     function recuperarServicos() {
         const options = {
             method: 'GET',
-            url: 'https://api-rest-naum.azurewebsites.net/servicos?idBarbearia=1',
+            url: 'servicos?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         };
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 const { data } = response;
                 if (data.length > 0) {

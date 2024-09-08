@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styles from './AgendBarb.module.css';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import api from '../../api';
 
 const localizer = momentLocalizer(moment);
 
@@ -43,13 +44,13 @@ const AgendBarb = () => {
 
         const options = {
           method: 'GET',
-          url: `https://api-rest-naum.azurewebsites.net/agendamentos/barbeiro/${id}`,
+          url: `agendamentos/barbeiro/${id}`,
           headers: {
             'User-Agent': 'insomnia/8.6.1',
             Authorization: `Bearer ${sessionStorage.getItem("token")}`
           }
         };
-        axios.request(options)
+        api.request(options)
           .then(function (response) {
 
             if (response.data && response.data.length > 0) {

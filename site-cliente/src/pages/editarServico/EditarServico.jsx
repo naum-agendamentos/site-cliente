@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from '../../components/navbar-pos-login/NavBar';
 import axios from "axios";
 import Loading from '../../utils/assets/loading-gif-transparent-10.gif';
+import api from "../../api";
 
 function EditarServico() {
     const navigate = useNavigate();
@@ -78,7 +79,7 @@ function EditarServico() {
             setBotaoSalvar(true);
             const options = {
                 method: 'PUT',
-                url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
+                url: `servicos/${id}`,
                 params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
                 data: {
                     nomeServico: nome,
@@ -91,7 +92,7 @@ function EditarServico() {
                 }
             };
 
-            axios.request(options)
+            api.request(options)
                 .then(function (response) {
                     toast.success('Dados editados com sucesso!');
                     console.log(response.data);
@@ -111,7 +112,7 @@ function EditarServico() {
     useEffect(() => {
         const options = {
             method: 'GET',
-            url: `https://api-rest-naum.azurewebsites.net/servicos/${id}`,
+            url: `servicos/${id}`,
             params: { idBarbearia: sessionStorage.getItem("idBarbearia") },
             headers: {
                 'User-Agent': 'insomnia/9.2.0',
@@ -119,7 +120,7 @@ function EditarServico() {
             }
         };
 
-        axios.request(options)
+        api.request(options)
             .then(function (response) {
                 const { data } = response;
                 const { nomeServico, tempoServico, preco } = data;

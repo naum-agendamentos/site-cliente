@@ -6,6 +6,7 @@ import HorizontalBarChartComponent from '../../components/barChart/HorizontalBar
 //import LineChartComponent from '../../components/barChart/LineChartComponent';
 import BarChartTopServices from '../../components/barChart/BarChartTopServices';
 import NavbarBarbeiros from "../../components/navbarBarbeiro/NavbarBarbeiro";
+import api from '../../api';
 
 const Dashboard = () => {
   const [data1, setData1] = useState([]);
@@ -23,13 +24,13 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       const endpoints = [
-        'https://api-rest-naum.azurewebsites.net/dashboards/cortes-por-barbeiro',
-        'https://api-rest-naum.azurewebsites.net/dashboards/lucro-por-barbeiro',
-        'https://api-rest-naum.azurewebsites.net/dashboards/top-servicos',
-        'https://api-rest-naum.azurewebsites.net/dashboards/lucro',
-        'https://api-rest-naum.azurewebsites.net/dashboards/total-agendamento-hoje',
-        'https://api-rest-naum.azurewebsites.net/dashboards/porcentagem-agendamento-hoje-ontem',
-        'https://api-rest-naum.azurewebsites.net/dashboards/media-avaliacao/1'
+        'dashboards/cortes-por-barbeiro',
+        'dashboards/lucro-por-barbeiro',
+        'dashboards/top-servicos',
+        'dashboards/lucro',
+        'dashboards/total-agendamento-hoje',
+        'dashboards/porcentagem-agendamento-hoje-ontem',
+        'dashboards/media-avaliacao/1'
       ];
 
       const options = {
@@ -39,7 +40,7 @@ const Dashboard = () => {
         }
       };
 
-      const responses = await Promise.all(endpoints.map(endpoint => axios.get(endpoint, options)));
+      const responses = await Promise.all(endpoints.map(endpoint => api.get(endpoint, options)));
 
       setData1(responses[0].data.map(service => ({ name: service.nome.slice(0, 15), value: service.cortes })));
       setData2(responses[1].data.map(service => ({ name: service.nome.slice(0, 7), value: service.lucro })));
