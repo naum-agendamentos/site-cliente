@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import style from './FinalizarAgendamento.module.css';
-import NavBar from '../../components/navbar-pos-login/NavBar';
+import style from './BloquearHorarios.module.css';
+import NavBar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import ImgBarra from '../../utils/assets/barra-lateral.svg';
 import Barber from '../../utils/assets/barbeiroAgendamento.png';
 import { useNavigate, useParams } from "react-router-dom";
@@ -41,7 +41,7 @@ const MeusAgendamentos = () => {
             const jsonConvert = JSON.parse(jsonStr);
             if (jsonConvert != null) {
                 // Verifica se é um JSON de agendamento ou de serviço com base em uma chave específica
-                if (jsonConvert.dataHoraAgendamento != null) {
+                if (jsonConvert.dataHoraAgendamentoInicio != null) {
                     setAgendamentoJson(jsonConvert);
                     const servicosArray = jsonConvert.servicos.map(servico => ({
                         id: servico.id,
@@ -58,7 +58,7 @@ const MeusAgendamentos = () => {
                     recuperarAgendamentosExistentes(jsonConvert.barbeiro.id);
                     setDateDisabled(false);
                     setButtonsDisabled(false);
-                    var dataCompleta = jsonConvert.dataHoraAgendamento.split("T");
+                    var dataCompleta = jsonConvert.dataHoraAgendamentoInicio.split("T");
 
                     setDaySelected(dataCompleta[0]);
                     setHourDisabled(false);
@@ -68,9 +68,9 @@ const MeusAgendamentos = () => {
                     var dataAgendamento = new Date(dataCompleta[0] + " " + dataCompleta[1]);
 
                     var dataAtual = new Date();
-                    var dataHoraAgendamento = new Date(dataCompleta[0] + " " + dataCompleta[1]);
+                    var dataHoraAgendamentoInicio = new Date(dataCompleta[0] + " " + dataCompleta[1]);
 
-                    var timeDiff = Math.abs(dataHoraAgendamento - dataAtual); // Subtrai as duas datas
+                    var timeDiff = Math.abs(dataHoraAgendamentoInicio - dataAtual); // Subtrai as duas datas
 
                     // Converta a diferença de milissegundos em dias
                     var diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
@@ -91,7 +91,7 @@ const MeusAgendamentos = () => {
 
 
 
-                    agendamentoProibido(hora, dataCompleta, servicosArray, dataHoraAgendamento, jsonConvert.barbeiro.id, jsonConvert.id)
+                    agendamentoProibido(hora, dataCompleta, servicosArray, dataHoraAgendamentoInicio, jsonConvert.barbeiro.id, jsonConvert.id)
 
 
 
@@ -139,7 +139,7 @@ const MeusAgendamentos = () => {
             });
     }
 
-    function agendamentoProibido(hora, dataCompleta, servicosArray, dataHoraAgendamentoDaVez, barbeiro, idAgendamento) {
+    function agendamentoProibido(hora, dataCompleta, servicosArray, dataHoraAgendamentoInicioDaVez, barbeiro, idAgendamento) {
 
         if (!agendamentoProibidoCalled) {
             const options = {
@@ -156,37 +156,33 @@ const MeusAgendamentos = () => {
                     var retornados = response.data;
                     var datasOcupadas = [];
                     for (const agendamento of retornados) {
-                        var dataAgendamentoExistente = agendamento.dataHoraAgendamento.split("T");
-                        var dataHoraAgendamentoExistente = new Date(dataAgendamentoExistente[0] + " " + dataAgendamentoExistente[1]);
+                        var dataAgendamentoExistente = agendamento.dataHoraAgendamentoInicio.split("T");
+                        var dataHoraAgendamentoInicioExistente = new Date(dataAgendamentoExistente[0] + " " + dataAgendamentoExistente[1]);
 
                         if (dataAgendamentoExistente[0] == dataCompleta[0] && agendamento.id != idAgendamento) {
 
                             for (const servico of agendamento.servicos) {
 
-                                var dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                var dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoInicioExistente.getHours() + "." + dataHoraAgendamentoInicioExistente.getMinutes());
                                 var condicao = servico.tempoServico / 30;
 
                                 if (condicao == 1) {
 
-                                    dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + servico.tempoServico);
-                                    dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                    dataHoraAgendamentoInicioExistente.setMinutes(dataHoraAgendamentoInicioExistente.getMinutes() + servico.tempoServico);
+                                    dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoInicioExistente.getHours() + "." + dataHoraAgendamentoInicioExistente.getMinutes());
 
                                     datasOcupadas.push(dataAgendamentoConvertida);
                                 }
                                 else {
                                     while (condicao > 0) {
-                                        dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + 30);
+                                        dataHoraAgendamentoInicioExistente.setMinutes(dataHoraAgendamentoInicioExistente.getMinutes() + 30);
                                         condicao--;
-                                        dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                        dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoInicioExistente.getHours() + "." + dataHoraAgendamentoInicioExistente.getMinutes());
                                         datasOcupadas.push(dataAgendamentoConvertida);
 
                                     }
                                 }
                             }
-
-                            console.log("Servico da vez: "+agendamento);
-
-                            console.log("agendamento.servicos agendamento.servicos agendamento.servicos agendamento.servicos agendamento.servicos "+ (agendamento.servicos.length));
 
 
 
@@ -200,8 +196,8 @@ const MeusAgendamentos = () => {
                         while (condicao >= 1) {
 
 
-                            dataHoraAgendamentoDaVez.setMinutes(dataHoraAgendamentoDaVez.getMinutes() + 30);
-                            dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoDaVez.getHours() + "." + dataHoraAgendamentoDaVez.getMinutes());
+                            dataHoraAgendamentoInicioDaVez.setMinutes(dataHoraAgendamentoInicioDaVez.getMinutes() + 30);
+                            dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoInicioDaVez.getHours() + "." + dataHoraAgendamentoInicioDaVez.getMinutes());
 
 
                             if (datasOcupadas.includes(dataAgendamentoConvertida)) {
@@ -288,7 +284,7 @@ const MeusAgendamentos = () => {
     function recuperarAgendamentosExistentes(idBarber) {
         const options = {
             method: 'GET',
-            url: `agendamentos/barbeiro/${idBarber}`,
+            url: `agendamentos/barbeiroBloq/${idBarber}`,
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -338,17 +334,16 @@ const MeusAgendamentos = () => {
         if (agendamentoSelectedsJson.length <= 1) {
             if (agendamentosExistentes != null && daySelected != null) {
                 for (const agendamento of agendamentosExistentes) {
-
                     if(agendamento.cliente != null){
-                        const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                        const diaHoraAgendamento = agendamento.dataHoraAgendamentoInicio.split("T");
                         if (diaHoraAgendamento[0] == daySelected) {
                             const horarioReservado = diaHoraAgendamento[1].split(":");
                             const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] + "." + horarioReservado[1]);
-
+    
                             horariosProibidos.push(horarioReservadoConvertidoInicio);
                             var soma = 0;
                             // var somaTempoServicoReservado = 0;
-                            const dataAumentada = new Date(agendamento.dataHoraAgendamento);
+                            const dataAumentada = new Date(agendamento.dataHoraAgendamentoInicio);
                             for (const servico of agendamento.servicos) {
                                 var condicao = servico.tempoServico / 30;
                                 while (condicao > 0) {
@@ -358,10 +353,12 @@ const MeusAgendamentos = () => {
                                     condicao--;
                                 }
                             }
-
+    
                         }
 
                     }
+
+
                 }
             }
         }
@@ -369,13 +366,13 @@ const MeusAgendamentos = () => {
 
             if (agendamentosExistentes != null && daySelected != null) {
                 for (const agendamento of agendamentosExistentes) {
-                    const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                    const diaHoraAgendamento = agendamento.dataHoraAgendamentoInicio.split("T");
                     if (diaHoraAgendamento[0] == daySelected) {
                         const horarioReservado = diaHoraAgendamento[1].split(":");
                         const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] + "." + horarioReservado[1]);
 
 
-                        var dataCompleta = agendamentoSelectedsJson.dataHoraAgendamento.split("T");
+                        var dataCompleta = agendamentoSelectedsJson.dataHoraAgendamentoInicio.split("T");
                         var hora = dataCompleta[1].split(":");
                         hora = parseFloat(hora[0] + "." + hora[1]);
                         if (hora != horarioReservadoConvertidoInicio) {
@@ -383,7 +380,7 @@ const MeusAgendamentos = () => {
                             horariosProibidos.push(horarioReservadoConvertidoInicio);
                             var soma = 0;
                             // var somaTempoServicoReservado = 0;
-                            const dataAumentada = new Date(agendamento.dataHoraAgendamento);
+                            const dataAumentada = new Date(agendamento.dataHoraAgendamentoInicio);
                             for (const servico of agendamento.servicos) {
                                 var condicao = servico.tempoServico / 30;
                                 while (condicao > 0) {
@@ -402,31 +399,41 @@ const MeusAgendamentos = () => {
         }
         return horariosProibidos.includes(hour);
     }
-    const horariosIndisponiveis = []
+    var horariosIndisponiveis = [];
     function verificarHoraIndisponivel(hour) {
-        if (agendamentosExistentes != null && daySelected != null) {
-            for (const agendamento of agendamentosExistentes) {
-                if(agendamento.cliente == null){
-                    const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
-                    if (diaHoraAgendamento[0] == daySelected) {
-                        const horarioReservado = diaHoraAgendamento[1].split(":");
-                        const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] + "." + horarioReservado[1]);
-                        horariosIndisponiveis.push(horarioReservadoConvertidoInicio);
+            if (agendamentosExistentes != null && daySelected != null) {
+                console.log("Existentes: "+ JSON.stringify(agendamentosExistentes));
+                for (const agendamento of agendamentosExistentes) {
+                    if(agendamento.cliente == null){
+                        const diaHoraAgendamento = agendamento.dataHoraAgendamentoInicio.split("T");
+                        const diaHoraAgendamentoFim = agendamento.dataHoraAgendamentoFim.split("T");
+                        if (diaHoraAgendamento[0] == daySelected) {
+                            const horarioReservadoInicio = diaHoraAgendamento[1].split(":");
+                            const horarioReservadoFim = diaHoraAgendamentoFim[1].split(":");
+                            
+                            var horarioReservadoConvertidoInicio = parseFloat(horarioReservadoInicio[0] + "." + horarioReservadoInicio[1]);
+                            var horarioReservadoConvertidoFim = parseFloat(horarioReservadoFim[0] + "." + horarioReservadoFim[1]);
+                            
+                            horariosIndisponiveis.push(horarioReservadoConvertidoInicio);
+                            var dataAgendamentoInicio = new Date(diaHoraAgendamento[0] + " " + diaHoraAgendamento[1]);
+                            while(horarioReservadoConvertidoInicio < horarioReservadoConvertidoFim){
+                                
+                                dataAgendamentoInicio.setMinutes(dataAgendamentoInicio.getMinutes() + 30);
+                                horarioReservadoConvertidoInicio = parseFloat(dataAgendamentoInicio.getHours() + "." + dataAgendamentoInicio.getMinutes());
+                                horariosIndisponiveis.push(horarioReservadoConvertidoInicio);
+                            }
+
+                            horariosIndisponiveis.pop(horarioReservadoConvertidoFim);
+
+                        }
 
                     }
-
                 }
             }
-        }
-        
-
-    
-    return horariosIndisponiveis.includes(hour);
-}
-
-    function indisponivelBarbeiroAlert() {
-        toast.warning("Barbeiro selecionado não irá realizar serviços nesse horário!");
+            
+        return horariosIndisponiveis.includes(hour);
     }
+
 
     const gerarProximosDias = (dias) => {
         const hoje = new Date();
@@ -449,94 +456,102 @@ const MeusAgendamentos = () => {
     //HOURS***********************************************************
     const oppeningHour = [8, 8.30, 9, 9.30, 10, 10.30, 11, 11.30, 12, 12.30, 13, 13.30, 14, 14.30, 15, 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30]; //horário funcionamento 
 
-    const [hourSelected, setHourSelected] = useState(null);
+    const addHour = (newHour) => {
+        setHourSelected((prevHours) => {
+          // Verifica se prevHours é um array
+        //   var arrayHorasOrdenadas = [];
+        //   var menorHora;
+          if (Array.isArray(prevHours)) {
+            
+            // prevHours.forEach((hora,index) => {
+            //     if(index == 0){
+            //         menorHora = hora;
+            //     }
+            //     else if(parseFloat(menorHora) > parseFloat(hora)){
+            //         menorHora = hora;
+            //     }
+                
+            // });
+            // console.log("Condição do if (parseFloat(menorHora) > parseFloat(newHour)) "+(parseFloat(menorHora) > parseFloat(newHour)))
+            // if(parseFloat(menorHora) > parseFloat(newHour)){
+            //     return [newHour]; 
+            // }
+
+
+            // arrayHorasOrdenadas.push(menorHora);
+            // var maiorHora = newHour.replace(".",":");
+            // menorHora = menorHora.replace(".",":");
+            // var dataHoraMenor = new Date(daySelected + " " + menorHora + ":00");
+            // var dataHoraMaior = new Date(daySelected + " " + maiorHora + ":00");
+
+            // console.log("dataHoraMenor: "+menorHora);
+            // console.log("dataHoraMaior: "+maiorHora);
+            // while(dataHoraMenor < dataHoraMaior){
+            //     dataHoraMenor.setMinutes(dataHoraMenor.getMinutes() + 30);
+
+            //     var horaMenorSomada = parseFloat(dataHoraMenor.getHours() + "." + dataHoraMenor.getMinutes());
+
+            //     arrayHorasOrdenadas.push(horaMenorSomada.toFixed(2));
+            // }
+
+
+            return [...prevHours,newHour];// Adiciona o novo valor ao array
+          } else {
+            return [newHour]; // Caso contrário, inicia o array com o novo valor
+          }
+        });
+      };
+
+    //   const zerarHourSelected = () => {
+    //     setHourSelected((prevHours) => {
+    //       // Retorna um novo array sem o item a ser removido
+    //       return null;
+    //     });
+    //   };
+
+      const removeHour = (hourToRemove) => {
+        setHourSelected((prevHours) => {
+          // Retorna um novo array sem o item a ser removido
+          return prevHours.filter(hour => hour !== hourToRemove);
+        });
+      };
+      
+    const [hourSelected, setHourSelected] = useState([]);
+    const horasSelecionadasIndisponiveis = [];
     const buttonHour = (value) => {
-        var horasSelecionadas = [];
+        console.log("HourSelected inicio: " + hourSelected);
+        if(hourSelected != null &&  hourSelected.includes(value.toFixed(2))){
 
-        var hour = parseFloat(value).toFixed(2);
-        var horaMinutosFormatado = hour.replace(".", ":");
+            // if(hourSelected.length > 1){
+            //     zerarHourSelected();
+            // }
+            // else{
+                removeHour(value.toFixed(2));
+    
+                console.log("Após remoção : "+hourSelected.length);
+            // }
 
-        var dataServicoEscolhida = new Date(daySelected + " " + horaMinutosFormatado + ":00");
-        for (var i = 0; i < servicosSelectedsJson.length; i++) {
-            dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + servicosSelectedsJson[i].tempo);
-
-            const dataServicoEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-
-
-            if (horariosProibidos.includes(dataServicoEscolhidaConvertida)) {
-
-                const dataEscolhidaVerificacaoHorarioFloat = dataServicoEscolhidaConvertida.toFixed(2);
-                const dataEscolhidaVerificacaoReplace = dataEscolhidaVerificacaoHorarioFloat.replace(".", ":");
-
-
-                const dataEscolhidaVerificacaoHorario = new Date(daySelected + " " + dataEscolhidaVerificacaoReplace + ":00");
-
-                dataEscolhidaVerificacaoHorario.setMinutes(dataEscolhidaVerificacaoHorario.getMinutes() - 30);
-
-                const convercaoDataEscolhidaVerificacao = parseFloat(dataEscolhidaVerificacaoHorario.getHours() + "." + dataEscolhidaVerificacaoHorario.getMinutes());
-
-
-                if (i != (servicosSelectedsJson.length - 1) || horariosProibidos.includes(convercaoDataEscolhidaVerificacao)) {
-                    console.log("HORA PROIBIDAS " + horariosProibidos);
-                    return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
-
-                }
+            if(hourSelected.length == 1){
+                setButtonsDisabled(true);
             }
         }
+        else{
 
-        dataServicoEscolhida = new Date(daySelected + " " + horaMinutosFormatado + ":00");
-        var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-        horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+    
+            var hour = parseFloat(value).toFixed(2);
+    
+            addHour(hour);
+            // horasSelecionadasIndisponiveis.push(hour)
 
-        for (const service of servicosSelectedsJson) {
-            dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
-            dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-
-            // Cria uma cópia do objeto dataServicoEscolhida antes de modificar os minutos
-            var verificaHorario = new Date(dataServicoEscolhida);
-            verificaHorario.setMinutes(verificaHorario.getMinutes() - 30);
-
-            var verificaHorarioConvertido = parseFloat(verificaHorario.getHours() + "." + verificaHorario.getMinutes());
-            if (!oppeningHour.includes(dataEscolhidaConvertida) && !oppeningHour.includes(verificaHorarioConvertido)) {
-                return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
-            }
-            horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
+            console.log("Hour Selected: " + hourSelected);
+            console.log("Horas Selecionadas Indisponiveis: " + horasSelecionadasIndisponiveis);
+            setButtonsDisabled(false);
         }
-
-        if (horasSelecionadas.length != 0 && horariosProibidos.some(num => num > horasSelecionadas[0] && num < horasSelecionadas[horasSelecionadas.length - 1])) {
-            return toast.warning("Selecione um horário que tenha a disponibilidade de " + somaTempoServico() + " minutos");
-        }
-
-
-        console.log("horasSelecionadas " + horasSelecionadas);
-        setHourSelected(hour);
-        setButtonsDisabled(false);
     }
 
     function verificarHoraHabilited(value) {
         if (hourSelected != null) {
-            var horasSelecionadas = [];
-
-            var horaMinutosFormatado = hourSelected.replace(".", ":");
-
-            var dataServicoEscolhida = new Date(daySelected + " " + horaMinutosFormatado + ":00")
-
-            dataServicoEscolhida = new Date(daySelected + " " + horaMinutosFormatado + ":00");
-            var dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-            horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
-            for (const service of servicosSelectedsJson) {
-                dataServicoEscolhida.setMinutes(dataServicoEscolhida.getMinutes() + service.tempo);
-                dataEscolhidaConvertida = parseFloat(dataServicoEscolhida.getHours() + "." + dataServicoEscolhida.getMinutes());
-                horasSelecionadas.push(dataEscolhidaConvertida.toFixed(2));
-            }
-
-
-            if (parseFloat(parseFloat(value).toFixed(2)) >= parseFloat(horasSelecionadas[0]) && parseFloat(parseFloat(value).toFixed(2)) < parseFloat(horasSelecionadas[horasSelecionadas.length - 1])) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return hourSelected.includes(value.toFixed(2));
         }
         return false;
     }
@@ -668,37 +683,46 @@ const MeusAgendamentos = () => {
         }
     };
 
-    function salvar() {
+    function salvarOrDelete() {
         setBotaoSalvar(true);
-        var hora = hourSelected.replace(".", ":");
-        var data = new Date(daySelected + " " + hora + ":00");
+        // var tempo = 0;
+        // var menorHora;
 
-        let ano = data.getFullYear();
-        let mes = (data.getMonth() + 1).toString().padStart(2, '0');
-        let dia = data.getDate().toString().padStart(2, '0');
-        let horas = data.getHours().toString().padStart(2, '0');
-        let minutos = data.getMinutes().toString().padStart(2, '0');
-        let segundos = data.getSeconds().toString().padStart(2, '0');
+        var datas = [];
+        for(var hora of hourSelected){
+            // tempo += 30;
+            // if(menorHora == null){
+            //     menorHora = hora;
+            // }
+            // else{
+            //     if(menorHora > hora){
+            //         menorHora = hora;
+            //     }
+            // }
+            var horaFormatada = hora.replace(".", ":");
+            var data = new Date(daySelected + " " + horaFormatada + ":00");
+            
+            let ano = data.getFullYear();
+            let mes = (data.getMonth() + 1).toString().padStart(2, '0');
+            let dia = data.getDate().toString().padStart(2, '0');
+            let horas = data.getHours().toString().padStart(2, '0');
+            let minutos = data.getMinutes().toString().padStart(2, '0');
+            let segundos = data.getSeconds().toString().padStart(2, '0');
+    
+            let dataFormatada = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
 
-        let dataFormatada = `${ano}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
-
-        const idServicos = [];
-        for (const service of servicosSelectedsJson) {
-            idServicos.push(service.id);
+            datas.push(dataFormatada)
         }
-
-        console.log("Id cliente: "+ sessionStorage.getItem("idCliente"));
-
+        
         if (agendamentoSelectedsJson.length <= 1) {
-
+            
             const options = {
                 method: 'POST',
-                url: `agendamentos`,
+                url: `agendamentos/bloquearHorarios`,
                 params: {
                     barbeiroId: barberSelected,
-                    clienteId: sessionStorage.getItem("idCliente"),
-                    servicoIds: idServicos.toString(),
-                    inicio: dataFormatada
+                    datas: datas.toString()
+                        
                 },
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
@@ -710,16 +734,16 @@ const MeusAgendamentos = () => {
                 .then(function (response) {
                   
                     setTimeout(() => {
-                        localStorage.setItem("pagAtual","meusAgendamentos");
-                        navigate(`/meus-agendamentos`);
-                        toast.success("Agendado com Sucesso!");
+                        localStorage.setItem("pagAtual","gestaoTempo");
+                        toast.success("Horário Bloqueado com Sucesso!");
+                        window.location.reload();
                     }, 2000);
-                    console.log("Agendamento criado com sucesso:", response.data);
+                    console.log("Bloqueio criado com sucesso:", response.data);
                 })
                 .catch(function (error) {
                     setBotaoSalvar(false);
-                    toast.error("Erro ao agendar, contate o administrador!");
-                    console.error("Erro ao criar agendamento:", error);
+                    toast.error("Erro ao bloquear horário, contate o administrador!");
+                    console.error("Erro ao criar bloqueio de horário:", error);
                 });
         }
         else {
@@ -729,9 +753,9 @@ const MeusAgendamentos = () => {
                 url: `agendamentos/${agendamentoSelectedsJson.id}`,
                 params: {
                     barbeiroId: barberSelected,
-                    clienteId: sessionStorage.getItem("idCliente"),
-                    servicoIds: idServicos.toString(),
-                    inicio: dataFormatada
+                    clienteId: null,
+                    servicoIds: null,
+                    inicio: null
                 },
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
@@ -761,6 +785,8 @@ const MeusAgendamentos = () => {
     function bloqueioHorasDataAlert() {
         toast.error("Não é possível selecionar um horário do passado!");
     }
+
+
 
 
     const [somaHour, setSomaHour] = useState(false);
@@ -905,20 +931,30 @@ const MeusAgendamentos = () => {
                                             oppeningHour.map((hour, index) => ( // Remova o segundo parâmetro "oppeningHour"
                                                 <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
 
-                                                    <button disabled={verificarHoraDisabled(hour)} id={"idBtnHour" + index} className={`
-                                                         ${
-                                                        HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
-                                                        verificarHoraDisabled(hour) ? style.daysNotSelected :
-                                                            verificarHoraHabilited(hour) ? style.daySelected :
-                                                            verificarHoraIndisponivel(hour) ? style.daysNotSelected:
-                                                                style.boxDays
+<button 
+    disabled={verificarHoraIndisponivel(hour)} 
+    id={"idBtnHour" + index} 
+    className={`
+        ${HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
+          verificarHoraIndisponivel(hour) ? style.daysNotSelected :
+          verificarHoraHabilited(hour) ? style.daySelected :
+          style.boxDays
+        }
+    `}
+    onClick={HOJE === daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : () => buttonHour(hour)}
+>
+    <p>
+        {HOJE === daySelected && HORAATUAL >= hour ? "Bloqueado" : 
+         verificarHoraIndisponivel(hour) ? "Indisponível" : 
+         verificarHoraDisabled(hour) ? (
+             <>
+                 Reservado<br />
+                 {hour.toFixed(2).replace(".", ":")}
+             </>
+         ) : hour.toFixed(2).replace(".", ":")}
+    </p>
+</button>
 
-
-                                                        }
-                                        `}
-                                                        onClick={HOJE == daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : verificarHoraIndisponivel(hour)? () => indisponivelBarbeiroAlert() : () => buttonHour(hour)}>
-                                                        <p>{HOJE == daySelected && HORAATUAL >= hour ? "Bloqueado" : verificarHoraIndisponivel(hour) ? "Indisponível" : verificarHoraDisabled(hour) ? "Reservado" : hour.toFixed(2).replace(".", ":")}</p>
-                                                    </button>
                                                 </React.Fragment>
                                             ))
                                         }
@@ -934,8 +970,8 @@ const MeusAgendamentos = () => {
                             ${agendamentoSelectedsJson.length <= 1 ? style["subcontainer-btns"] :
                                     style["subcontainer-btns-alterar"]
                                 }`}>
-                                 <button className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvar}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "Salvar"}</button>
-                                <button onClick={cancelar} className={style["btn-cancelar"]}>Cancelar</button>
+                                 <button disabled={buttonsDisabled} className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvarOrDelete}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "Bloquear"}</button>
+                                 <button  className={style["btnBloqDias"]}>Bloquear Dias</button>
                                 <button onClick={editarServico} className={`${agendamentoSelectedsJson.length <= 1 ? style["btnAlterarServicosDisabled"] :
                                     style["btnEditar"]
 

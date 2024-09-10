@@ -27,6 +27,11 @@ const NavBar = () => {
         navigate(`/avaliacao-barbearia`);
     };
 
+    const mural = () => {
+        localStorage.setItem("pagAtual","mural");
+        navigate(`/mural`);
+    };
+
     const sair = () => {
         navigate(`/login`);
         sessionStorage.clear();
@@ -44,6 +49,7 @@ const NavBar = () => {
                 <li onClick={meusAgendamento} className={localStorage.getItem("pagAtual") === "meusAgendamentos" ? styles["option-selected"] : styles["option"]}>Meus Agendamentos</li>
                 <li onClick={meusDados} className={localStorage.getItem("pagAtual") === "meusDados" ? styles["option-selected"] : styles["option"]}>Meus Dados</li>
                 <li onClick={avaliacao} className={localStorage.getItem("pagAtual") === "avaliacao" ? styles["option-selected"] : styles["option"]}>Avaliar</li>
+                <li onClick={mural} className={localStorage.getItem("pagAtual") === "mural" ? styles["option-selected"] : styles["option"]}>Mural</li>
                 <li onClick={sair} className={styles["option"]}>Sair</li>
             </ul>
         </div>

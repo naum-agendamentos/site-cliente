@@ -8,3 +8,9 @@ const api = axios.create({
 
 // Exporta a instância criada para que possa ser utilizada em outras partes do projeto.
 export default api;
+
+
+
+
+
+

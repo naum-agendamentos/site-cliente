@@ -46,12 +46,14 @@ function Login() {
             senha
         }).then((response) => {
             const { data } = response;
-            const { userId, token, tipo } = data;
+            const { userId, token, nome, tipo } = data;
 
             console.log(tipo)
             console.log(token)
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('userId', userId)
+            sessionStorage.setItem('nomeUser', nome)
+            sessionStorage.setItem('tipoUser', tipo)
 
             if (tipo === "BARBEIRO") {
                 localStorage.setItem("pagAtual","barbeiro");

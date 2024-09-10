@@ -150,6 +150,10 @@ body{
     cursor: pointer;
     color: #001BAB;
     font-weight: 600;
+    font-size: 15px;
+    word-wrap: break-word; /* Permite quebra de palavras longas */
+    white-space: normal; /* Quebra o texto normalmente */
+    overflow-wrap: break-word; /* Para maior compatibilidade */
 }
 .boxDays:hover{
     transition: 0.5s;
@@ -175,7 +179,9 @@ body{
     transform: scale(1.1);
     background-color: #001BAB;
     color: #FFFFFF;
+    font-size: 15px;
 }
+
 
 .container-btns{
     width: 100%;
@@ -202,6 +208,17 @@ body{
     border-style: none;
     border-radius: 6px;
     font-size: 24px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #001BAB;
+    width: 126px;
+    height: 43px;
+}
+
+.btnBloqDias{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 16px;
     color: #FFFFFF;
     font-weight: 600;
     background-color: #001BAB;
@@ -295,13 +312,15 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: 15/px;
     border-radius: 6px;
     margin: 1vh;
     cursor: pointer;
     font-weight: 600;
     color: #001BAB;
     opacity: 0.6;
+    font-size: 15px;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 

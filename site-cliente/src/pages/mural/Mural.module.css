@@ -1,0 +1,441 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-mural {
+    width: 78%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adicionar-aviso {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: safe;
+}
+
+/* parte botao add */
+
+.adicionar-aviso .Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border-radius: calc(45px/2);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background: linear-gradient(144deg, #0007AB, #5b42f3 50%, #00ddeb);
+}
+
+.Btn-off {
+    display: none;
+}
+
+
+.adicionar-aviso .sign {
+    width: 100%;
+    font-size: 2.2em;
+    color: white;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.adicionar-aviso .text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.4em;
+    font-weight: 500;
+    transition-duration: .3s;
+}
+
+/* hover effect on .footer button width */
+.adicionar-aviso .Btn:hover {
+    width: 125px;
+    transition-duration: .3s;
+}
+
+.adicionar-aviso .Btn:hover .sign {
+    width: 30%;
+    transition-duration: .3s;
+    padding-left: 15px;
+}
+
+/* hover effect .footer button's text */
+.adicionar-aviso .Btn:hover .text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 15px;
+}
+
+/* .footer button click effect*/
+.adicionar-aviso .Btn:active {
+    transform: translate(2px, 2px);
+}
+
+
+/* parte card adicionar */
+
+.parte-aviso {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5vh;
+}
+
+.data-group {
+    width: 100%;
+    color: black;
+    background-color: #5f5f5f44;
+    border-radius: 20px;
+    padding: 4vh;
+    /* Ajuste o valor conforme necessário */
+}
+
+
+.cardsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9vh;
+
+}
+
+
+.parte-aviso .card {
+    padding: 20px;
+    width: 330px;
+    min-height: 370px;
+    border-radius: 20px;
+    background: #212121;
+    box-shadow: 5px 5px 8px #1b1b1b,
+        -5px -5px 8px #272727;
+    transition: 0.4s;
+}
+
+.parte-aviso .card-off {
+    display: none;
+}
+
+
+.parte-aviso .card:hover {
+    translate: 0 -10px;
+}
+
+.parte-aviso .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 15px 0 0 10px;
+}
+
+
+.parte-aviso .card-image {
+    display: flex;
+    justify-content: center;
+    min-height: 170px;
+    background-color: #313131;
+    border-radius: 15px;
+    background: #313131;
+    box-shadow: inset 5px 5px 3px #2f2f2f,
+        inset -5px -5px 3px #333333;
+}
+
+.parte-aviso .card-image img {
+    width: 290px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: inset 5px 5px 3px #2f2f2f,
+        inset -5px -5px 3px #333333;
+}
+
+.url-none {
+    display: none;
+}
+
+.parte-aviso .card-body {
+    margin: 13px 0 0 10px;
+    color: rgb(184, 184, 184);
+    font-size: 15px;
+}
+
+.parte-aviso .footer {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #b3b3b3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+.parte-aviso .form {
+    --width-of-input: 200px;
+    --border-height: 1px;
+    --border-before-color: rgba(221, 221, 221, 0.39);
+    --border-after-color: #5891ff;
+    --input-hovered-color: #4985e01f;
+    position: relative;
+    width: var(--width-of-input);
+}
+
+/* styling of Input */
+.parte-aviso .input {
+    color: #fff;
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: var(--border-height) solid var(--border-before-color);
+}
+
+/* styling of animated border */
+.parte-aviso .input-border {
+    position: absolute;
+    background: var(--border-after-color);
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+/* Hover on Input */
+.parte-aviso input:hover {
+    background: var(--input-hovered-color);
+}
+
+.parte-aviso input:focus {
+    outline: none;
+}
+
+/* here is code of animated border */
+.parte-aviso input:focus~.input-border {
+    width: 100%;
+}
+
+
+.parte-aviso .text-area-edit {
+    width: "100%";
+    padding: "12px 16px";
+    borderRadius: "8px";
+    resize: "none";
+    color: "#fff";
+    height: "96px";
+    border: "1px solid #414141";
+    backgroundColor: "transparent";
+    fontFamily: "inherit";
+}
+
+/* parte opções  */
+
+.radio-input input {
+    display: none;
+}
+
+.radio-input {
+    --container_width: 150px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #212121;
+    color: #fff;
+    width: var(--container_width);
+    overflow: hidden;
+    border: 2px solid #fff;
+}
+
+.radio-input label {
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: -1px;
+    font-size: 14px;
+}
+
+.selection {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: calc(var(--container_width) / 3);
+    z-index: 0;
+    left: 0;
+    top: 0;
+    transition: 0.15s ease;
+}
+
+.radio-input label:has(input:checked) {
+    color: #000;
+}
+
+.radio-input label:has(input:checked)~.selection {
+    background-color: #ffffff;
+    display: inline-block;
+}
+
+.radio-input label:nth-child(1):has(input:checked)~.selection {
+    transform: translateX(calc(var(--container_width) * 0 / 3));
+}
+
+.radio-input label:nth-child(2):has(input:checked)~.selection {
+    transform: translateX(calc(var(--container_width) * 1 / 3));
+}
+
+.radio-input label:nth-child(3):has(input:checked)~.selection {
+    transform: translateX(calc(var(--container_width) * 2 / 3));
+}
+
+
+/* parte botao enviar */
+
+.parte-aviso .footer button {
+    font-family: inherit;
+    font-size: 20px;
+    background: linear-gradient(144deg, #0007AB, #5b42f3 50%, #00ddeb);
+    color: white;
+    padding: 0.5em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.parte-aviso .footer button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+}
+
+.parte-aviso .footer button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.parte-aviso .footer button:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.parte-aviso .footer button:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.parte-aviso .footer button:hover span {
+    transform: translateX(5em);
+}
+
+.parte-aviso .footer button:active {
+    transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+    from {
+        transform: translateY(0.1em);
+    }
+
+    to {
+        transform: translateY(-0.1em);
+    }
+}
+
+/* botao ver mais */
+
+.part-ver-mais {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 3vh;
+}
+
+
+.cta {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.cta span {
+    padding-bottom: 7px;
+    letter-spacing: 4px;
+    font-size: 14px;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
+.cta svg {
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover svg {
+    transform: translateX(0);
+}
+
+.cta:active svg {
+    transform: scale(0.9);
+}
+
+.hover-underline-animation {
+    position: relative;
+    color: black;
+    padding-bottom: 20px;
+}
+
+.hover-underline-animation:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.cta:hover .hover-underline-animation:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

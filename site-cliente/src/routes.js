@@ -18,6 +18,8 @@ import EditarServico from "./pages/editarServico/EditarServico";
 import Dashboard from "./pages/dashboard/dashboard";
 import MeusAgendamentosBarbeiro from "./pages/meusAgendamentoBarbeiro/MeusAgendamentoBarbeiro";
 import AvaliacaoBarbearia from "./pages/avaliacaoBarbearia/avaliacao";
+import BloquearHorarios from "./pages/bloquearHorarios/BloquearHorarios";
+import Mural from "./pages/mural/Mural"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -44,7 +46,9 @@ function Rotas() {
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/agendamentos-barbeiro/:id" element={<MeusAgendamentosBarbeiro/>}/>
                     <Route path="/avaliacao-barbearia" element={<AvaliacaoBarbearia/>}/>
+                    <Route path="/bloquear-horarios" element={<BloquearHorarios/>}/>
                     <Route path="/*" element={<NotFound/>}/>
+                    <Route path="/mural" element={<Mural/>}/>
 
                 </Routes>
             </BrowserRouter>
