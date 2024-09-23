@@ -160,28 +160,37 @@ const MeusAgendamentos = () => {
                         var dataHoraAgendamentoExistente = new Date(dataAgendamentoExistente[0] + " " + dataAgendamentoExistente[1]);
 
                         if (dataAgendamentoExistente[0] == dataCompleta[0] && agendamento.id != idAgendamento) {
+                            if(agendamento.servicos.length == 0){
+                                var dataAumentada = new Date(dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes()+30))
+                                var dataAgendamentoConvertida = parseFloat(dataAumentada.getHours() + "." + dataAumentada.getMinutes());
+                                datasOcupadas.push(dataAgendamentoConvertida);
 
-                            for (const servico of agendamento.servicos) {
 
-                                var dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
-                                var condicao = servico.tempoServico / 30;
-
-                                if (condicao == 1) {
-
-                                    dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + servico.tempoServico);
-                                    dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
-
-                                    datasOcupadas.push(dataAgendamentoConvertida);
-                                }
-                                else {
-                                    while (condicao > 0) {
-                                        dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + 30);
-                                        condicao--;
+                            }
+                            else{
+                                for (const servico of agendamento.servicos) {
+    
+                                    var dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                    var condicao = servico.tempoServico / 30;
+    
+                                    if (condicao == 1) {
+    
+                                        dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + servico.tempoServico);
                                         dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+    
                                         datasOcupadas.push(dataAgendamentoConvertida);
-
+                                    }
+                                    else {
+                                        while (condicao > 0) {
+                                            dataHoraAgendamentoExistente.setMinutes(dataHoraAgendamentoExistente.getMinutes() + 30);
+                                            condicao--;
+                                            dataAgendamentoConvertida = parseFloat(dataHoraAgendamentoExistente.getHours() + "." + dataHoraAgendamentoExistente.getMinutes());
+                                            datasOcupadas.push(dataAgendamentoConvertida);
+    
+                                        }
                                     }
                                 }
+
                             }
 
                             console.log("Servico da vez: "+agendamento);
@@ -361,6 +370,15 @@ const MeusAgendamentos = () => {
 
                         }
 
+                    }
+                    else{
+                        const diaHoraAgendamento = agendamento.dataHoraAgendamento.split("T");
+                        if (diaHoraAgendamento[0] == daySelected) {
+                            const horarioReservado = diaHoraAgendamento[1].split(":");
+                            const horarioReservadoConvertidoInicio = parseFloat(horarioReservado[0] + "." + horarioReservado[1]);
+
+                            horariosProibidos.push(horarioReservadoConvertidoInicio);
+                        }
                     }
                 }
             }

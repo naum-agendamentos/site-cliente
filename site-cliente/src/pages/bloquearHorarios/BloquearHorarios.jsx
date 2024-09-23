@@ -931,29 +931,29 @@ const MeusAgendamentos = () => {
                                             oppeningHour.map((hour, index) => ( // Remova o segundo parâmetro "oppeningHour"
                                                 <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
 
-<button 
-    disabled={verificarHoraIndisponivel(hour)} 
-    id={"idBtnHour" + index} 
-    className={`
-        ${HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
-          verificarHoraIndisponivel(hour) ? style.daysNotSelected :
-          verificarHoraHabilited(hour) ? style.daySelected :
-          style.boxDays
-        }
-    `}
-    onClick={HOJE === daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : () => buttonHour(hour)}
->
-    <p>
-        {HOJE === daySelected && HORAATUAL >= hour ? "Bloqueado" : 
-         verificarHoraIndisponivel(hour) ? "Indisponível" : 
-         verificarHoraDisabled(hour) ? (
-             <>
-                 Reservado<br />
-                 {hour.toFixed(2).replace(".", ":")}
-             </>
-         ) : hour.toFixed(2).replace(".", ":")}
-    </p>
-</button>
+                                                <button 
+                                                    disabled={verificarHoraIndisponivel(hour)} 
+                                                    id={"idBtnHour" + index} 
+                                                    className={`
+                                                        ${HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
+                                                        verificarHoraIndisponivel(hour) ? style.daysNotSelectedIndisponivel :
+                                                        verificarHoraHabilited(hour) ? style.daySelected :
+                                                        style.boxDays
+                                                        }
+                                                    `}
+                                                    onClick={HOJE === daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : () => buttonHour(hour)}
+                                                >
+                                                    <p>
+                                                        {HOJE === daySelected && HORAATUAL >= hour ? "Bloqueado" : 
+                                                        verificarHoraIndisponivel(hour) ? "Você bloqueou esse horário" : 
+                                                        verificarHoraDisabled(hour) ? (
+                                                            <>
+                                                                Reservado<br />
+                                                                {hour.toFixed(2).replace(".", ":")}
+                                                            </>
+                                                        ) : hour.toFixed(2).replace(".", ":")}
+                                                    </p>
+                                                </button>
 
                                                 </React.Fragment>
                                             ))
