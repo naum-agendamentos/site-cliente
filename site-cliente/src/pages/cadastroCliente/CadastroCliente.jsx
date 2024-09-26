@@ -152,19 +152,7 @@ function CadastroCliente() {
                             <h1 className={styles["title"]}>CADASTRAR</h1></div>
                         <div className={styles["container-form"]}>
                             <div className={styles["container-input"]}>
-                                <div className={styles["info-up-inputs"]}>
-                                    <p>EMAIL</p>
-                                    {erroEmail && <span>{erroEmail}</span>}
-                                </div>
-                                <input
-                                    className={styles[inputValidEmail]}
-                                    type="text"
-                                    placeholder="usuario@gmail.com"
-                                    value={email}
-                                    onBlur={handleEmailBlur}
-                                    onChange={(e) => handleInputChange(e, setEmail)}
-                                />
-                            </div>
+                                
                             <div className={styles["container-input"]}>
                                 <div className={styles["info-up-inputs"]}>
                                     <p>NOME</p>
@@ -178,6 +166,19 @@ function CadastroCliente() {
                                     onBlur={handleNomeBlur}
                                     onChange={(e) => handleInputChange(e, setNome)}
                                 />
+                                <div className={styles["info-up-inputs"]}>
+                                    <p>EMAIL</p>
+                                    {erroEmail && <span>{erroEmail}</span>}
+                                </div>
+                                <input
+                                    className={styles[inputValidEmail]}
+                                    type="text"
+                                    placeholder="usuario@gmail.com"
+                                    value={email}
+                                    onBlur={handleEmailBlur}
+                                    onChange={(e) => handleInputChange(e, setEmail)}
+                                />
+                           
                             </div>
                             <div className={styles["container-input"]}>
                                 <div className={styles["info-up-inputs"]}>
@@ -223,7 +224,7 @@ function CadastroCliente() {
                                 />
                             </div>
                             <h5 className={styles["h5-txt"]}>Já tem uma conta? <a className={styles["h4-txt"]} href="../login">clique aqui</a></h5>
-
+                            </div>
                             <div className="container-btn">
                             <button className={styles["button-alterar"]} onClick={handleSave}> {botaoSalvar ? <img className={styles["gif-loading"]} src={Loading} alt="Loading" /> : "CADASTRAR"}</button>
                             </div>
