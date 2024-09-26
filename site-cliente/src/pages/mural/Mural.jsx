@@ -3,21 +3,23 @@ import styles from './Mural.module.css';
 import Navbar from '../../components/navbarBarbeiro/NavbarBarbeiro';
 import NavBarCliente from '../../components/navbar-pos-login/NavBar';
 import CardMural from '../../components/cardMural/CardMural';
-import axios from "axios";
+//import axios from "axios";
 import CloudinaryUploader from '../../components/uploadImg/CloudinaryUploader';
 import { toast } from "react-toastify";
+import api from '../../api';
 
 function Mural() {
     const [imageSrc, setImageSrc] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [nomeBarb] = useState(sessionStorage.getItem("nomeUser"));
-    const currentDateTime = new Date().toISOString();
+    //const [nomeBarb] = useState(sessionStorage.getItem("nomeUser"));
+    //const currentDateTime = new Date().toISOString();
     const [userBarbeiro, setUserBarbeiro] = useState(false);
     const tipoUsuario = sessionStorage.getItem("tipoUser");
+    const userId = sessionStorage.getItem("userId")
     const [tipo, setTipo] = useState('');
 
-    const [apiMock] = useState("https://66d5c026f5859a70426752fb.mockapi.io/mural/aviso");
+    //const [apiMock] = useState("https://66d5c026f5859a70426752fb.mockapi.io/mural/aviso");
     const [aviso, setAviso] = useState([]);
     const [cardAtivo, setCardAtivo] = useState(false);
     const [visibleDates, setVisibleDates] = useState(2); // Controla quantas datas são exibidas
@@ -45,9 +47,17 @@ function Mural() {
     }
 
     const recuperarValorDoCard = () => {
-        axios.get(apiMock)
+        const options = {
+            method: 'GET',
+            url: 'mural-avisos',
+            headers: {
+                'User-Agent': 'insomnia/8.6.1',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        };
+        api.request(options)
             .then(function (response) {
-                const { data } = response;
+                const { data } = response;    
                 setAviso(data);
             })
             .catch(function (error) {
@@ -55,12 +65,32 @@ function Mural() {
             });
     };
 
+    const options = {
+        method: 'GET',
+        url: `barbeiros/usuario`,
+        params: { idUsuario: userId },
+        headers: {
+            'User-Agent': 'insomnia/8.6.1',
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        }
+    };
+    api.request(options)
+        .then(function (response) {
+            const { data } = response;
+            const { id } = data;
+            sessionStorage.setItem("idBarbeiro", id);
+
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
 
 
 
     const handleSave = async () => {
-       
-        
+
+
         if (title.length < 3) {
             toast.warn('O título deve ter pelo menos 3 caracteres.');
             return;
@@ -78,40 +108,50 @@ function Mural() {
         if (tipoUsuario !== "BARBEIRO") {
             return;
         }
-    
-       
+
+
         const finalImageSrc = imageSrc || "https://res.cloudinary.com/dmgfyyioo/image/upload/v1724806186/vadpxfbqw7pnhhsogzvj.png";
-    
-        const postData = {
-            titulo: title,
-            descricao: description,
-            imagem: finalImageSrc,
-            nome: nomeBarb,
-            datahora: currentDateTime,
-            tipo: tipo
+
+
+        const options = {
+            method: 'POST',
+            url: 'mural-avisos',
+            data: {
+                titulo: title,
+                descricao: description,
+                url: finalImageSrc,
+                tipoAviso: tipo,
+                barbeiroId: sessionStorage.getItem("idBarbeiro")
+
+            },
+            headers: {
+                'User-Agent': 'insomnia/9.2.0',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+
         };
-    
-        axios.post(apiMock, postData)
-            .then(function (response) {
-                const { data } = response;
-                setAviso(prevAviso => [...prevAviso, data]);
-                setCardAtivo(false);
-                setTitle('');
-                setDescription('');
-                setImageSrc('');
-                setTipo('');
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+
+        api.request(options).then(function (response) {
+            const { data } = response;
+            setAviso(prevAviso => [...prevAviso, data]);
+            setCardAtivo(false);
+            setTitle('');
+            setDescription('');
+            setImageSrc('');
+            setTipo('');
+        }).catch((error) => {
+            console.error(error);
+        });
+
+
     }
-    
+
 
     const agruparPorData = (avisos) => {
         return avisos.reduce((acc, aviso) => {
             // Obtém a data e a hora separadas
-            const data = new Date(aviso.datahora).toLocaleDateString("pt-BR");
-            const hora = new Date(aviso.datahora).toLocaleTimeString("pt-BR", {
+            const data = new Date(aviso.data).toLocaleDateString("pt-BR");
+            const hora = new Date(aviso.data).toLocaleTimeString("pt-BR", {
                 hour: '2-digit',
                 minute: '2-digit'
             });
@@ -174,12 +214,7 @@ function Mural() {
 
                             <div className={styles["parte-aviso"]}>
 
-
-                                {datasOrdenadas.slice(0, visibleDates).map(data => (
-                                    <div key={data} className={styles["data-group"]}>
-                                        <h3>{data}</h3>
-                                        <div className={styles["cardsContainer"]}>
-                                            <div className={cardAtivo ? styles["card"] : styles["card-off"]}>
+                            <div className={cardAtivo ? styles["card"] : styles["card-off"]}>
                                                 <div className={styles["card-image"]}>
                                                     <label htmlFor="image-upload">
                                                         <img
@@ -241,7 +276,7 @@ function Mural() {
                                                             <span>ALERTA</span>
                                                         </label>
                                                         <label>
-                                                            <input value="INFO" name="value-radio" id="INFO" type="radio" onChange={(e) => setTipo(e.target.value)} />
+                                                            <input value="INFORMACAO" name="value-radio" id="INFORMACAO" type="radio" onChange={(e) => setTipo(e.target.value)} />
                                                             <span>INFO</span>
                                                         </label>
                                                         <span className={styles['selection']}></span>
@@ -267,16 +302,22 @@ function Mural() {
                                                     </button>
                                                 </p>
                                             </div>
+
+                                {datasOrdenadas.slice(0, visibleDates).map(data => (
+                                    <div key={data} className={styles["data-group"]}>
+                                        <h3>{data}</h3>
+                                        <div className={styles["cardsContainer"]}>
+                                            
                                             {avisosOrdenados[data].map((aviso, index) => (
                                                 <CardMural
                                                     key={index}
                                                     id={aviso.id}
-                                                    imageSrc={aviso.imagem}
+                                                    imageSrc={aviso.url}
                                                     title={aviso.titulo}
                                                     body={aviso.descricao}
-                                                    author={aviso.nome}
-                                                    date={aviso.datahora}
-                                                    type={aviso.tipo}
+                                                    author={aviso.barbeiro.nome}
+                                                    date={aviso.data}
+                                                    type={aviso.tipoAviso}
                                                     user={tipoUsuario}
                                                     onDelete={handleDeleteAviso}
                                                 />
