@@ -226,6 +226,17 @@ body{
     height: 43px;
 }
 
+.btnBloqDiasDisabled{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #001BAB;
+    width: 126px;
+    height: 43px;
+    opacity: 0.6;
+}
 
 .btnSalvarDisabled{
     border-style: none;
@@ -319,6 +330,24 @@ body{
     color: #001BAB;
     opacity: 0.6;
     font-size: 15px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+.daysNotSelectedIndisponivel{
+    width: 74px;
+    height: 58px;
+    border: 1px solid #001BAB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    margin: 1vh;
+    cursor: pointer;
+    font-weight: 600;
+    color: #001BAB;
+    opacity: 0.6;
+    font-size: 12px;
     word-wrap: break-word;
     white-space: normal;
 }

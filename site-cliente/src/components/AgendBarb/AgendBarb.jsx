@@ -44,7 +44,7 @@ const AgendBarb = () => {
 
         const options = {
           method: 'GET',
-          url: `agendamentos/barbeiro/${id}`,
+          url: `agendamentos/barbeiroBloq/${id}`,
           headers: {
             'User-Agent': 'insomnia/8.6.1',
             Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -57,17 +57,39 @@ const AgendBarb = () => {
               console.log(response.data);
 
               const eventData = response.data.map(item => {
-                const { dataHoraAgendamento, cliente, servicos } = item;
-                const { nome: nomeCliente } = cliente;
+
+                console.log("ITEM: " + item);
+                const { dataHoraAgendamentoInicio, dataHoraAgendamentoFim, cliente, servicos } = item;
+                const { nome: nomeCliente } = cliente != null ? cliente : "";
+                var totalTempoServico = 0;
+                var nomesServicos = "";
+
+                if(cliente !== null){
+                  totalTempoServico = servicos.reduce((total, servico) => total + servico.tempoServico, 0);
+                  nomesServicos = servicos.map(servico => servico.nomeServico).join(', ');
+                  return {
+                    title: `${nomesServicos} - ${nomeCliente}`,
+                    start: moment(dataHoraAgendamentoInicio).toDate(),
+                    end: moment(dataHoraAgendamentoInicio).add(totalTempoServico, 'minutes').toDate()
+                  };
+                }
+                else{
+                  const inicio = new Date(dataHoraAgendamentoInicio);
+                  const fim = new Date(dataHoraAgendamentoFim);
+
+                  // Calcular a diferença em milissegundos
+                  const diferencaEmMilissegundos = fim - inicio;
+
+                  // Converter a diferença de milissegundos para minutos
+                  const diferencaEmMinutos = Math.floor(diferencaEmMilissegundos / (1000 * 60));
+                  return {
+                    title: `Você bloqueou esse horário!`,
+                    start: moment(dataHoraAgendamentoInicio).toDate(),
+                    end: moment(dataHoraAgendamentoInicio).add(diferencaEmMinutos, 'minutes').toDate()
+                  };
+                }
             
-                const totalTempoServico = servicos.reduce((total, servico) => total + servico.tempoServico, 0);
-                const nomesServicos = servicos.map(servico => servico.nomeServico).join(', ');
-            
-                return {
-                  title: `${nomesServicos} - ${nomeCliente}`,
-                  start: moment(dataHoraAgendamento).toDate(),
-                  end: moment(dataHoraAgendamento).add(totalTempoServico, 'minutes').toDate()
-                };
+                
               });
               setEvents(eventData);
             } else {

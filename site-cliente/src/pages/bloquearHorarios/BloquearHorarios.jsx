@@ -15,7 +15,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { toast } from "react-toastify";
 import api from "../../api";
-
+import ModalSemana from "../../components/modalSemana/ModalSemana"
 
 const MeusAgendamentos = () => {
     const HOJE = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, "0") + '-' + new Date().getDate().toString().padStart(2, "0");
@@ -229,7 +229,7 @@ const MeusAgendamentos = () => {
     function recuperarValorBarbeiro() {
         const options = {
             method: 'GET',
-            url: 'barbeiros/listar?idBarbearia=1',
+            url: 'barbeiros/listarBarbeiros?idBarbearia=1',
             headers: {
                 'User-Agent': 'insomnia/8.6.1',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -279,6 +279,8 @@ const MeusAgendamentos = () => {
     };
 
     const [barberSelected, setBarberSelected] = useState(0);
+    const [barberSelectedName, setBarberSelectedName] = useState(0);
+    const [barberSelectedObj,setBarberSelectedObj] = useState(null);
     const [agendamentosExistentes, setAgendaementosExistentes] = useState();
 
     function recuperarAgendamentosExistentes(idBarber) {
@@ -300,15 +302,17 @@ const MeusAgendamentos = () => {
             });
     }
 
-
-    const buttonBarber = (idBarber) => {
+    
+    const buttonBarber = (data) => {
         voltarSlide();
         setDateDisabled(false);
         setHourSelected(null);
         setButtonsDisabled(true);
-        console.log("BARBEIRO ID: " + idBarber);
-        setBarberSelected(idBarber);
-        recuperarAgendamentosExistentes(idBarber);
+        setBarberSelected(data.id);
+        recuperarAgendamentosExistentes(data.id);
+        setBarberSelectedName(data.nome);
+        setBloqDias(false);
+        setBarberSelectedObj(data);
     };
 
 
@@ -434,7 +438,9 @@ const MeusAgendamentos = () => {
         return horariosIndisponiveis.includes(hour);
     }
 
-
+    const removerAcentos = (texto) => {
+        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      };
     const gerarProximosDias = (dias) => {
         const hoje = new Date();
         const proximosDias = [];
@@ -442,16 +448,56 @@ const MeusAgendamentos = () => {
         for (let i = 0; i < dias; i++) {
             const data = addDays(hoje, i);
             const diaSemanaAbreviado = format(data, 'EEE', { locale: ptBR });
-            //   console.log("DIAS ABREVIADO "+diaSemanaAbreviado)
+
+            let diaSemanaExtenso = format(data, 'EEEE', { locale: ptBR });
+            let diaSemanaExtensoSemFormatacao = format(data, 'EEEE', { locale: ptBR });
+            diaSemanaExtenso = removerAcentos(diaSemanaExtenso.replace('-feira', ''));
+            diaSemanaExtenso = diaSemanaExtenso.charAt(0).toUpperCase() + diaSemanaExtenso.slice(1).toLowerCase();
+
             const dia = format(data, 'dd');
             const mes = format(data, 'MM');
             const ano = format(data, 'yyyy');
-            proximosDias.push({ diaSemanaAbreviado, dia, mes, ano, data });
+            proximosDias.push({ diaSemanaAbreviado, dia, mes, ano, data, diaSemanaExtenso, diaSemanaExtensoSemFormatacao});
             // console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
         }
         return proximosDias;
     };
 
+
+    const [diasIndisponiveis, setDiasIndisponiveis] = useState([]);
+    useEffect (() =>{
+        if (barberSelectedObj != null) {
+            const novosDiasIndisponiveis = [];
+    
+            if (barberSelectedObj.semana.segunda["Segunda"]) {
+                novosDiasIndisponiveis.push("Segunda");
+            }
+            if (barberSelectedObj.semana.terca["Terca"]) {
+                novosDiasIndisponiveis.push("Terca");
+            }
+            if (barberSelectedObj.semana.quarta["Quarta"]) {
+                novosDiasIndisponiveis.push("Quarta");
+            }
+            if (barberSelectedObj.semana.quinta["Quinta"]) {
+                novosDiasIndisponiveis.push("Quinta");
+            }
+            if (barberSelectedObj.semana.sexta["Sexta"]) {
+                novosDiasIndisponiveis.push("Sexta");
+            }
+            if (barberSelectedObj.semana.sabado["Sabado"]) {
+                novosDiasIndisponiveis.push("Sabado");
+            }
+            if (barberSelectedObj.semana.domingo["Domingo"]) {
+                novosDiasIndisponiveis.push("Domingo");
+            }
+            setDiasIndisponiveis(novosDiasIndisponiveis);
+        }
+
+    },[barberSelectedObj])
+    function toastDiaIndisponivel(dia){
+
+        toast.info(`De ${dia} o barbeiro selecionado não realiza atendimentos!`);
+    }
 
     //HOURS***********************************************************
     const oppeningHour = [8, 8.30, 9, 9.30, 10, 10.30, 11, 11.30, 12, 12.30, 13, 13.30, 14, 14.30, 15, 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30]; //horário funcionamento 
@@ -599,7 +645,7 @@ const MeusAgendamentos = () => {
 
     const goToNext7SlidesDays = () => {
         if (carouselRefDays.current && currentSlideDays < 53) { //verifica se já está no último slide
-            const nextSlide = currentSlideDays + 7;
+            const nextSlide = currentSlideDays + 6;
             carouselRefDays.current.goToSlide(nextSlide);
             setCurrentSlideDays(nextSlide);
         }
@@ -807,12 +853,13 @@ const MeusAgendamentos = () => {
     }, [daySelected])
 
 
-
+    const [btnBloqDias, setBloqDias] = useState(true);
 
 
     const dias = gerarProximosDias(60);
     return (
         <>
+            <ModalSemana barbeiroSelecionado={barberSelectedObj}/>
             <div className="borda-gradiente-left">
                 <div className="borda-gradiente-right">
                     <div className={style["container"]}>
@@ -837,7 +884,7 @@ const MeusAgendamentos = () => {
                                     {cardsData && cardsData.map((data, index) => (
                                         <div key={index} className={style["container-asset-barber-Name"]}>
                                             <img
-                                                onClick={() => buttonBarber(data.id)}
+                                                onClick={() => buttonBarber(data)}
                                                 className={`${style["asset-barber"]} ${barberSelected === 0 ? '' :
                                                     barberSelected === data.id ? style.barberSelected : style.barberNotSelected}`}
                                                 src={data.foto} alt=""
@@ -880,13 +927,15 @@ const MeusAgendamentos = () => {
                                             dias.map((data, index) => (
                                                 <React.Fragment key={index}>
                                                     <button className={`
-                                                ${daySelected === null ? style.boxDays :
+                                                ${
+                                                            diasIndisponiveis.includes(data.diaSemanaExtenso) ? style.daysNotSelected :
+                                                            daySelected === null ? style.boxDays :
                                                             daySelected === (data.ano + "-" + data.mes + "-" + data.dia) ? style.daySelected :
                                                                 style.daysNotSelected
                                                         }
                                             `}
                                                         //
-                                                        onClick={() => buttonDay(index, (data.ano + "-" + data.mes + "-" + data.dia))}>
+                                                        onClick={diasIndisponiveis.includes(data.diaSemanaExtenso) ? () => toastDiaIndisponivel(data.diaSemanaExtensoSemFormatacao) :  () => buttonDay(index, (data.ano + "-" + data.mes + "-" + data.dia))}>
                                                         <p>{index === 0 ? "Hoje" : data.diaSemanaAbreviado.slice(0, 3)}</p>
                                                         <p>{index === 0 ? "" : data.dia + "/" + data.mes}</p>
                                                     </button>
@@ -931,29 +980,29 @@ const MeusAgendamentos = () => {
                                             oppeningHour.map((hour, index) => ( // Remova o segundo parâmetro "oppeningHour"
                                                 <React.Fragment key={hour}> {/* Use oppeningHour como chave */}
 
-<button 
-    disabled={verificarHoraIndisponivel(hour)} 
-    id={"idBtnHour" + index} 
-    className={`
-        ${HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
-          verificarHoraIndisponivel(hour) ? style.daysNotSelected :
-          verificarHoraHabilited(hour) ? style.daySelected :
-          style.boxDays
-        }
-    `}
-    onClick={HOJE === daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : () => buttonHour(hour)}
->
-    <p>
-        {HOJE === daySelected && HORAATUAL >= hour ? "Bloqueado" : 
-         verificarHoraIndisponivel(hour) ? "Indisponível" : 
-         verificarHoraDisabled(hour) ? (
-             <>
-                 Reservado<br />
-                 {hour.toFixed(2).replace(".", ":")}
-             </>
-         ) : hour.toFixed(2).replace(".", ":")}
-    </p>
-</button>
+                                                <button 
+                                                    disabled={verificarHoraIndisponivel(hour)} 
+                                                    id={"idBtnHour" + index} 
+                                                    className={`
+                                                        ${HOJE === daySelected && HORAATUAL >= hour ? style.daysNotSelected :
+                                                        verificarHoraIndisponivel(hour) ? style.daysNotSelectedIndisponivel :
+                                                        verificarHoraHabilited(hour) ? style.daySelected :
+                                                        style.boxDays
+                                                        }
+                                                    `}
+                                                    onClick={HOJE === daySelected && HORAATUAL >= hour ? () => bloqueioHorasDataAlert() : () => buttonHour(hour)}
+                                                >
+                                                    <p>
+                                                        {HOJE === daySelected && HORAATUAL >= hour ? "Bloqueado" : 
+                                                        verificarHoraIndisponivel(hour) ? "Você bloqueou esse horário" : 
+                                                        verificarHoraDisabled(hour) ? (
+                                                            <>
+                                                                Reservado<br />
+                                                                {hour.toFixed(2).replace(".", ":")}
+                                                            </>
+                                                        ) : hour.toFixed(2).replace(".", ":")}
+                                                    </p>
+                                                </button>
 
                                                 </React.Fragment>
                                             ))
@@ -971,7 +1020,7 @@ const MeusAgendamentos = () => {
                                     style["subcontainer-btns-alterar"]
                                 }`}>
                                  <button disabled={buttonsDisabled} className={`${buttonsDisabled === true ? style["btnSalvarDisabled"] : style["btnSalvar"]}`} onClick={salvarOrDelete}> {botaoSalvar ? <img className={style["gif-loading"]} src={Loading} alt="Loading" /> : "Bloquear"}</button>
-                                 <button  className={style["btnBloqDias"]}>Bloquear Dias</button>
+                                 <button disabled={btnBloqDias} className={`${btnBloqDias === true ? style["btnBloqDiasDisabled"] : style["btnBloqDias"]}`} data-toggle="modal" data-target="#exampleModalCenter">Bloquear Dias</button>
                                 <button onClick={editarServico} className={`${agendamentoSelectedsJson.length <= 1 ? style["btnAlterarServicosDisabled"] :
                                     style["btnEditar"]
 
