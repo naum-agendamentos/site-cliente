@@ -645,7 +645,7 @@ const MeusAgendamentos = () => {
 
     const goToNext7SlidesDays = () => {
         if (carouselRefDays.current && currentSlideDays < 53) { //verifica se já está no último slide
-            const nextSlide = currentSlideDays + 7;
+            const nextSlide = currentSlideDays + 6;
             carouselRefDays.current.goToSlide(nextSlide);
             setCurrentSlideDays(nextSlide);
         }
