@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+*{
+    font-family: 'Oswald';
+}
+
+.container-title-modal{
+    background-color: #303030;
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-body-modal{
+    height: 30vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.container-dia-modal{
+    width: 80%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5vh;
+}
+.container-dia-modal-maior{
+    width: 90%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5vh;
+}
+.dia-da-semana{
+    width: 20%;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #303030;
+    align-items: center;
+}
+.dia-da-semana input{
+    width: 60px; 
+    height: 30px;
+    cursor: pointer;
+}
+.container-aviso{
+    width: 100%;
+    height: fit-content;
+    color: #303030;
+    display: flex;
+    flex-direction: row;
+   
+}
+.aviso{
+    width: 90%;
+    height: fit-content;
+}
+.container-aviso p{
+    color: #303030;
+    font-size: 13px;
+    margin: 0;
+    margin-left: 5px;
+    padding-top: 5px;
+}
+.icon{
+    margin-left: 1vh;
+    font-size: 20px;
+    color: red;
+}

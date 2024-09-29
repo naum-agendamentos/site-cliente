@@ -226,6 +226,17 @@ body{
     height: 43px;
 }
 
+.btnBloqDiasDisabled{
+    border-style: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: #001BAB;
+    width: 126px;
+    height: 43px;
+    opacity: 0.6;
+}
 
 .btnSalvarDisabled{
     border-style: none;
