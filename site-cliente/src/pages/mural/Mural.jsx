@@ -148,6 +148,10 @@ function Mural() {
 
 
     const agruparPorData = (avisos) => {
+        // Verifica se avisos é um array, caso contrário, inicializa como array vazio
+        if (!Array.isArray(avisos)) {
+            avisos = [];
+        }
         return avisos.reduce((acc, aviso) => {
             // Obtém a data e a hora separadas
             const data = new Date(aviso.data).toLocaleDateString("pt-BR");
@@ -155,7 +159,7 @@ function Mural() {
                 hour: '2-digit',
                 minute: '2-digit'
             });
-
+    
             if (!acc[data]) {
                 acc[data] = [];
             }
@@ -163,7 +167,8 @@ function Mural() {
             acc[data].push({ ...aviso, hora });
             return acc;
         }, {});
-    }
+    };
+    
 
     // Ordena os avisos dentro de cada grupo por hora e minuto
     const ordenarPorHora = (avisosAgrupados) => {
