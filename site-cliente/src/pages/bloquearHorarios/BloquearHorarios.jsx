@@ -663,8 +663,8 @@ const MeusAgendamentos = () => {
     }
 
     const goToPrevious7SlidesDays = () => {
-        if (carouselRefDays.current && currentSlideDays >= 7) { //verifica se já está no primeiro slide
-            const previousSlide = currentSlideDays - 7;
+        if (carouselRefDays.current && currentSlideDays >= 6) { //verifica se já está no primeiro slide
+            const previousSlide = currentSlideDays - 6;
             carouselRefDays.current.goToSlide(previousSlide);
             setCurrentSlideDays(previousSlide);
         }
