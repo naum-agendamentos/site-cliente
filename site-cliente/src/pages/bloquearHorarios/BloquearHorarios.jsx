@@ -465,39 +465,43 @@ const MeusAgendamentos = () => {
 
 
     const [diasIndisponiveis, setDiasIndisponiveis] = useState([]);
-    useEffect (() =>{
-        if (barberSelectedObj != null) {
+
+    const isDayUnavailable = (weekObj, day) => weekObj?.[day]?.[day] ?? false;
+
+    useEffect(() => {
+        if (barberSelectedObj?.semana) {
             const novosDiasIndisponiveis = [];
     
-            if (barberSelectedObj.semana.segunda["Segunda"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "segunda")) {
                 novosDiasIndisponiveis.push("Segunda");
             }
-            if (barberSelectedObj.semana.terca["Terca"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "terca")) {
                 novosDiasIndisponiveis.push("Terca");
             }
-            if (barberSelectedObj.semana.quarta["Quarta"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "quarta")) {
                 novosDiasIndisponiveis.push("Quarta");
             }
-            if (barberSelectedObj.semana.quinta["Quinta"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "quinta")) {
                 novosDiasIndisponiveis.push("Quinta");
             }
-            if (barberSelectedObj.semana.sexta["Sexta"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "sexta")) {
                 novosDiasIndisponiveis.push("Sexta");
             }
-            if (barberSelectedObj.semana.sabado["Sabado"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "sabado")) {
                 novosDiasIndisponiveis.push("Sabado");
             }
-            if (barberSelectedObj.semana.domingo["Domingo"]) {
+            if (isDayUnavailable(barberSelectedObj.semana, "domingo")) {
                 novosDiasIndisponiveis.push("Domingo");
             }
             setDiasIndisponiveis(novosDiasIndisponiveis);
         }
-
-    },[barberSelectedObj])
-    function toastDiaIndisponivel(dia){
-
+    }, [barberSelectedObj]);
+    
+    function toastDiaIndisponivel(dia) {
         toast.info(`De ${dia} o barbeiro selecionado não realiza atendimentos!`);
     }
+    
+
 
     //HOURS***********************************************************
     const oppeningHour = [8, 8.30, 9, 9.30, 10, 10.30, 11, 11.30, 12, 12.30, 13, 13.30, 14, 14.30, 15, 15.30, 16, 16.30, 17, 17.30, 18, 18.30, 19, 19.30]; //horário funcionamento 
