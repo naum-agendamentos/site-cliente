@@ -479,25 +479,25 @@ const MeusAgendamentos = () => {
         if (barberSelectedObj != null && barberSelectedObj.semana != null) {
             const novosDiasIndisponiveis = [];
     
-            if (barberSelectedObj.semana.segunda && barberSelectedObj.semana.segunda["Segunda"]) {
+            if (barberSelectedObj.semana.segunda && barberSelectedObj.semana.segunda == true) {
                 novosDiasIndisponiveis.push("Segunda");
             }
-            if (barberSelectedObj.semana.terca && barberSelectedObj.semana.terca["Terca"]) {
+            if (barberSelectedObj.semana.terca && barberSelectedObj.semana.terca == true) {
                 novosDiasIndisponiveis.push("Terca");
             }
-            if (barberSelectedObj.semana.quarta && barberSelectedObj.semana.quarta["Quarta"]) {
+            if (barberSelectedObj.semana.quarta && barberSelectedObj.semana.quarta == true) {
                 novosDiasIndisponiveis.push("Quarta");
             }
-            if (barberSelectedObj.semana.quinta && barberSelectedObj.semana.quinta["Quinta"]) {
+            if (barberSelectedObj.semana.quinta && barberSelectedObj.semana.quinta == true) {
                 novosDiasIndisponiveis.push("Quinta");
             }
-            if (barberSelectedObj.semana.sexta && barberSelectedObj.semana.sexta["Sexta"]) {
+            if (barberSelectedObj.semana.sexta && barberSelectedObj.semana.sexta == true) {
                 novosDiasIndisponiveis.push("Sexta");
             }
-            if (barberSelectedObj.semana.sabado && barberSelectedObj.semana.sabado["Sabado"]) {
+            if (barberSelectedObj.semana.sabado && barberSelectedObj.semana.sabado == true) {
                 novosDiasIndisponiveis.push("Sabado");
             }
-            if (barberSelectedObj.semana.domingo && barberSelectedObj.semana.domingo["Domingo"]) {
+            if (barberSelectedObj.semana.domingo && barberSelectedObj.semana.domingo == true) {
                 novosDiasIndisponiveis.push("Domingo");
             }
             setDiasIndisponiveis(novosDiasIndisponiveis);

@@ -406,7 +406,6 @@ const MeusAgendamentos = () => {
     var horariosIndisponiveis = [];
     function verificarHoraIndisponivel(hour) {
             if (agendamentosExistentes != null && daySelected != null) {
-                console.log("Existentes: "+ JSON.stringify(agendamentosExistentes));
                 for (const agendamento of agendamentosExistentes) {
                     if(agendamento.cliente == null){
                         const diaHoraAgendamento = agendamento.dataHoraAgendamentoInicio.split("T");
@@ -469,28 +468,28 @@ const MeusAgendamentos = () => {
     const isDayUnavailable = (weekObj, day) => weekObj?.[day]?.[day] ?? false;
 
     useEffect(() => {
+
         if (barberSelectedObj?.semana) {
             const novosDiasIndisponiveis = [];
-    
-            if (isDayUnavailable(barberSelectedObj.semana, "segunda")) {
+            if (barberSelectedObj.semana.segunda ==  true) {
                 novosDiasIndisponiveis.push("Segunda");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "terca")) {
+            if (barberSelectedObj.semana.terca ==  true) {
                 novosDiasIndisponiveis.push("Terca");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "quarta")) {
+            if (barberSelectedObj.semana.quarta ==  true) {
                 novosDiasIndisponiveis.push("Quarta");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "quinta")) {
+            if (barberSelectedObj.semana.quinta ==  true) {
                 novosDiasIndisponiveis.push("Quinta");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "sexta")) {
+            if (barberSelectedObj.semana.sexta ==  true) {
                 novosDiasIndisponiveis.push("Sexta");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "sabado")) {
+            if (barberSelectedObj.semana.sabado ==  true) {
                 novosDiasIndisponiveis.push("Sabado");
             }
-            if (isDayUnavailable(barberSelectedObj.semana, "domingo")) {
+            if (barberSelectedObj.semana.domingo ==  true) {
                 novosDiasIndisponiveis.push("Domingo");
             }
             setDiasIndisponiveis(novosDiasIndisponiveis);

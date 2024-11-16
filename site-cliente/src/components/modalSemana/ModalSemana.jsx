@@ -3,6 +3,7 @@ import { IoWarning } from "react-icons/io5";
 import useSemanaCheckboxes from './ControleModal';
 import api from '../../api';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 const ModalSemana = ({ barbeiroSelecionado }) => {
     const {
@@ -12,13 +13,13 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
 
     const salvar = () => {
         if (barbeiroSelecionado && barbeiroSelecionado.semana) {
-            barbeiroSelecionado.semana.segunda["Segunda"] = segundaChecked;
-            barbeiroSelecionado.semana.terca["Terca"] = tercaChecked;
-            barbeiroSelecionado.semana.quarta["Quarta"] = quartaChecked;
-            barbeiroSelecionado.semana.quinta["Quinta"] = quintaChecked;
-            barbeiroSelecionado.semana.sexta["Sexta"] = sextaChecked;
-            barbeiroSelecionado.semana.sabado["Sabado"] = sabadoChecked;
-            barbeiroSelecionado.semana.domingo["Domingo"] = domingoChecked;
+            barbeiroSelecionado.semana.segunda = segundaChecked;
+            barbeiroSelecionado.semana.terca = tercaChecked;
+            barbeiroSelecionado.semana.quarta = quartaChecked;
+            barbeiroSelecionado.semana.quinta = quintaChecked;
+            barbeiroSelecionado.semana.sexta = sextaChecked;
+            barbeiroSelecionado.semana.sabado = sabadoChecked;
+            barbeiroSelecionado.semana.domingo  = domingoChecked;
         }
 
         console.log("Barbeiro para salvar: " + JSON.stringify(barbeiroSelecionado));
@@ -45,6 +46,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
         }, 2000);
     };
 
+
     return (
         <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
@@ -58,7 +60,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>SEG</h3>
                                 <input
                                     type="checkbox"
-                                    value="Segunda"
+                                    value="segunda"
                                     checked={segundaChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -67,7 +69,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>TER</h3>
                                 <input
                                     type="checkbox"
-                                    value="Terca"
+                                    value="terca"
                                     checked={tercaChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -76,7 +78,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>QUA</h3>
                                 <input
                                     type="checkbox"
-                                    value="Quarta"
+                                    value="quarta"
                                     checked={quartaChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -87,7 +89,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>QUI</h3>
                                 <input
                                     type="checkbox"
-                                    value="Quinta"
+                                    value="quinta"
                                     checked={quintaChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -96,7 +98,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>SEX</h3>
                                 <input
                                     type="checkbox"
-                                    value="Sexta"
+                                    value="sexta"
                                     checked={sextaChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -105,7 +107,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>SAB</h3>
                                 <input
                                     type="checkbox"
-                                    value="Sabado"
+                                    value="sabado"
                                     checked={sabadoChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
@@ -114,7 +116,7 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
                                 <h3>DOM</h3>
                                 <input
                                     type="checkbox"
-                                    value="Domingo"
+                                    value="domingo"
                                     checked={domingoChecked}
                                     onChange={(e) => controleCheckbox(e.target.value)}
                                 />
