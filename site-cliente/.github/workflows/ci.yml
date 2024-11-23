@@ -1,4 +1,4 @@
-name: CI Naum Frontend
+name: CI Naum Front end
 
 on:
   push:
@@ -64,5 +64,4 @@ jobs:
           context: .
           push: true
           tags: bryansilva117/naum-front:react-client-actions
-          file: ./Dockerfile  # Certifique-se de que o caminho para o seu Dockerfile esteja correto
 
