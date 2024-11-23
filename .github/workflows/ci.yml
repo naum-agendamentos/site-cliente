@@ -1,4 +1,4 @@
-name: CI Naum Front end
+name: CI Naum Front End
 
 on:
   push:
@@ -24,14 +24,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build React app
-        run: npm run build
-
-      - name: Archive build folder
+      - name: Archive node_modules and src
+        run: |
+          tar -czf app.tar.gz ./node_modules ./src
+          
+      - name: Upload app artifact
         uses: actions/upload-artifact@v3
         with:
-          name: react-build
-          path: build/
+          name: react-app
+          path: app.tar.gz
 
   docker:
     runs-on: ubuntu-latest
@@ -40,11 +41,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifact
+      - name: Download app artifact
         uses: actions/download-artifact@v3
         with:
-          name: react-build
-          path: ./build
+          name: react-app
+          path: ./app
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -64,4 +65,3 @@ jobs:
           context: .
           push: true
           tags: bryansilva117/naum-front:react-client-actions
-
