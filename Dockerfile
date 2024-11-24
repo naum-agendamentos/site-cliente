@@ -13,6 +13,9 @@ RUN npm install
 # Copiar o restante do código para o container
 COPY . .
 
+# Definir a variável de ambiente para a API URL
+ENV API_URL=http://<IP_da_instancia_EC2>
+
 # Definir a variável de ambiente para a porta
 ENV PORT=3001
 
