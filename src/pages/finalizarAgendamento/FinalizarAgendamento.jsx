@@ -470,6 +470,7 @@ const MeusAgendamentos = () => {
             const ano = format(data, 'yyyy');
             proximosDias.push({ diaSemanaAbreviado, dia, mes, ano, data, diaSemanaExtenso, diaSemanaExtensoSemFormatacao });
             // console.log("ESSE É O ÚLTIMO DIA DO VETOR: "+proximosDias[proximosDias.length - 1].data)
+            
         }
         return proximosDias;
     };
@@ -478,29 +479,31 @@ const MeusAgendamentos = () => {
     useEffect(() => {
         if (barberSelectedObj != null && barberSelectedObj.semana != null) {
             const novosDiasIndisponiveis = [];
-    
-            if (barberSelectedObj.semana.segunda && barberSelectedObj.semana.segunda == true) {
+            
+            
+            if (barberSelectedObj.semana.segunda == false) {
                 novosDiasIndisponiveis.push("Segunda");
             }
-            if (barberSelectedObj.semana.terca && barberSelectedObj.semana.terca == true) {
+            if (barberSelectedObj.semana.terca == false) {
                 novosDiasIndisponiveis.push("Terca");
             }
-            if (barberSelectedObj.semana.quarta && barberSelectedObj.semana.quarta == true) {
+            if (barberSelectedObj.semana.quarta == false) {
                 novosDiasIndisponiveis.push("Quarta");
             }
-            if (barberSelectedObj.semana.quinta && barberSelectedObj.semana.quinta == true) {
+            if (barberSelectedObj.semana.quinta == false) {
                 novosDiasIndisponiveis.push("Quinta");
             }
-            if (barberSelectedObj.semana.sexta && barberSelectedObj.semana.sexta == true) {
+            if (barberSelectedObj.semana.sexta == false) {
                 novosDiasIndisponiveis.push("Sexta");
             }
-            if (barberSelectedObj.semana.sabado && barberSelectedObj.semana.sabado == true) {
+            if (barberSelectedObj.semana.sabado == false) {
                 novosDiasIndisponiveis.push("Sabado");
             }
-            if (barberSelectedObj.semana.domingo && barberSelectedObj.semana.domingo == true) {
+            if (barberSelectedObj.semana.domingo == false) {
                 novosDiasIndisponiveis.push("Domingo");
             }
             setDiasIndisponiveis(novosDiasIndisponiveis);
+            console.log("Dias indisponiveis: " + (novosDiasIndisponiveis));
         }
     
     }, [barberSelectedObj]);

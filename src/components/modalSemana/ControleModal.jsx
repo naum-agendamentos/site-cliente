@@ -14,13 +14,13 @@ const useSemanaCheckboxes = (barbeiroSelecionado) => {
     useEffect(() => {
         if (barbeiroSelecionado && barbeiroSelecionado.semana) {
             setDiasChecked({
-                segundaChecked: barbeiroSelecionado.semana.segunda,
-                tercaChecked: barbeiroSelecionado.semana.terca,
-                quartaChecked: barbeiroSelecionado.semana.quarta,
-                quintaChecked: barbeiroSelecionado.semana.quinta,
-                sextaChecked: barbeiroSelecionado.semana.sexta,
-                sabadoChecked: barbeiroSelecionado.semana.sabado,
-                domingoChecked: barbeiroSelecionado.semana.domingo,
+                segundaChecked: !barbeiroSelecionado.semana.segunda,
+                tercaChecked: !barbeiroSelecionado.semana.terca,
+                quartaChecked: !barbeiroSelecionado.semana.quarta,
+                quintaChecked: !barbeiroSelecionado.semana.quinta,
+                sextaChecked: !barbeiroSelecionado.semana.sexta,
+                sabadoChecked: !barbeiroSelecionado.semana.sabado,
+                domingoChecked: !barbeiroSelecionado.semana.domingo,
             });
         }
     }, [barbeiroSelecionado]);

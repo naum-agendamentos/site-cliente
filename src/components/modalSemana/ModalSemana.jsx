@@ -13,13 +13,13 @@ const ModalSemana = ({ barbeiroSelecionado }) => {
 
     const salvar = () => {
         if (barbeiroSelecionado && barbeiroSelecionado.semana) {
-            barbeiroSelecionado.semana.segunda = segundaChecked;
-            barbeiroSelecionado.semana.terca = tercaChecked;
-            barbeiroSelecionado.semana.quarta = quartaChecked;
-            barbeiroSelecionado.semana.quinta = quintaChecked;
-            barbeiroSelecionado.semana.sexta = sextaChecked;
-            barbeiroSelecionado.semana.sabado = sabadoChecked;
-            barbeiroSelecionado.semana.domingo  = domingoChecked;
+            barbeiroSelecionado.semana.segunda = !segundaChecked;
+            barbeiroSelecionado.semana.terca = !tercaChecked;
+            barbeiroSelecionado.semana.quarta = !quartaChecked;
+            barbeiroSelecionado.semana.quinta = !quintaChecked;
+            barbeiroSelecionado.semana.sexta = !sextaChecked;
+            barbeiroSelecionado.semana.sabado = !sabadoChecked;
+            barbeiroSelecionado.semana.domingo  = !domingoChecked;
         }
 
         console.log("Barbeiro para salvar: " + JSON.stringify(barbeiroSelecionado));

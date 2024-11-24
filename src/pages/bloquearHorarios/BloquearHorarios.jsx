@@ -471,25 +471,25 @@ const MeusAgendamentos = () => {
 
         if (barberSelectedObj?.semana) {
             const novosDiasIndisponiveis = [];
-            if (barberSelectedObj.semana.segunda ==  true) {
+            if (barberSelectedObj.semana.segunda ==  false) {
                 novosDiasIndisponiveis.push("Segunda");
             }
-            if (barberSelectedObj.semana.terca ==  true) {
+            if (barberSelectedObj.semana.terca ==  false) {
                 novosDiasIndisponiveis.push("Terca");
             }
-            if (barberSelectedObj.semana.quarta ==  true) {
+            if (barberSelectedObj.semana.quarta ==  false) {
                 novosDiasIndisponiveis.push("Quarta");
             }
-            if (barberSelectedObj.semana.quinta ==  true) {
+            if (barberSelectedObj.semana.quinta ==  false) {
                 novosDiasIndisponiveis.push("Quinta");
             }
-            if (barberSelectedObj.semana.sexta ==  true) {
+            if (barberSelectedObj.semana.sexta ==  false) {
                 novosDiasIndisponiveis.push("Sexta");
             }
-            if (barberSelectedObj.semana.sabado ==  true) {
+            if (barberSelectedObj.semana.sabado ==  false) {
                 novosDiasIndisponiveis.push("Sabado");
             }
-            if (barberSelectedObj.semana.domingo ==  true) {
+            if (barberSelectedObj.semana.domingo ==  false) {
                 novosDiasIndisponiveis.push("Domingo");
             }
             setDiasIndisponiveis(novosDiasIndisponiveis);
