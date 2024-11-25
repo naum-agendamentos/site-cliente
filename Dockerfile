@@ -13,8 +13,8 @@ RUN npm install
 # Copiar o restante do código para o container
 COPY . .
 
-# Definir a variável de ambiente para a API URL (use o nome correto com o prefixo REACT_APP_)
-ENV REACT_APP_API_URL=http://<IP_da_instancia_EC2>  # Aqui você precisa usar o IP real da EC2
+# Definir a variável de ambiente para a API URL
+ENV REACT_APP_API_URL=http://<IP_da_instancia_EC2>  
 
 # Definir a variável de ambiente para a porta
 ENV PORT=3001
